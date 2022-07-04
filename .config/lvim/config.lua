@@ -1,10 +1,10 @@
 -- general
-lvim.log.level = "warn"
-lvim.colorscheme = "tokyonight"
+lvim.log.level          = "warn"
+lvim.colorscheme        = "tokyonight"
 lvim.transparent_window = true
-vim.opt.undodir = vim.fn.stdpath "cache" .. "/undo"
-vim.opt.undofile = true
-vim.opt.titlestring = "%<%F%=%l/%L - nvim"
+vim.opt.undodir         = vim.fn.stdpath "cache" .. "/undo"
+vim.opt.undofile        = true
+vim.opt.titlestring     = "%<%F%=%l/%L - nvim"
 
 -- Lualine
 lvim.builtin.lualine.style = "none"
@@ -15,9 +15,6 @@ components.scrollbar = {
     local current_line = vim.fn.line "."
     local total_lines = vim.fn.line "$"
     local chars = { "", "", "", "", "", "", "", "", "", "", "", "", "" }
-    -- local chars = { "⠁", "⠉", "⠋", "⠛", "⠟", "⠿" }
-    -- local chars = { "▒░░░░", "█▒░░░", "▒█▒░░", "░▒█▒░",
-    --   "░░▒█▒", "░░░▒█", "░░░░▒" }
     local line_ratio = current_line / total_lines
     local index = math.ceil(line_ratio * #chars)
     return chars[index]
@@ -38,13 +35,9 @@ lvim.builtin.lualine.sections = {
   lualine_z = { components.encoding, components.filetype },
 }
 
-
 -- keymappings [view all the defaults by pressing <leader>Lk]
 lvim.leader = "space"
--- add your own keymapping
 lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
--- Change Telescope navigation to use j and k for navigation and n and p for history in both input and normal mode.
--- we use protected-mode (pcall) just in case the plugin wasn't loaded yet.
 local _, actions = pcall(require, "telescope.actions")
 lvim.builtin.telescope.defaults.mappings = {
   -- for input mode
@@ -60,21 +53,7 @@ lvim.builtin.telescope.defaults.mappings = {
     ["<C-k>"] = actions.move_selection_previous,
   },
 }
-
 lvim.builtin.which_key.mappings["e"] = { "<cmd>LfNewTab<CR>", "Explorer" }
-
--- Use which-key to add extra bindings with the leader-key prefix
--- lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
--- lvim.builtin.which_key.mappings["t"] = {
---   name = "+Trouble",
---   r = { "<cmd>Trouble lsp_references<cr>", "References" },
---   f = { "<cmd>Trouble lsp_definitions<cr>", "Definitions" },
---   d = { "<cmd>Trouble document_diagnostics<cr>", "Diagnostics" },
---   q = { "<cmd>Trouble quickfix<cr>", "QuickFix" },
---   l = { "<cmd>Trouble loclist<cr>", "LocationList" },
---   w = { "<cmd>Trouble workspace_diagnostics<cr>", "Wordspace Diagnostics" },
--- }
-
 lvim.builtin.alpha.active = true
 lvim.builtin.alpha.mode = "dashboard"
 lvim.builtin.notify.active = true
@@ -82,7 +61,7 @@ lvim.builtin.terminal.active = true
 lvim.builtin.nvimtree.setup.view.side = "left"
 lvim.builtin.nvimtree.setup.renderer.icons.show.git = false
 
--- if you don't want all the parsers change this to a table of the ones you want
+-- parsers
 lvim.builtin.treesitter.ensure_installed = {
   "bash",
   "c",
@@ -97,7 +76,7 @@ lvim.builtin.treesitter.highlight.enabled = true
 -- generic LSP settings
 lvim.lsp.automatic_servers_installation = false
 
--- set a formatter, this will override the language server formatting capabilities (if it exists)
+-- formatters
 local formatters = require "lvim.lsp.null-ls.formatters"
 formatters.setup {
   { command = "black", filetypes = { "python" } },
@@ -109,7 +88,7 @@ formatters.setup {
 --   { command = "flake8", filetypes = { "python" } },
 -- }
 
--- Additional Plugins
+-- Plugins
 lvim.plugins = {
   { "folke/tokyonight.nvim" },
   { "nacro90/numb.nvim",
@@ -153,7 +132,7 @@ lvim.plugins = {
     end,
   },
   { "voldikss/vim-floaterm" },
-  { "oberblastmeister/neuron.nvim" },
+  { "vimwiki/vimwiki" }
 }
 
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
