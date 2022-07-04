@@ -1,0 +1,14 @@
+[database]
+path=.config/claws-mail/imapcache/imap.gmail.com/luca.bilke
+[user]
+name=luca.bilke
+primary_email=luca.bilke@gmail.com
+[new]
+tags=unread;inbox;
+ignore=.mbsyncstate;.uidvalidity
+[search]
+exclude_tags=deleted;spam;
+[maildir]
+synchronize_flags=true
+[crypto]
+gpg_path=gpg

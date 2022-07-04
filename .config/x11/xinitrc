@@ -1,0 +1,45 @@
+#!/bin/sh
+
+# xinitrc runs automatically when you run startx.
+
+# There are some small but important commands that need to be run when we start
+# the graphical environment. There is a link to this file in ~/.xprofile
+# because that file is run automatically if someone uses a display manager
+# (login screen) and so they are needed there. To prevent doubling up commands,
+# I source them here with the line below.
+
+if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/x11/xprofile" ]; then
+	. "${XDG_CONFIG_HOME:-$HOME/.config}/x11/xprofile"
+else
+	. "$HOME/.xprofile"
+fi
+
+# Start gpg-agent if not already running
+if ! pgrep -x -u "${USER}" gpg-agent &> /dev/null; then
+     gpg-connect-agent /bye &> /dev/null
+fi
+
+# Set SSH to use gpg-agent (see 'man gpg-agent', section EXAMPLES)
+unset SSH_AGENT_PID
+if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
+    # export SSH_AUTH_SOCK="/run/user/$UID/gnupg/S.gpg-agent.ssh"
+    export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
+fi
+
+# Set GPG TTY as stated in 'man gpg-agent'
+export GPG_TTY=$(tty)
+
+# Refresh gpg-agent tty
+gpg-connect-agent updatestartuptty /bye > /dev/null
+
+# Set lock screen on x screensaver
+xautolock -time 10 -locker 'slock -m "$(cowsay -f octopus "$(fortune)" | lolcat -ft)"' &
+
+# Check for updates
+checkup &
+
+# Set GPU settings
+gwe --hide-window &
+
+# Start Console TDM
+exec dwm
