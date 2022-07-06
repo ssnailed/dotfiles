@@ -4,7 +4,7 @@ lvim.colorscheme        = "tokyonight"
 lvim.transparent_window = true
 vim.opt.undodir         = vim.fn.stdpath "cache" .. "/undo"
 vim.opt.undofile        = true
-vim.opt.titlestring     = "%<%F%=%l/%L - nvim"
+vim.opt.titlestring     = "%<%F - nvim"
 
 -- Lualine
 lvim.builtin.lualine.style = "none"
