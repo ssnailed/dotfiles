@@ -10,12 +10,11 @@ set hiddenfiles ".*:*.aux:*.log:*.bbl:*.bcf:*.blg:*.run.xml"
 set previewer ~/.config/lf/preview
 set cleaner ~/.config/lf/clean
 
-# cmds/functions
 cmd open ${{
-    case $(file --mime-type "$(readlink -f $f)" -b) in
+  case $(file --mime-type "$(readlink -f $f)" -b) in
 	application/vnd.openxmlformats-officedocument.spreadsheetml.sheet) localc $fx ;;
 	image/vnd.djvu|application/pdf|application/octet-stream|application/postscript) setsid -f zathura $fx >/dev/null 2>&1 ;;
-        text/*|application/json|inode/x-empty) $EDITOR $fx;;
+  text/*|application/json|inode/x-empty) $EDITOR $fx;;
 	image/x-xcf) setsid -f gimp $f >/dev/null 2>&1 ;;
 	image/svg+xml) display -- $f ;;
 	image/*) rotdir $f | grep -i "\.\(png\|jpg\|jpeg\|gif\|webp\|tif\|ico\)\(_large\)*$" |
@@ -86,6 +85,26 @@ cmd rsyncto ${{
 	notify-send "File(s) rsynced." "File(s) copies to $dest."
 }}
 
+# y (select for copy) and P to paste soft-link
+# d (select for cut) and P to paste hard-link
+cmd link %{{
+    set -- $(cat ~/.local/share/lf/files)
+    mode="$1"
+    shift
+    if [ "$#" -lt 1 ]; then
+        lf -remote "send $id echo no files to link"
+        exit 0
+    fi
+    case "$mode" in
+        # symbolically copy mode is indicating a soft link
+        copy) ln -sr -t . -- "$@";;
+        # while a move mode is indicating a hard link
+        move) ln -t . -- "$@";;
+    esac
+    rm ~/.local/share/lf/files
+    lf -remote "send clear"
+}}
+
 cmd setbg "$1"
 cmd bulkrename $vidir
 
@@ -97,6 +116,8 @@ map E extract
 map C copyto
 map R rsyncto
 map M moveto
+map P link
+
 map <c-n> push :mkdir<space>
 map <c-r> reload
 map <c-s> set hidden!
@@ -118,6 +139,3 @@ map <c-y> up
 map V push :!$EDITOR<space>
 
 map W $setsid -f $TERMINAL >/dev/null 2>&1
-
-# Source Bookmarks
-source "~/.config/lf/shortcutrc"
