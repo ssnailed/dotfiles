@@ -1,10 +1,16 @@
 -- general
-lvim.log.level          = "warn"
-lvim.colorscheme        = "tokyonight"
-lvim.transparent_window = true
-vim.opt.undodir         = vim.fn.stdpath "cache" .. "/undo"
-vim.opt.undofile        = true
-vim.opt.titlestring     = "%t - nvim"
+lvim.log.level         = "warn"
+lvim.colorscheme       = "tokyonight"
+vim.g.tokyonight_style = "night"
+vim.opt.undodir        = vim.fn.stdpath "cache" .. "/undo"
+vim.opt.undofile       = true
+vim.opt.titlestring    = "%t - nvim"
+
+-- opts for LF
+vim.g.NERDTreeHijackNetrw = 0
+vim.g.lf_replace_netrw = 1
+vim.g.lf_command_override = 'lf -command "set nopreview" -command "set hidden"'
+
 
 -- Lualine
 lvim.builtin.lualine.style = "none"
@@ -296,20 +302,8 @@ lvim.plugins = {
   { "felipec/vim-sanegx",
     event = "BufRead",
   },
-  --  { "tpope/vim-surround",
-  --    keys = { "c", "d", "y" },
-  --    -- make sure to change the value of `timeoutlen` if it's not triggering correctly, see https://github.com/tpope/vim-surround/issues/117
-  --    setup = function()
-  --      vim.opt.timeoutlen = 500
-  --    end
-  --  },
   { "ptzz/lf.vim",
     requires = "voldikss/vim-floaterm",
-    config = function()
-      vim.g.NERDTreeHijackNetrw = 0
-      vim.g.lf_replace_netrw = 1
-      vim.g.lf_command_override = 'lf -command "set nopreview" -command "set hidden"'
-    end,
   },
   { "vimwiki/vimwiki" }
 }
