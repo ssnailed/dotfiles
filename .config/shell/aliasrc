@@ -51,4 +51,4 @@ alias \
 	weath="less -S ${XDG_DATA_HOME:-$HOME/.local/share}/weatherreport" \
 	remvirt="virt-manager -c 'qemu+ssh://luca@192.168.178.200/system'" \
 	vim="lvim" \
-  ssh="kitty +kitten ssh myserver"
+  ssh="kitty +kitten ssh"
