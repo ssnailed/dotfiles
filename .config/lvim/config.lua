@@ -74,9 +74,6 @@ lvim.plugins = {
       }
     end,
   },
-  { "sindrets/diffview.nvim",
-    event = "BufRead",
-  },
   { "folke/todo-comments.nvim",
     event = "BufRead",
     config = function()
