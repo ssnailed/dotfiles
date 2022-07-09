@@ -2,6 +2,7 @@
 lvim.log.level                            = "warn"
 lvim.colorscheme                          = "tokyonight"
 vim.g.tokyonight_style                    = "night"
+lvim.transparent_window                   = true
 vim.opt.undodir                           = vim.fn.stdpath "cache" .. "/undo"
 vim.opt.undofile                          = true
 vim.opt.titlestring                       = "%t - vim"
@@ -10,7 +11,7 @@ lvim.builtin.alpha.mode                   = "dashboard"
 lvim.builtin.terminal.active              = true
 lvim.builtin.nvimtree.active              = false
 lvim.builtin.treesitter.highlight.enabled = true
-lvim.lsp.automatic_servers_installation   = true
+lvim.lsp.automatic_servers_installation   = false
 vim.g.NERDTreeHijackNetrw                 = 0
 vim.g.lf_replace_netrw                    = 1
 
@@ -97,7 +98,7 @@ lvim.keys.insert_mode = {
 }
 lvim.keys.normal_mode = {
   ["<c-s>"] = ":w<CR>",
-  ["<c-q>"] = ":bd<CR>"
+  ["<c-q>"] = ":bd<CR>",
 }
 lvim.keys.term_mode = {
   ["<c-q>"] = ":bd<CR>"
@@ -127,6 +128,8 @@ lvim.builtin.which_key.mappings = {
     j = { "<cmd>BufferLinePick<cr>", "Jump" },
     f = { "<cmd>Telescope buffers<cr>", "Find" },
     b = { "<cmd>BufferLineCyclePrev<cr>", "Previous" },
+    n = { "<cmd>BufferLineCycleNext<cr>", "Next" },
+
     -- w = { "<cmd>BufferWipeout<cr>", "Wipeout" }, -- TODO: implement this for bufferline
     e = {
       "<cmd>BufferLinePickClose<cr>",
