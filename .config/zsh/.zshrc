@@ -2,12 +2,12 @@
 autoload -U colors && colors	# Load colors
 PS1="%{$fg[cyan]%}%n%{$reset_color%}@%{$fg[blue]%}%m %{$reset_color%}[%{$fg[magenta]%}%3~%{$reset_color%}] %{$fg[green]%}»%{$reset_color%} "
 stty stop undef		# Disable ctrl-s to freeze terminal.
-setopt interactive_comments histignorealldups autocd
+setopt interactive_comments histignorealldups
 
 # History in cache directory:
 HISTSIZE=10000000
 SAVEHIST=10000000
-HISTFILE=~/.cache/zsh/history
+HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/history"
 
 # Load aliases and shortcuts if existent.
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc"
@@ -71,6 +71,8 @@ bindkey -s '^f' 'cd "$(dirname "$(fzf)")"\n'
 # Edit line in vim with ctrl-e:
 autoload edit-command-line; zle -N edit-command-line
 bindkey '^e' edit-command-line
+
+[ -f /usr/share/fzf/key-bindings.zsh ] && source /usr/share/fzf/key-bindings.zsh
 
 # Load syntax highlighting; should be last.
 source /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh 2>/dev/null
