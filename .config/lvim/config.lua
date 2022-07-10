@@ -14,6 +14,7 @@ lvim.builtin.treesitter.highlight.enabled = true
 lvim.lsp.automatic_servers_installation   = false
 vim.g.NERDTreeHijackNetrw                 = 0
 vim.g.lf_replace_netrw                    = 1
+lvim.format_on_save                       = false
 
 local formatters = require "lvim.lsp.null-ls.formatters"
 formatters.setup {
@@ -123,7 +124,8 @@ lvim.builtin.which_key.mappings = {
   ["f"] = { require("lvim.core.telescope.custom-finders").find_project_files, "Find File" },
   ["h"] = { "<cmd>nohlsearch<CR>", "No Highlight" },
   ["e"] = { "<cmd>Lf<CR>", "List Files" },
-  b = {
+  ["P"] = { "<cmd>Telescope projects<CR>", "Projects" },
+  b     = {
     name = "Buffers",
     j = { "<cmd>BufferLinePick<cr>", "Jump" },
     f = { "<cmd>Telescope buffers<cr>", "Find" },
@@ -149,7 +151,7 @@ lvim.builtin.which_key.mappings = {
       "Sort by language",
     },
   },
-  p = {
+  p     = {
     name = "Packer",
     c = { "<cmd>PackerCompile<cr>", "Compile" },
     i = { "<cmd>PackerInstall<cr>", "Install" },
