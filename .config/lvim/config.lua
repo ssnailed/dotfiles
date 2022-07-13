@@ -13,6 +13,9 @@ lvim.builtin.treesitter.highlight.enabled = true
 lvim.lsp.automatic_servers_installation   = true
 vim.g.NERDTreeHijackNetrw                 = 0
 vim.g.lf_replace_netrw                    = 1
+vim.opt.foldmethod                        = "expr"
+vim.opt.foldexpr                          = "nvim_treesitter#foldexpr()"
+
 
 local formatters = require "lvim.lsp.null-ls.formatters"
 formatters.setup {
@@ -74,6 +77,9 @@ lvim.plugins = {
       }
     end,
   },
+  { "sindrets/diffview.nvim",
+    event = "BufRead",
+  },
   { "folke/todo-comments.nvim",
     event = "BufRead",
     config = function()
@@ -93,14 +99,18 @@ lvim.plugins = {
 lvim.leader = "space"
 lvim.keys.insert_mode = {
   ["<c-s>"] = "<ESC>:w<CR>i<Right>",
-  ["<c-q>"] = "<ESC>:bd<CR>"
+  ["<c-q>"] = "<ESC>:bd<CR>",
 }
 lvim.keys.normal_mode = {
   ["<c-s>"] = ":w<CR>",
-  ["<c-q>"] = ":bd<CR>"
+  ["<c-q>"] = ":bd<CR>",
+  ["<C-Right>"] = ":bn<CR>",
+  ["<C-Left>"] = ":bp<CR>"
 }
 lvim.keys.term_mode = {
-  ["<c-q>"] = ":bd<CR>"
+  ["<c-q>"] = ":bd<CR>",
+  ["<C-Right>"] = ":bn<CR>",
+  ["<C-Left>"] = ":bp<CR>"
 }
 lvim.keys.visual_mode = {
   ["<c-s>"] = "<ESC>:w<CR>",
@@ -295,5 +305,6 @@ lvim.builtin.which_key.mappings = {
     name = "Treesitter",
     i = { ":TSConfigInfo<cr>", "Info" },
   },
-  w = { name = "VimWiki" }
+  w = { name = "VimWiki" },
+  z = { name = "Folding" }
 }
