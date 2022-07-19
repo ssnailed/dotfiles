@@ -1,5 +1,7 @@
 # pyright: reportMissingImports=false
-import datetime
+from datetime import datetime
+import subprocess
+import os
 
 from kitty.boss import get_boss
 from kitty.fast_data_types import Screen, add_timer
@@ -14,15 +16,7 @@ from kitty.tab_bar import (
 )
 from kitty.utils import color_as_int
 
-
-def calc_draw_spaces(*args) -> int:
-    length = 0
-    for i in args:
-        if not isinstance(i, str):
-            i = str(i)
-        length += len(i)
-    return length
-
+RIGHT_MARGIN = 1
 
 def _draw_left_status(
     draw_data: DrawData,
@@ -62,19 +56,24 @@ def _draw_right_status(draw_data: DrawData, screen: Screen, is_last: bool) -> in
         return 0
 
     draw_attributed_string(Formatter.reset, screen)
-    time = datetime.datetime.now().strftime(" %H:%M")
-    date = datetime.datetime.now().strftime(" %d.%m.%Y")
+    time = datetime.now().strftime(" %H:%M")
+    date = datetime.now().strftime(" %d.%m.%Y")
+    # TODO: Figure out how to import psutils so I don't have to call a separate script
+    bat = subprocess.getoutput(os.path.expandvars("~/.local/bin/battery")) 
+   
+    cells = [
+        (draw_data.active_fg, bat),
+        (draw_data.active_fg, time),
+        (draw_data.inactive_fg, date),
+    ]
 
-    right_status_length = calc_draw_spaces(time + " " + date)
+    right_status_length = RIGHT_MARGIN
+    for i in cells:
+        right_status_length += (len(str(i[1])))
 
     draw_spaces = screen.columns - screen.cursor.x - right_status_length
     if draw_spaces > 0:
         screen.draw(" " * draw_spaces)
-
-    cells = [
-        (draw_data.active_fg, time),
-        (draw_data.inactive_fg, date),
-    ]
 
     screen.cursor.fg = 0
     for color, status in cells:
@@ -109,7 +108,7 @@ def draw_tab(
 ) -> int:
     global timer_id
     if timer_id is None:
-        timer_id = add_timer(_redraw_tab_bar, 2.0, True)
+        timer_id = add_timer(_redraw_tab_bar, 15.0, True)
     _draw_left_status(
         draw_data,
         screen,

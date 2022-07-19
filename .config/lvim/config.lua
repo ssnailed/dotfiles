@@ -10,12 +10,12 @@ lvim.builtin.alpha.mode                   = "dashboard"
 lvim.builtin.terminal.active              = true
 lvim.builtin.nvimtree.active              = false
 lvim.builtin.treesitter.highlight.enabled = true
-lvim.lsp.automatic_servers_installation   = true
+lvim.lsp.automatic_servers_installation   = false
 vim.g.NERDTreeHijackNetrw                 = 0
 vim.g.lf_replace_netrw                    = 1
 vim.opt.foldmethod                        = "expr"
 vim.opt.foldexpr                          = "nvim_treesitter#foldexpr()"
-
+lvim.format_on_save                       = false
 
 local formatters = require "lvim.lsp.null-ls.formatters"
 formatters.setup {
@@ -98,8 +98,9 @@ lvim.plugins = {
 -- keymappings [view all the defaults by pressing <leader>Lk]
 lvim.leader = "space"
 lvim.keys.insert_mode = {
-  ["<c-s>"] = "<ESC>:w<CR>i<Right>",
-  ["<c-q>"] = "<ESC>:bd<CR>",
+  ["<C-S>"] = "<ESC>:w<CR>a",
+  ["<C-Q>"] = "<ESC>:bd<CR>",
+  ["<C-BS>"] = "<C-W>"
 }
 lvim.keys.normal_mode = {
   ["<c-s>"] = ":w<CR>",
