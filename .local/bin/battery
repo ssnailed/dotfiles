@@ -31,22 +31,24 @@ def get_battery():
     #     return ret + PLUGGED_ICONS[min(PLUGGED_ICONS.keys(), key=lambda x: abs(x - battery.percent))]
     # return ret + UNPLUGGED_ICONS[min(UNPLUGGED_ICONS.keys(), key=lambda x: abs(x - battery.percent))]
     battery = psutil.sensors_battery()
-    ret = str(round(battery.percent)) + "% "
-    if not battery:
-        return ret + UNKOWN_ICON
-    if battery.power_plugged:
+    try:
+        ret = str(round(battery.percent)) + "% "
+        if not battery:
+            return ret + UNKOWN_ICON
+        if battery.power_plugged:
+            return (
+                ret
+                + PLUGGED_ICONS[
+                    min(PLUGGED_ICONS.keys(), key=lambda x: abs(x * 10 - battery.percent))
+                ]
+            )
         return (
             ret
-            + PLUGGED_ICONS[
-                min(PLUGGED_ICONS.keys(), key=lambda x: abs(x * 10 - battery.percent))
+            + UNPLUGGED_ICONS[
+                min(UNPLUGGED_ICONS.keys(), key=lambda x: abs(x * 10 - battery.percent))
             ]
         )
-    return (
-        ret
-        + UNPLUGGED_ICONS[
-            min(UNPLUGGED_ICONS.keys(), key=lambda x: abs(x * 10 - battery.percent))
-        ]
-    )
-
+    except AttributeError:
+        return ""
 
 print(get_battery())
