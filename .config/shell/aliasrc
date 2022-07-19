@@ -6,6 +6,10 @@
 # Use $XINITRC variable if file exists.
 [ -f "$XINITRC" ] && alias startx="startx $XINITRC"
 
+# fix ssh if using kitty as terminal
+[ "$TERM" = "xterm-kitty" ] && alias ssh="kitty +kitten ssh"
+
+
 # sudo not required for some system commands
 for command in mount umount sv pacman updatedb su shutdown poweroff reboot ; do
 	alias $command="sudo $command"
@@ -51,4 +55,3 @@ alias \
 	weath="less -S ${XDG_DATA_HOME:-$HOME/.local/share}/weatherreport" \
 	remvirt="virt-manager -c 'qemu+ssh://luca@192.168.178.200/system'" \
 	vim="lvim" \
-  ssh="kitty +kitten ssh"
