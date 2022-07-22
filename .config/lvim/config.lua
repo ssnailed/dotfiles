@@ -17,6 +17,10 @@ vim.opt.foldmethod                        = "expr"
 vim.opt.foldexpr                          = "nvim_treesitter#foldexpr()"
 lvim.format_on_save                       = false
 
+vim.g.vimwiki_ext2syntax = { ['.Rmd'] = 'markdown', ['.rmd'] = 'markdown', ['.md'] = 'markdown',
+  ['.markdown'] = 'markdown', ['.mdown'] = 'markdown' }
+vim.g.vimwiki_list = { { ['path'] = '~/Documents/vimwiki', ['syntax'] = 'markdown', ['ext'] = '.md' } }
+
 local formatters = require "lvim.lsp.null-ls.formatters"
 formatters.setup {
   { command = "black", filetypes = { "python" } },
@@ -82,9 +86,9 @@ lvim.plugins = {
   },
   { "folke/todo-comments.nvim",
     event = "BufRead",
-    config = function()
-      require("todo-comments").setup()
-    end,
+    -- config = function()
+    --   require("todo-comments").setup()
+    -- end,
   },
   { "felipec/vim-sanegx",
     event = "BufRead",
