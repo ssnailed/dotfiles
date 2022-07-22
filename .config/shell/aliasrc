@@ -1,14 +1,7 @@
 #!/bin/sh
 
-# Use neovim for vim if present.
-[ -x "$(command -v nvim)" ] && alias vim="nvim" vimdiff="nvim -d"
-
 # Use $XINITRC variable if file exists.
 [ -f "$XINITRC" ] && alias startx="startx $XINITRC"
-
-# fix ssh if using kitty as terminal
-[ "$TERM" = "xterm-kitty" ] && alias ssh="kitty +kitten ssh"
-
 
 # sudo not required for some system commands
 for command in mount umount sv pacman updatedb su shutdown poweroff reboot ; do
@@ -24,7 +17,7 @@ alias \
 	mkd="mkdir -pv" \
 	ffmpeg="ffmpeg -hide_banner" \
 	exa="exa -abghHliS" \
-	claws="claws-mail --alternate-config-dir $CLAWSRC" \
+  duf="duf -all" \
 	lock='slock -m "$(cowsay "$(fortune)" | lolcat -ft)"'
 
 # Colorize commands when possible.
@@ -37,21 +30,14 @@ alias \
 # These common commands are just too long! Abbreviate them.
 alias \
 	ka="killall" \
-	g="git" \
-	trem="transmission-remote" \
-	YT="youtube-viewer" \
-	sdn="shutdown -h now" \
-	e="$EDITOR" \
-	v="$EDITOR" \
-	p="pacman" \
-	xi="sudo xbps-install" \
-	xr="sudo xbps-remove -R" \
-	xq="xbps-query" \
-	z="zathura"
+  e="$EDITOR" \
+	p="pacman"
+
 # Misc.
 alias \
-	magit="nvim -c MagitOnly" \
 	ref="shortcuts >/dev/null; source ${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc ; source ${XDG_CONFIG_HOME:-$HOME/.config}/shell/zshnameddirrc" \
 	weath="less -S ${XDG_DATA_HOME:-$HOME/.local/share}/weatherreport" \
 	remvirt="virt-manager -c 'qemu+ssh://luca@192.168.178.200/system'" \
 	vim="lvim" \
+  wikidown='rclone sync cloud:files/luca/Notes ~/Documents/vimwiki' \
+  wikiup='rclone sync ~/Documents/vimwiki cloud:files/luca/Notes'
