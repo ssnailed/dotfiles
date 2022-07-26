@@ -3,6 +3,7 @@ from kitty.boss import get_boss
 from kitty.fast_data_types import Screen, add_timer, get_options
 from kitty.tab_bar import (
     DrawData,
+    ExtraData,
     Formatter,
     TabBarData,
     as_rgb,
@@ -172,6 +173,7 @@ def draw_tab(
     max_title_length: int,
     index: int,
     is_last: bool,
+    _: ExtraData,
 ) -> int:
     global timer_id
     if timer_id is None:
