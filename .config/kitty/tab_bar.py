@@ -134,6 +134,7 @@ def get_battery_cells() -> list:
         with open("/sys/class/power_supply/BAT0/capacity", "r") as f:
             percent = int(f.read())
         if status == "Discharging\n":
+            # TODO: declare the lambda once and don't repeat the code
             icon_color = UNPLUGGED_COLORS[
                 min(UNPLUGGED_COLORS.keys(), key=lambda x: abs(x - percent))
             ]
