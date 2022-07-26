@@ -1,10 +1,10 @@
-# pyright: reportMissingImports=false
 from datetime import datetime
+import time
 import subprocess
 import os
 
 from kitty.boss import get_boss
-from kitty.fast_data_types import Screen, add_timer
+from kitty.fast_data_types import Screen, add_timer, get_options
 from kitty.tab_bar import (
     DrawData,
     ExtraData,
@@ -17,6 +17,54 @@ from kitty.tab_bar import (
 from kitty.utils import color_as_int
 
 RIGHT_MARGIN = 1
+REFRESH_TIME = 1
+opts = get_options()
+icon_fg = as_rgb(color_as_int(opts.color16))
+icon_bg = as_rgb(color_as_int(opts.color8))
+bat_text_color = as_rgb(color_as_int(opts.color15))
+clock_color = as_rgb(color_as_int(opts.color15))
+date_color = as_rgb(color_as_int(opts.color8))
+UNPLUGGED_ICONS = {
+    10: "",
+    20: "",
+    30: "",
+    40: "",
+    50: "",
+    60: "",
+    70: "",
+    80: "",
+    90: "",
+    100: "",
+}
+PLUGGED_ICONS = {
+    1: "",
+}
+UNPLUGGED_COLORS = {
+    15: as_rgb(color_as_int(opts.color1)),
+    16: as_rgb(color_as_int(opts.color15)),
+}
+PLUGGED_COLORS = {
+    15: as_rgb(color_as_int(opts.color1)),
+    16: as_rgb(color_as_int(opts.color6)),
+    99: as_rgb(color_as_int(opts.color6)),
+    100: as_rgb(color_as_int(opts.color2)),
+}
+
+
+def _draw_icon(
+    screen: Screen, index: int, symbol: str, fg_color: int, bg_color: int
+) -> int:
+    if index != 1:
+        return 0
+
+    fg, bg = screen.cursor.fg, screen.cursor.bg
+    screen.cursor.fg = fg_color
+    screen.cursor.bg = bg_color
+    screen.draw(symbol)
+    screen.cursor.fg, screen.cursor.bg = fg, bg
+    screen.cursor.x = len(symbol)
+    return screen.cursor.x
+
 
 def _draw_left_status(
     draw_data: DrawData,
@@ -28,7 +76,6 @@ def _draw_left_status(
     is_last: bool,
     extra_data: ExtraData,
 ) -> int:
-    print(extra_data)
     if draw_data.leading_spaces:
         screen.draw(" " * draw_data.leading_spaces)
 
@@ -51,25 +98,17 @@ def _draw_left_status(
     return end
 
 
-def _draw_right_status(draw_data: DrawData, screen: Screen, is_last: bool) -> int:
+def _draw_right_status(
+    draw_data: DrawData, screen: Screen, is_last: bool, cells: list
+) -> int:
     if not is_last:
         return 0
 
     draw_attributed_string(Formatter.reset, screen)
-    time = datetime.now().strftime(" %H:%M")
-    date = datetime.now().strftime(" %d.%m.%Y")
-    # TODO: Figure out how to import psutils so I don't have to call a separate script
-    bat = subprocess.getoutput(os.path.expandvars("~/.local/bin/battery")) 
-   
-    cells = [
-        (draw_data.active_fg, bat),
-        (draw_data.active_fg, time),
-        (draw_data.inactive_fg, date),
-    ]
 
     right_status_length = RIGHT_MARGIN
     for i in cells:
-        right_status_length += (len(str(i[1])))
+        right_status_length += len(str(i[1]))
 
     draw_spaces = screen.columns - screen.cursor.x - right_status_length
     if draw_spaces > 0:
@@ -77,7 +116,7 @@ def _draw_right_status(draw_data: DrawData, screen: Screen, is_last: bool) -> in
 
     screen.cursor.fg = 0
     for color, status in cells:
-        screen.cursor.fg = as_rgb(color_as_int(color))
+        screen.cursor.fg = color
         screen.draw(status)
     screen.cursor.bg = 0
 
@@ -87,10 +126,45 @@ def _draw_right_status(draw_data: DrawData, screen: Screen, is_last: bool) -> in
     return screen.cursor.x
 
 
-def _redraw_tab_bar():
+def _redraw_tab_bar(_):
     tm = get_boss().active_tab_manager
     if tm is not None:
         tm.mark_tab_bar_dirty()
+
+
+def get_battery_cells() -> list:
+    try:
+        with open("/sys/class/power_supply/BAT0/status", "r") as f:
+            status = f.read()
+        with open("/sys/class/power_supply/BAT0/capacity", "r") as f:
+            percent = int(f.read())
+        if status == "Discharging\n":
+            icon_color = UNPLUGGED_COLORS[
+                min(UNPLUGGED_COLORS.keys(), key=lambda x: abs(x - percent))
+            ]
+            icon = UNPLUGGED_ICONS[
+                min(UNPLUGGED_ICONS.keys(), key=lambda x: abs(x - percent))
+            ]
+        elif status == "Not charging\n":
+            icon_color = UNPLUGGED_COLORS[
+                min(UNPLUGGED_COLORS.keys(), key=lambda x: abs(x - percent))
+            ]
+            icon = PLUGGED_ICONS[
+                min(PLUGGED_ICONS.keys(), key=lambda x: abs(x - percent))
+            ]
+        else:
+            icon_color = PLUGGED_COLORS[
+                min(PLUGGED_COLORS.keys(), key=lambda x: abs(x - percent))
+            ]
+            icon = PLUGGED_ICONS[
+                min(PLUGGED_ICONS.keys(), key=lambda x: abs(x - percent))
+            ]
+
+        percent_cell = (bat_text_color, str(percent) + "% ")
+        icon_cell = (icon_color, icon)
+        return [percent_cell, icon_cell]
+    except FileNotFoundError:
+        return []
 
 
 timer_id = None
@@ -106,9 +180,18 @@ def draw_tab(
     is_last: bool,
     extra_data: ExtraData,
 ) -> int:
+    runtime = time.perf_counter()
     global timer_id
     if timer_id is None:
-        timer_id = add_timer(_redraw_tab_bar, 15.0, True)
+        timer_id = add_timer(_redraw_tab_bar, REFRESH_TIME, True)
+    icon = "  "
+    clock = datetime.now().strftime(" %H:%M")
+    date = datetime.now().strftime(" %d.%m.%Y")
+    cells = get_battery_cells()
+    cells.append((clock_color, clock))
+    cells.append((date_color, date))
+
+    _draw_icon(screen, index, icon, icon_fg, icon_bg)
     _draw_left_status(
         draw_data,
         screen,
@@ -123,6 +206,7 @@ def draw_tab(
         draw_data,
         screen,
         is_last,
+        cells,
     )
 
     return screen.cursor.x
