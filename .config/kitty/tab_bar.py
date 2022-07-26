@@ -1,13 +1,8 @@
 from datetime import datetime
-import time
-import subprocess
-import os
-
 from kitty.boss import get_boss
 from kitty.fast_data_types import Screen, add_timer, get_options
 from kitty.tab_bar import (
     DrawData,
-    ExtraData,
     Formatter,
     TabBarData,
     as_rgb,
@@ -18,6 +13,8 @@ from kitty.utils import color_as_int
 
 RIGHT_MARGIN = 1
 REFRESH_TIME = 1
+ICON = "  "
+
 opts = get_options()
 icon_fg = as_rgb(color_as_int(opts.color16))
 icon_bg = as_rgb(color_as_int(opts.color8))
@@ -51,18 +48,16 @@ PLUGGED_COLORS = {
 }
 
 
-def _draw_icon(
-    screen: Screen, index: int, symbol: str, fg_color: int, bg_color: int
-) -> int:
+def _draw_icon(screen: Screen, index: int) -> int:
     if index != 1:
         return 0
 
     fg, bg = screen.cursor.fg, screen.cursor.bg
-    screen.cursor.fg = fg_color
-    screen.cursor.bg = bg_color
-    screen.draw(symbol)
+    screen.cursor.fg = icon_fg
+    screen.cursor.bg = icon_bg
+    screen.draw(ICON)
     screen.cursor.fg, screen.cursor.bg = fg, bg
-    screen.cursor.x = len(symbol)
+    screen.cursor.x = len(ICON)
     return screen.cursor.x
 
 
@@ -74,7 +69,6 @@ def _draw_left_status(
     max_title_length: int,
     index: int,
     is_last: bool,
-    extra_data: ExtraData,
 ) -> int:
     if draw_data.leading_spaces:
         screen.draw(" " * draw_data.leading_spaces)
@@ -99,7 +93,7 @@ def _draw_left_status(
 
 
 def _draw_right_status(
-    draw_data: DrawData, screen: Screen, is_last: bool, cells: list
+    screen: Screen, is_last: bool, cells: list
 ) -> int:
     if not is_last:
         return 0
@@ -178,20 +172,17 @@ def draw_tab(
     max_title_length: int,
     index: int,
     is_last: bool,
-    extra_data: ExtraData,
 ) -> int:
-    runtime = time.perf_counter()
     global timer_id
     if timer_id is None:
         timer_id = add_timer(_redraw_tab_bar, REFRESH_TIME, True)
-    icon = "  "
     clock = datetime.now().strftime(" %H:%M")
     date = datetime.now().strftime(" %d.%m.%Y")
     cells = get_battery_cells()
     cells.append((clock_color, clock))
     cells.append((date_color, date))
 
-    _draw_icon(screen, index, icon, icon_fg, icon_bg)
+    _draw_icon(screen, index)
     _draw_left_status(
         draw_data,
         screen,
@@ -200,10 +191,8 @@ def draw_tab(
         max_title_length,
         index,
         is_last,
-        extra_data,
     )
     _draw_right_status(
-        draw_data,
         screen,
         is_last,
         cells,
