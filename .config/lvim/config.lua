@@ -86,9 +86,9 @@ lvim.plugins = {
   },
   { "folke/todo-comments.nvim",
     event = "BufRead",
-    -- config = function()
-    --   require("todo-comments").setup()
-    -- end,
+    config = function()
+      require("todo-comments").setup {}
+    end,
   },
   { "felipec/vim-sanegx",
     event = "BufRead",
