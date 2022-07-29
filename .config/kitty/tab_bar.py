@@ -1,4 +1,6 @@
 # pyright: reportMissingImports=false
+import os
+from pprint import pprint
 from datetime import datetime
 from kitty.boss import get_boss
 from kitty.fast_data_types import Screen, add_timer, get_options
@@ -72,6 +74,8 @@ def _draw_left_status(
     is_last: bool,
     extra_data: ExtraData,
 ) -> int:
+    if screen.cursor.x >= screen.columns - right_status_length:
+        return screen.cursor.x
     tab_bg = screen.cursor.bg
     tab_fg = screen.cursor.fg
     default_bg = as_rgb(int(draw_data.default_bg))
@@ -83,12 +87,11 @@ def _draw_left_status(
         needs_soft_separator = False
     if screen.cursor.x <= len(ICON):
         screen.cursor.x = len(ICON)
-        screen.cursor.bg = tab_bg
-        screen.draw(" ")
-    elif screen.cursor.x >= screen.columns - right_status_length:
-        return screen.cursor.x
     screen.draw(" ")
     screen.cursor.bg = tab_bg
+    if tab.title.rindex(tab.title[-1]) + 1 > 15:
+        title = f'{os.path.splitext(tab.title)[0][:14-len(os.path.splitext(tab.title))]}…{os.path.splitext(tab.title)[1]}'
+        tab = TabBarData(title, tab.is_active, tab.needs_attention, tab.num_windows, tab.num_window_groups, tab.layout_name, tab.has_activity_since_last_focus, tab.active_fg, tab.active_bg, tab.inactive_fg, tab.inactive_bg)
     draw_title(draw_data, screen, tab, index)
     if not needs_soft_separator:
         screen.draw(" ")
@@ -106,8 +109,7 @@ def _draw_left_status(
                 screen.cursor.fg = default_bg
         screen.draw(" " + SOFT_SEPARATOR_SYMBOL)
         screen.cursor.fg = prev_fg
-    end = screen.cursor.x
-    return end
+    return screen.cursor.x
 
 
 def _draw_right_status(screen: Screen, is_last: bool, cells: list) -> int:
