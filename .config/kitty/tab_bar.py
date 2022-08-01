@@ -89,9 +89,9 @@ def _draw_left_status(
         screen.cursor.x = len(ICON)
     screen.draw(" ")
     screen.cursor.bg = tab_bg
-    if tab.title.rindex(tab.title[-1]) + 1 > 15:
-        title = f'{os.path.splitext(tab.title)[0][:14-len(os.path.splitext(tab.title))]}…{os.path.splitext(tab.title)[1]}'
-        tab = TabBarData(title, tab.is_active, tab.needs_attention, tab.num_windows, tab.num_window_groups, tab.layout_name, tab.has_activity_since_last_focus, tab.active_fg, tab.active_bg, tab.inactive_fg, tab.inactive_bg)
+    # if tab.title.rindex(tab.title[-1]) + 1 > 15:
+    #     title = f'{os.path.splitext(tab.title)[0][:14-len(os.path.splitext(tab.title))]}…{os.path.splitext(tab.title)[1]}'
+    #     tab = TabBarData(title, tab.is_active, tab.needs_attention, tab.num_windows, tab.num_window_groups, tab.layout_name, tab.has_activity_since_last_focus, tab.active_fg, tab.active_bg, tab.inactive_fg, tab.inactive_bg)
     draw_title(draw_data, screen, tab, index)
     if not needs_soft_separator:
         screen.draw(" ")
