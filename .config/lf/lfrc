@@ -70,7 +70,6 @@ cmd trash ${{
 	[ $ans = "y" ] && trash-put $fx
 }}
 
-
 cmd moveto ${{
 	clear; tput cup $(($(tput lines)/3)); tput bold
 	set -f
@@ -94,13 +93,13 @@ cmd copyto ${{
 }}
 
 cmd rsyncto ${{
-        clear; tput cup $(($(tput lines)/3)); tput bold
-        set -f
-        clear; echo "rsync to where?"
-        read dest
-        for x in $fx; do
-                eval rsync -aAXHv \"$x\" \"$dest\"
-        done &&
+  clear; tput cup $(($(tput lines)/3)); tput bold
+  set -f
+  clear; echo "rsync to where?"
+  read dest
+  for x in $fx; do
+          eval rsync -aAXHv \"$x\" \"$dest\"
+  done &&
 	notify-send "File(s) rsynced." "File(s) copies to $dest."
 }}
 
