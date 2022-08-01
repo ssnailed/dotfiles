@@ -22,6 +22,9 @@ compinit
 _comp_options+=(globdots)		# Include hidden files.
 
 # vi mode
+autoload -Uz edit-command-line
+zle -N edit-command-line
+bindkey -M vicmd v edit-command-line
 bindkey -v
 export KEYTIMEOUT=1
 
@@ -33,7 +36,9 @@ bindkey -M menuselect 'j' vi-down-line-or-history
 bindkey -v '^?' backward-delete-char
 bindkey '^[[P' delete-char
 bindkey "^[[H" beginning-of-line
-bindkey "^[[4~" end-of-line
+bindkey '^[[F' end-of-line
+bindkey '^[[1;5C' forward-word
+bindkey '^[[1;5D' backward-word 
 
 # Change cursor shape for different vi modes.
 function zle-keymap-select () {
@@ -69,16 +74,17 @@ lfcd () {
     if [ -f "$tmp" ]; then
         dir="$(cat "$tmp")"
         command rm -f "$tmp"
-        [ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir" && zle -I
+        [ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir"
     fi
+    tput cuu1;tput el
 }
-zle -N lfcd{,}
-bindkey '^o' lfcd
 
-bindkey -s '^a' 'bc -lq\n'
-
-bindkey -s '^f' 'cd "$(dirname "$(fzf)")"\n'
-
+_lfcd () {
+  BUFFER="lfcd"
+  zle accept-line
+}
+zle -N _lfcd
+bindkey '^o' _lfcd
 
 # Edit line in vim with ctrl-e:
 autoload edit-command-line; zle -N edit-command-line
