@@ -1,8 +1,8 @@
 # Enable colors and change prompt:
 autoload -U colors && colors	# Load colors
-PS1="%{$fg[cyan]%}%n%{$reset_color%}@%{$fg[blue]%}%m %{$reset_color%}[%{$fg[magenta]%}%3~%{$reset_color%}] %{$fg[green]%}»%{$reset_color%} "
+PS1="%B%{${fg[magenta]}%}[%{${fg[blue]}%}%3~%{${fg[magenta]}%}]%b %{${fg[green]}%}»%{${reset_color}%} "
 stty stop undef		# Disable ctrl-s to freeze terminal.
-setopt interactive_comments histignorealldups
+setopt HIST_IGNORE_ALL_DUPS HIST_REDUCE_BLANKS HIST_VERIFY BANG_HIST interactive_comments autocd
 
 # History in cache directory:
 HISTSIZE=10000000
@@ -54,14 +54,26 @@ preexec() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt.
 # Use lf to switch directories and bind it to ctrl-o
 lfcd () {
     tmp="$(mktemp)"
-    lf -last-dir-path="$tmp" "$@"
+    fid="$(mktemp)"
+    lf -command '$printf $id > '"$fid"'' -last-dir-path="$tmp" "$@"
+    id="$(cat "$fid")"
+    archivemount_dir="/tmp/__lf_archivemount_$id"
+    if [ -f "$archivemount_dir" ]; then
+        cat "$archivemount_dir" | \
+            while read -r line; do
+                sudo umount "$line"
+                rmdir "$line"
+            done
+        command rm -f "$archivemount_dir"
+    fi
     if [ -f "$tmp" ]; then
         dir="$(cat "$tmp")"
-        rm -f "$tmp" >/dev/null
-        [ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir"
+        command rm -f "$tmp"
+        [ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir" && zle -I
     fi
 }
-bindkey -s '^o' 'lfcd\n'
+zle -N lfcd{,}
+bindkey '^o' lfcd
 
 bindkey -s '^a' 'bc -lq\n'
 
