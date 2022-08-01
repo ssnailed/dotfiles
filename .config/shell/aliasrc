@@ -4,7 +4,7 @@
 [ -f "$XINITRC" ] && alias startx="startx $XINITRC"
 
 # sudo not required for some system commands
-for command in mount umount sv pacman updatedb su shutdown poweroff reboot ; do
+for command in mount umount sv pacman apt updatedb su shutdown poweroff reboot ; do
 	alias $command="sudo $command"
 done; unset command
 
@@ -18,20 +18,29 @@ alias \
 	ffmpeg="ffmpeg -hide_banner" \
 	exa="exa -abghHliS" \
   duf="duf -all" \
-	lock='slock -m "$(cowsay "$(fortune)" | lolcat -ft)"'
+	lock='slock -m "$(cowsay "$(fortune)" | lolcat -ft)"' \
+  ls="ls -hN --color=auto --group-directories-first" \
+	grep="grep --color=auto" \
+	diff="diff --color=auto" \
+
 
 # Colorize commands when possible.
 alias \
 	ls="ls -hN --color=auto --group-directories-first" \
 	grep="grep --color=auto" \
 	diff="diff --color=auto" \
-	ccat="highlight --out-format=ansi"
+	ccat="highlight --out-format=ansi" \
+  ip="ip -color=auto"
 
 # These common commands are just too long! Abbreviate them.
 alias \
 	ka="killall" \
   e="$EDITOR" \
-	p="pacman"
+  z="zathura" \
+	p="pacman" \
+  au="apt uninstall" \
+  ar="apt reinstall" \
+  ai="apt install" \
 
 # Misc.
 alias \

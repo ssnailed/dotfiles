@@ -1,4 +1,3 @@
-hash -d tr=/home/luca/.local/share 
 hash -d cac=/home/luca/.cache 
 hash -d cf=/home/luca/.config 
 hash -d D=/home/luca/Downloads 
@@ -17,7 +16,7 @@ hash -d bd=/home/luca/.config/shell/bm-dirs
 hash -d cfx=/home/luca/.config/x11/xresources 
 hash -d cfb=~/.local/src/dwmblocks/config.h 
 hash -d cfv=/home/luca/.config/nvim/init.vim 
-hash -d cfz=/home/luca/.config/zsh/.zshrc 
+hash -d cfz=/.zshrc 
 hash -d cfa=/home/luca/.config/shell/aliasrc 
 hash -d cfp=/home/luca/.config/shell/profile 
 hash -d cfm=/home/luca/.config/mutt/muttrc 
