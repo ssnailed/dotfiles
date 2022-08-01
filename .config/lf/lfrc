@@ -1,6 +1,5 @@
-set ratios 1:2:4
-
 # Basic vars
+set ratios 1:2:4
 set shellopts '-eu'
 set ifs "\n"
 set scrolloff 10
@@ -135,7 +134,11 @@ cmd git_branch ${{
     lf -remote "send $id cd \"$pwd_shell\""
 }}
 
+
+
 cmd on-cd &{{
+    DIR=$(echo $PWD | sed "s|$HOME|~|")
+    printf "\033]0;  $DIR\007" > /dev/tty
     # display git repository status in your prompt
     source /usr/share/git/completion/git-prompt.sh
     GIT_PS1_SHOWDIRTYSTATE=auto
@@ -146,6 +149,13 @@ cmd on-cd &{{
     git=$(__git_ps1 " [GIT BRANCH:> %s]") || true
     fmt="\033[32;1m%u@%h\033[0m:\033[34;1m%w\033[0m\033[33;1m$git\033[0m"
     lf -remote "send $id set promptfmt \"$fmt\""
+}}
+# run at startup
+on-cd
+
+cmd on-quit ${{
+    DIR=$(echo $PWD | sed "s|$HOME|~|")
+    printf "\033]0; $DIR\007" > /dev/tty
 }}
 
 cmd paste &{{
