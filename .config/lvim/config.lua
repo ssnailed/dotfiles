@@ -16,6 +16,7 @@ vim.g.lf_replace_netrw                    = 1
 vim.opt.foldmethod                        = "expr"
 vim.opt.foldexpr                          = "nvim_treesitter#foldexpr()"
 lvim.format_on_save                       = false
+lvim.line_wrap_cursor_movement            = false
 
 vim.g.vimwiki_ext2syntax = { ['.Rmd'] = 'markdown', ['.rmd'] = 'markdown', ['.md'] = 'markdown',
   ['.markdown'] = 'markdown', ['.mdown'] = 'markdown' }
@@ -99,33 +100,47 @@ lvim.plugins = {
   { "vimwiki/vimwiki" }
 }
 
+-- Functions for keymapping
+function Custom_Close()
+  local num_bufs = #vim.tbl_filter(
+    function(buf)
+      return vim.api.nvim_buf_is_valid(buf) and vim.api.nvim_buf_get_option(buf, 'buflisted')
+    end,
+    vim.api.nvim_list_bufs()
+  )
+  if num_bufs <= 1 then
+    vim.cmd("quit")
+  end
+  vim.api.nvim_buf_delete(0, {})
+end
+
 -- keymappings [view all the defaults by pressing <leader>Lk]
 lvim.leader = "space"
 lvim.keys.insert_mode = {
   ["<C-S>"] = "<ESC>:w<CR>a",
-  ["<C-Q>"] = "<ESC>:bd<CR>",
+  ["<C-Q>"] = "<ESC>:lua Custom_Close()<CR>",
   ["<C-BS>"] = "<C-W>"
 }
 lvim.keys.normal_mode = {
   ["<c-s>"] = ":w<CR>",
-  ["<c-q>"] = ":bd<CR>",
+  ["<c-q>"] = ":lua Custom_Close()<CR>",
   ["<C-Right>"] = ":bn<CR>",
   ["<C-Left>"] = ":bp<CR>"
 }
 lvim.keys.term_mode = {
-  ["<c-q>"] = ":bd<CR>",
+  ["<c-q>"] = ":lua Custom_Close()<CR>",
   ["<C-Right>"] = ":bn<CR>",
   ["<C-Left>"] = ":bp<CR>"
 }
 lvim.keys.visual_mode = {
   ["<c-s>"] = "<ESC>:w<CR>",
-  ["<c-q>"] = "<ESC>:bd<CR>",
+  ["<c-q>"] = "<ESC>:lua Custom_Close()<CR>",
   ["<"] = "<gv",
   [">"] = ">gv",
 }
 lvim.keys.visual_block_mode = {
   ["<c-s>"] = "<ESC>:w<CR>",
-  ["<c-q>"] = "<ESC>:bd<CR>",
+  ["<c-q>"] = "<ESC>:lua Custom_Close()<CR>",
   ["K"] = ":move '<-2<CR>gv-gv",
   ["J"] = ":move '>+1<CR>gv-gv",
 }
