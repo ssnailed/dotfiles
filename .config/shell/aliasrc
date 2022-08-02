@@ -41,6 +41,8 @@ alias \
   au="apt uninstall" \
   ar="apt reinstall" \
   ai="apt install" \
+  aur="apt autoremove" \
+  kssh="kitty +kitten ssh"
 
 # Misc.
 alias \
