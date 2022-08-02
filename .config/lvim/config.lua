@@ -22,6 +22,23 @@ vim.g.vimwiki_ext2syntax = { ['.Rmd'] = 'markdown', ['.rmd'] = 'markdown', ['.md
   ['.markdown'] = 'markdown', ['.mdown'] = 'markdown' }
 vim.g.vimwiki_list = { { ['path'] = '~/Documents/vimwiki', ['syntax'] = 'markdown', ['ext'] = '.md' } }
 
+-- Completion settings
+lvim.builtin.cmp.completion.keyword_length = 3
+-- lvim.builtin.cmp.completion.autocomplete = false
+lvim.builtin.cmp.sources = {
+  { name = "nvim_lsp" },
+  { name = "path" },
+  { name = "luasnip" },
+  { name = "cmp_tabnine" },
+  { name = "nvim_lua" },
+  { name = "buffer" },
+  { name = "calc" },
+  { name = "emoji" },
+  { name = "treesitter" },
+  { name = "crates" },
+  { name = "tmux" },
+}
+
 local formatters = require "lvim.lsp.null-ls.formatters"
 formatters.setup {
   { command = "black", filetypes = { "python" } },
@@ -120,8 +137,6 @@ lvim.keys.insert_mode = {
   ["<C-S>"] = "<ESC>:w<CR>a",
   ["<C-Q>"] = "<ESC>:lua Custom_Close()<CR>",
   ["<C-BS>"] = "<C-W>",
-  ["<S-Up>"] = "<ESC><C-U>a",
-  ["<S-Down>"] = "<ESC><C-D>a"
 }
 lvim.keys.normal_mode = {
   ["<c-s>"] = ":w<CR>",
