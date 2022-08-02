@@ -90,7 +90,8 @@ bindkey '^o' _lfcd
 autoload edit-command-line; zle -N edit-command-line
 bindkey '^e' edit-command-line
 
-[ -f /usr/share/fzf/key-bindings.zsh ] && source /usr/share/fzf/key-bindings.zsh
+PLUGINS_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/zsh/plugins"
+[ -f "$PLUGINS_HOME/fzf/key-bindings.zsh" ]                                         && source "$PLUGINS_HOME/fzf/key-bindings.zsh"
+[ -f "$PLUGINS_HOME/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh" ] && source "$PLUGINS_HOME/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
+[ -f "$PLUGINS_HOME/autopyenv/autopyenv.plugin.zsh" ]                               && source "$PLUGINS_HOME/autopyenv/autopyenv.plugin.zsh"
 
-# Load syntax highlighting; should be last.
-source /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh 2>/dev/null
