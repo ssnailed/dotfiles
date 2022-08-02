@@ -100,7 +100,7 @@ lvim.plugins = {
   { "vimwiki/vimwiki" }
 }
 
--- Functions for keymapping
+-- Functions for keymappings
 function Custom_Close()
   local num_bufs = #vim.tbl_filter(
     function(buf)
@@ -119,13 +119,17 @@ lvim.leader = "space"
 lvim.keys.insert_mode = {
   ["<C-S>"] = "<ESC>:w<CR>a",
   ["<C-Q>"] = "<ESC>:lua Custom_Close()<CR>",
-  ["<C-BS>"] = "<C-W>"
+  ["<C-BS>"] = "<C-W>",
+  ["<S-Up>"] = "<ESC><C-U>a",
+  ["<S-Down>"] = "<ESC><C-D>a"
 }
 lvim.keys.normal_mode = {
   ["<c-s>"] = ":w<CR>",
   ["<c-q>"] = ":lua Custom_Close()<CR>",
   ["<C-Right>"] = ":bn<CR>",
-  ["<C-Left>"] = ":bp<CR>"
+  ["<C-Left>"] = ":bp<CR>",
+  ["<S-Up>"] = "<C-U>",
+  ["<S-Down>"] = "<C-D>"
 }
 lvim.keys.term_mode = {
   ["<c-q>"] = ":lua Custom_Close()<CR>",
@@ -137,12 +141,16 @@ lvim.keys.visual_mode = {
   ["<c-q>"] = "<ESC>:lua Custom_Close()<CR>",
   ["<"] = "<gv",
   [">"] = ">gv",
+  ["<S-Up>"] = "<C-U>",
+  ["<S-Down>"] = "<C-D>"
 }
 lvim.keys.visual_block_mode = {
   ["<c-s>"] = "<ESC>:w<CR>",
   ["<c-q>"] = "<ESC>:lua Custom_Close()<CR>",
   ["K"] = ":move '<-2<CR>gv-gv",
   ["J"] = ":move '>+1<CR>gv-gv",
+  ["<S-Up>"] = "<C-U>",
+  ["<S-Down>"] = "<C-D>"
 }
 
 
