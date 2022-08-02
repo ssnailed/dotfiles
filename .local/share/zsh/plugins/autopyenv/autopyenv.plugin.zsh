@@ -3,14 +3,14 @@ function chpwd_activate(){
   for pydir in $(ls $PYENV_DIR); do
     if [[ $(pwd|sed -e s@/@_@g) =~ "^$pydir" ]]; then
       if [ "x$VIRTUAL_ENV" != "x$PYENV_DIR/$pydir" ]; then
-        echo "Activating virtual env $pydir"
+        # echo "Activating virtual env $pydir"
         source "$PYENV_DIR/$pydir/bin/activate"
         return
       fi
     fi
   done
   if [ "x$VIRTUAL_ENV" != "x" ]; then
-    echo "Deactivating virtual env $VIRTUAL_ENV"
+    # echo "Deactivating virtual env $VIRTUAL_ENV"
     deactivate
   fi
 }
