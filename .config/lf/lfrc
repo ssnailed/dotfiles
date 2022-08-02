@@ -5,11 +5,9 @@ set ifs "\n"
 set scrolloff 10
 set icons
 set period 1
-set hiddenfiles ".*:*.aux:*.log:*.bbl:*.bcf:*.blg:*.run.xml"
+set hiddenfiles ".*"
 set previewer ~/.config/lf/preview
 set cleaner ~/.config/lf/clean
-# source directory shortcuts
-source "~/.config/lf/shortcutrc"
 
 cmd open ${{
   case $(file --mime-type "$(readlink -f $f)" -b) in
@@ -171,7 +169,7 @@ cmd share $curl -F"file=@$fx" https://0x0.snaile.de | xclip -selection c
 
 # Bindings
 map <c-f> $lf -remote "send $id select '$(fzf)'"
-map J $lf -remote "send $id cd $(sed -e 's/\s*#.*//' -e '/^$/d' -e 's/^\S*\s*//' ${XDG_CONFIG_HOME:-$HOME/.config}/shell/bm-dirs | fzf)"
+map J $dir=$(sed -e 's/\s*#.*//' -e '/^$/d' -e 's/^\S*\s*//' ${XDG_CONFIG_HOME:-$HOME/.config}/shell/bm-dirs | fzf) && lf -remote "send $id cd $(eval echo $dir)"
 map D trash
 map <c-d> delete
 map E extract
@@ -201,7 +199,7 @@ map <c-e> down
 map <c-y> up
 map V push :!$EDITOR<space>
 
-map gb :git_branch
-map gp ${{clear; git pull --rebase || true; echo "press ENTER"; read ENTER}}
-map gs ${{clear; git status; echo "press ENTER"; read ENTER}}
-map gl ${{clear; git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit}}
+map <c-g> $lazygit
+
+# source directory shortcuts
+source "~/.config/lf/shortcutrc"
