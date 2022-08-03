@@ -1,5 +1,5 @@
 #!/bin/sh
-
+# TODO: Rewrite this shit to connect to an external deluged
 transmission-remote -l | grep % |
 	sed " # The letters are for sorting and will not appear.
 	s/.*Stopped.*/A /;
