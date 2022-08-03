@@ -1,7 +1,7 @@
 PYENV_DIR="${PYENVS_HOME:-${XDG_DATA_HOME:-$HOME/.local/share}/pyenvs}"
 function chpwd_activate(){
   for pydir in $(ls $PYENV_DIR); do
-    if [[ $(pwd|sed -e s@/@_@g) =~ "^$pydir" ]]; then
+    if [[ $(pwd|sed -e s@/@_@g) =~ "^$pydir$" ]]; then
       if [ "x$VIRTUAL_ENV" != "x$PYENV_DIR/$pydir" ]; then
         # echo "Activating virtual env $pydir"
         source "$PYENV_DIR/$pydir/bin/activate"
