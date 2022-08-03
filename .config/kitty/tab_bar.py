@@ -1,6 +1,5 @@
 # pyright: reportMissingImports=false
-import os
-from pprint import pprint
+# from pprint import pprint
 from datetime import datetime
 from kitty.boss import get_boss
 from kitty.fast_data_types import Screen, add_timer, get_options
