@@ -1,16 +1,21 @@
 PYENV_DIR="${PYENVS_HOME:-${XDG_DATA_HOME:-$HOME/.local/share}/virtualenv}"
 function chpwd_activate(){
   [[ "$(pwd)" == "/" ]] && return 0
-  envdir=$(pwd|sed -e s@/@_@g|cut -c2-)
   for pydir in $(ls $PYENV_DIR); do
-    if [[ "$envdir" == "$pydir" ]]; then
+    if [[ "$(pwd|sed -e s@/@_@g|cut -c2-)" =~ "^$pydir$" ]]; then
       if [ "x$VIRTUAL_ENV" != "x$PYENV_DIR/$pydir" ]; then
+        export VIRTUAL_ENV_DISABLE_PROMPT=1
+        export PS1="  $PS1"
         source "$PYENV_DIR/$pydir/bin/activate"
         return
       fi
     fi
   done
-  [[ "x$VIRTUAL_ENV" != "x" ]] && deactivate
+  if [ "x$VIRTUAL_ENV" != "x" ]; then
+    unset VIRTUAL_ENV_DISABLE_PROMPT 
+    export PS1="${PS1:3}"
+    deactivate
+  fi
 }
 
 function venv-here(){
