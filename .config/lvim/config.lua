@@ -140,8 +140,10 @@ lvim.keys.insert_mode = {
 lvim.keys.normal_mode = {
   ["<c-s>"] = ":w<CR>",
   ["<c-q>"] = ":lua Custom_Close()<CR>",
-  ["<C-Right>"] = ":bn<CR>",
-  ["<C-Left>"] = ":bp<CR>",
+  ["<C-Right>"] = "W",
+  ["<C-Left>"] = "gE",
+  ["<C-.>"] = ":bn<CR>",
+  ["<C-,>"] = ":bp<CR>",
   ["<S-Up>"] = "<C-U>",
   ["<S-Down>"] = "<C-D>"
 }
