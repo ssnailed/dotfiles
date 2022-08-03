@@ -1,22 +1,21 @@
 PYENV_DIR="${PYENVS_HOME:-${XDG_DATA_HOME:-$HOME/.local/share}/virtualenv}"
 function chpwd_activate(){
+  [[ "$(pwd)" == "/" ]] && return 0
+  envdir=$(pwd|sed -e s@/@_@g|cut -c2-)
   for pydir in $(ls $PYENV_DIR); do
-    if [[ $(pwd|sed -e s@/@_@g) =~ "^$pydir$" ]]; then
+    if [[ "$envdir" == "$pydir" ]]; then
       if [ "x$VIRTUAL_ENV" != "x$PYENV_DIR/$pydir" ]; then
-        # echo "Activating virtual env $pydir"
         source "$PYENV_DIR/$pydir/bin/activate"
         return
       fi
     fi
   done
-  if [ "x$VIRTUAL_ENV" != "x" ]; then
-    # echo "Deactivating virtual env $VIRTUAL_ENV"
-    deactivate
-  fi
+  [[ "x$VIRTUAL_ENV" != "x" ]] && deactivate
 }
 
 function venv-here(){
-  envdir=$(pwd|sed -e s@/@_@g)
+  [[ "$(pwd)" == "/" ]] && echo "Cannot create venv at root" && return 1
+  [[ "$(pwd)" != "/" ]] && envdir=$(pwd|sed -e s@/@_@g|cut -c2-)
   if [ ! -e "$PYENV_DIR/${envdir}" ]; then
     echo "Creating python venv for ${envdir}.."
     mkdir "$PYENV_DIR" -p
