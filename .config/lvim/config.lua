@@ -18,13 +18,12 @@ vim.opt.foldexpr                          = "nvim_treesitter#foldexpr()"
 lvim.format_on_save                       = false
 lvim.line_wrap_cursor_movement            = false
 
-vim.g.vimwiki_ext2syntax = { ['.Rmd'] = 'markdown', ['.rmd'] = 'markdown', ['.md'] = 'markdown',
-  ['.markdown'] = 'markdown', ['.mdown'] = 'markdown' }
+-- Vimwiki Settings
+vim.g.vimwiki_ext2syntax = { ['.Rmd'] = 'markdown', ['.rmd'] = 'markdown', ['.md'] = 'markdown', ['.markdown'] = 'markdown', ['.mdown'] = 'markdown' }
 vim.g.vimwiki_list = { { ['path'] = '~/Documents/vimwiki', ['syntax'] = 'markdown', ['ext'] = '.md' } }
 
 -- Completion settings
 lvim.builtin.cmp.completion.keyword_length = 3
--- lvim.builtin.cmp.completion.autocomplete = false
 lvim.builtin.cmp.sources = {
   { name = "nvim_lsp" },
   { name = "path" },
