@@ -39,7 +39,7 @@ xautolock -time 10 -locker 'slock -m "$(cowsay -f octopus "$(fortune)" | lolcat 
 checkup &
 
 # Set GPU settings
-gwe --hide-window &
+# gwe --hide-window &
 
 # Start Console TDM
 exec dwm
