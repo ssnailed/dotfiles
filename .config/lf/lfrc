@@ -4,10 +4,12 @@ set shellopts '-eu'
 set ifs "\n"
 set scrolloff 10
 set icons
+set wrapscroll
 set period 1
-set hiddenfiles ".*"
+set findlen 2
 set previewer ~/.config/lf/preview
 set cleaner ~/.config/lf/clean
+set promptfmt "\033[34;1m%u\033[36m@\033[34m%h \033[35m[\033[0;1m%d\033[33m%f\033[35m]\033[0m"
 
 cmd open ${{
   case $(file --mime-type "$(readlink -f $f)" -b) in
@@ -60,28 +62,6 @@ cmd trash ${{
 	[ $ans = "y" ] && trash-put $fx
 }}
 
-cmd moveto ${{
-	clear; tput cup $(($(tput lines)/3)); tput bold
-	set -f
-	clear; echo "Move to where?"
-	dest="$(sed -e 's/\s*#.*//' -e '/^$/d' -e 's/^\S*\s*//' ${XDG_CONFIG_HOME:-$HOME/.config}/shell/bm-dirs | fzf | sed 's|~|$HOME|')" &&
-	for x in $fx; do
-		eval mv -iv \"$x\" \"$dest\"
-	done &&
-	notify-send "File(s) moved." "File(s) moved to $dest."
-}}
-
-cmd copyto ${{
-	clear; tput cup $(($(tput lines)/3)); tput bold
-	set -f
-	clear; echo "Copy to where?"
-	dest="$(sed -e 's/\s*#.*//' -e '/^$/d' -e 's/^\S*\s*//' ${XDG_CONFIG_HOME:-$HOME/.config}/shell/bm-dirs | fzf | sed 's|~|$HOME|')" &&
-	for x in $fx; do
-		eval cp -ivr \"$x\" \"$dest\"
-	done &&
-	notify-send "File(s) copied." "File(s) copies to $dest."
-}}
-
 cmd rsyncto ${{
   clear; tput cup $(($(tput lines)/3)); tput bold
   set -f
@@ -128,18 +108,7 @@ cmd git_branch ${{
 cmd on-cd &{{
     DIR=$(echo $PWD | sed "s|$HOME|~|")
     printf "\033]0;  $DIR\007" > /dev/tty
-    # display git repository status in your prompt
-    source /usr/share/git/completion/git-prompt.sh
-    GIT_PS1_SHOWDIRTYSTATE=auto
-    GIT_PS1_SHOWSTASHSTATE=auto
-    GIT_PS1_SHOWUNTRACKEDFILES=auto
-    GIT_PS1_SHOWUPSTREAM=auto
-    GIT_PS1_COMPRESSSPARSESTATE=auto
-    git=$(__git_ps1 " [GIT BRANCH:> %s]") || true
-    fmt="\033[32;1m%u@%h\033[0m:\033[34;1m%w\033[0m\033[33;1m$git\033[0m"
-    lf -remote "send $id set promptfmt \"$fmt\""
 }}
-# run at startup
 on-cd
 
 cmd on-quit ${{
@@ -173,12 +142,11 @@ map J $dir=$(sed -e 's/\s*#.*//' -e '/^$/d' -e 's/^\S*\s*//' ${XDG_CONFIG_HOME:-
 map D trash
 map <c-d> delete
 map E extract
-map C copyto
 map R rsyncto
-map M moveto
 map P link
 map S share
-
+map <c-g> $lazygit
+map V push :!$EDITOR<space>
 map <c-n> push :mkdir<space>
 map <c-r> reload
 map <c-s> set hidden!
@@ -189,17 +157,11 @@ map o &mimeopen $f
 map O $mimeopen --ask $f
 
 map A rename # at the very end
+map a push A<c-a> # at the very beginning
+map I push A<a-b> # after extension
+map i push A<a-b><a-b><a-f> # before extension
 map c push A<c-u> # new rename
-map I push A<c-a> # at the very beginning
-map i push A<a-b><a-b><a-f> # before extention
-map a push A<a-b> # after extention
 map B bulkrename
-
-map <c-e> down
-map <c-y> up
-map V push :!$EDITOR<space>
-
-map <c-g> $lazygit
 
 # source directory shortcuts
 source "~/.config/lf/shortcutrc"
