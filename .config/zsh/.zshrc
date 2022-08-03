@@ -1,6 +1,6 @@
 # Enable colors and change prompt:
 autoload -U colors && colors	# Load colors
-PS1="%B%{${fg[magenta]}%}[%{${fg[blue]}%}%3~%{${fg[magenta]}%}]%b %{${fg[green]}%}»%{${reset_color}%} "
+PS1="%B%F{blue}%n%F{cyan}@%F{blue}%m %F{magenta}[%f%3~%F{magenta}] %(?.%F{green}.%F{red})»%f%b "
 stty stop undef		# Disable ctrl-s to freeze terminal.
 setopt HIST_IGNORE_ALL_DUPS HIST_REDUCE_BLANKS HIST_VERIFY BANG_HIST interactive_comments autocd
 
