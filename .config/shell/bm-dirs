@@ -10,3 +10,5 @@ dm  ${XDG_DOCUMENTS_DIR:-$HOME/Documents}
 ms  ${XDG_MUSIC_DIR:-$HOME/Music}
 pc  ${XDG_PICTURES_DIR:-$HOME/Pictures}
 vd  ${XDG_VIDEOS_DIR:-$HOME/Videos}
+
+dot ${XDG_DATA_HOME:-$HOME/.local/share}/dotfiles
