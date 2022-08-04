@@ -103,6 +103,8 @@ cmd git_branch ${{
     lf -remote "send $id cd \"$pwd_shell\""
 }}
 
+
+
 cmd on-cd &{{
     DIR=$(echo $PWD | sed "s|$HOME|~|")
     printf "\033]0;  $DIR\007" > /dev/tty
@@ -132,7 +134,7 @@ cmd paste &{{
     lf -remote "send clear"
 }}
 
-cmd share $curl -F"file=@$fx" https://0x0.snaile.de | xclip -selection c
+cmd share $curl -F"file=@$fx" https://0x0.snaile.de | xclip -r -selection c
 
 # Bindings
 map <c-f> $lf -remote "send $id select '$(fzf)'"
