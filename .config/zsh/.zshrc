@@ -88,7 +88,7 @@ bindkey '^o' _lfcd
 
 lg () {
   lazygit
-  clear
+  tput cuu1;tput el
 }
 
 _lazygit () {
