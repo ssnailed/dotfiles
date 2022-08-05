@@ -4,7 +4,7 @@ function chpwd_activate(){
   for pydir in $(ls $PYENV_DIR); do
     if [[ "$(pwd|sed -e s@/@_@g|cut -c2-)" =~ "^${pydir}$" ]] || [[ "r-$(pwd|sed -e s@/@_@g|cut -c2-)" =~ "^${pydir}(_.+)?$" ]]; then
       if [ "x$VIRTUAL_ENV" != "x$PYENV_DIR/$pydir" ]; then
-        export PS1="  $PS1"
+        export PS1=" %F{yellow}%F{reset} $PS1"
         export VIRTUAL_ENV_DISABLE_PROMPT=1
         source "$PYENV_DIR/$pydir/bin/activate"
       fi
