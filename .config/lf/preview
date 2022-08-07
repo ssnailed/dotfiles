@@ -5,19 +5,18 @@ image() {
     h=$3
     x=$4
     y=$5
-    kitty +icat --silent --transfer-mode file --place "${w}x${h}@${x}x${y}" "$file"
+    if [ -n "$DISPLAY" ] && [ -z "$WAYLAND_DISPLAY" ]; then
+        kitty +icat --silent --transfer-mode file --place "${w}x${h}@${x}x${y}" "$file"
+    else
+        chafa "$1" -s "$4x"
+    fi
     exit 1
 }
 
 video() {
-    file=$1
-    w=$2
-    h=$3
-    x=$4
-    y=$5
     thumb="$(vidthumb "$file")"
     if [ "$thumb" != "" ]; then
-      kitty +icat --silent --transfer-mode file --place "${w}x${h}@${x}x${y}" "$thumb" 
+      image "$1" "$2" "$3" "$4" "$5"
       exit 1
     fi
     mediainfo "$file"
