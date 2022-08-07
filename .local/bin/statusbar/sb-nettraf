@@ -6,8 +6,7 @@
 
 case $BLOCK_BUTTON in
 	1) setsid -f "$TERMINAL" -e bmon ;;
-	3) notify-send " Network traffic module" ": Traffic received
-祝: Traffic transmitted" ;;
+	3) notify-send "歷 Network traffic module" ": Traffic received : Traffic transmitted" ;;
 	6) "$TERMINAL" -e "$EDITOR" "$0" ;;
 esac
 
@@ -17,7 +16,7 @@ update() {
         read -r i < "$arg"
         sum=$(( sum + i ))
     done
-    cache=${XDG_CACHE_HOME:-$HOME/.cache}/${1##*/}
+    cache=/tmp/${1##*/}
     [ -f "$cache" ] && read -r old < "$cache" || old=0
     printf %d\\n "$sum" > "$cache"
     printf %d\\n $(( sum - old ))
@@ -26,4 +25,4 @@ update() {
 rx=$(update /sys/class/net/[ew]*/statistics/rx_bytes)
 tx=$(update /sys/class/net/[ew]*/statistics/tx_bytes)
 
-printf " %4sB 祝 %4sB\\n" $(numfmt --to=iec $rx) $(numfmt --to=iec $tx)
+printf "  %4sB  %4sB \\n" $(numfmt --to=iec $rx $tx)

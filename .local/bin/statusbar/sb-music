@@ -1,13 +1,24 @@
 #!/bin/sh
 
-filter() { mpc | sed "/^volume:/d;s/\\&/&amp;/g;s/\\[paused\\].*/⏸/g;/\\[playing\\].*/d;/^ERROR/Q" | paste -sd ' ' -;}
+filter() {
+  if mpc &>/dev/null && [[ $(mpc | wc -l) -eq 3 ]]; then
+    song=$(mpc current -f "%artist% - %title%" | xargs -0 )
+    [[ $(echo $song | wc -m) -gt 37 ]] && song="${song:0:36}…"
+    mpc | awk 'NR==2' | grep -q playing && icon="" || icon=""
+    echo " $icon $song "
+  elif mpc &>/dev/null && [[ $(mpc | wc -l) -eq 1 ]]; then
+    echo " ﱙ "
+  else
+    exit 1
+  fi
+}
 
 pidof -x sb-mpdup >/dev/null 2>&1 || sb-mpdup >/dev/null 2>&1 &
 
 case $BLOCK_BUTTON in
 	1) mpc status | filter ; setsid -f "$TERMINAL" -e ncmpcpp ;;  # right click, pause/unpause
 	2) mpc toggle | filter ;;  # right click, pause/unpause
-	3) mpc status | filter ; notify-send "🎵 Music module" "\- Shows mpd song playing.
+	3) mpc status | filter ; notify-send " Music module" "\- Shows mpd song playing.
 - ⏸ when paused.
 - Left click opens ncmpcpp.
 - Middle click pauses.
