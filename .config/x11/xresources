@@ -1,10 +1,11 @@
 !! Set cursor size (Check GTK in .config too):
 Xcursor.size: 24
+Xcursor.theme: Fluent-dark-cursors
 !! Set transparency (0-1):
 *.alpha: 0.8
 
 !! Set a default font and font size:
-*.font: FiraCode Nerd Font Mono:pixelsize=14:antialias=true:autohint=true;
+*.font: JetBrainsMono Nerd Font Mono:pixelsize=14:antialias=true:autohint=true;
 
 /* name		dark	light */
 /* black	0	8 */
