@@ -1,3 +1,4 @@
 .config/lvim/plugin/packer_compiled.lua
 .config/pulse/
 .config/git/
+.config/zsh/.zcompdump
