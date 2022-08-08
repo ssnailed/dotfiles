@@ -5,8 +5,8 @@ image() {
     h=$3
     x=$4
     y=$5
-    kitty +icat --silent --transfer-mode file --place "${w}x${h}@${x}x${y}" "$f" && return 0
-    chafa "$f" -f symbols -s "$(($w-2))x$h" && return 0
+    [[ -v f ]] && kitty +icat --silent --transfer-mode file --place "${w}x${h}@${x}x${y}" "$f" && exit 1
+    chafa "$f" -f symbols -s "$(($w-2))x$h" && exit 1
     echo -e "\e[31mImage previewer not installed\e[0m"
     return 1
 }
@@ -17,29 +17,25 @@ video() {
     h=$3
     x=$4
     y=$5
-    command -v vidthumb && thumb="$(vidthumb "$f")" || echo -e "\e[31mvidthumb script not in path\e[0m" && return 1
-    image "$f" "$w" "$h" "$x" "$y" && return 0
+    thumb="$(vidthumb $f)" || ( echo -e "\e[31mvidthumb script not in path\e[0m" && return 1 )
+    image "$thumb" "$w" "$h" "$x" "$y" 
     return 1
 }
 
 batorcat() {
 	f=$1
   w=$2
-	if command -v bat > /dev/null 2>&1; then
-		bat --color=always --style=plain --pager=never --terminal-width "$(($w-2))" "$f"
-  elif command -v batcat > /dev/null 2>&1; then 
-		batcat --color=always --style=plain --pager=never --terminal-width "$(($w-2))" "$f"
-	else
-		cat "$f"
-	fi
+	command -v bat > /dev/null 2>&1 && bat --color=always --style=plain --pager=never --terminal-width "$(($w-2))" "$f" && exit 0
+  command -v batcat > /dev/null 2>&1 && batcat --color=always --style=plain --pager=never --terminal-width "$(($w-2))" "$f" && exit 0
+	cat "$f" && exit 0
 }
 
 CACHE="$HOME/.cache/lf/thumbnail.$(stat --printf '%n\0%i\0%F\0%s\0%W\0%Y' -- "$(readlink -f "$1")" | sha256sum | awk '{print $1}'))"
 
 case "$(xdg-mime query filetype "$1")" in
-  */x-bzip-compressed-tar|*/x-compressed-tar) als -- "$1" && exit 0 || echo -e "\e[31matools not installed\e[0m" && exit 1;;
+  */x-bzip-compressed-tar|*/x-compressed-tar|*/x-xz-compressed-tar) als -- "$1" && exit 0 || echo -e "\e[31matools not installed\e[0m" && exit 1;;
   */x-7z-compressed|*/vnd.rar|*/x-tar|*/zip|*/x-java-archive|*/x-xz) 7z l "$1" | sed 1,11d && exit 0 || echo -e "\e[31m7zip not installed\e[0m" && exit 1;;
-  */x-cd-image) iso-info --no-header -l "$1" && exit 0 || echo -e "\e[31mlibcdio-utils not installed\e[0m" && exit 1;;
+  */x-cd-image) iso-info --no-header -l "$1" && exit 0 || echo -e "\e[31mlibcdio not installed\e[0m" && exit 1;;
   */x-bittorrent) transmission-show "$1" && exit 0 || echo -e "\e[31mtransmission-cli not installed\e[0m" && exit 1;;
   */vnd.sun.xml.writer) odt2txt "$1" && exit 0 || echo -e "\e[31modt2txt not installed\e[0m" && exit 1;;
   */msword) catdoc "$1" && exit 0 || echo -e "\e[31mcatdoc not installed\e[0m" && exit 1;;
@@ -49,17 +45,17 @@ case "$(xdg-mime query filetype "$1")" in
   */epub+zip) [ ! -f "$CACHE" ] && epub-thumbnailer "$1" "$CACHE" 1024; image "$CACHE" "$2" "$3" "$4" "$5" && exit 0 || echo -e "\e[31mepubthumbnailer not installed (https://github.com/marianosimone/epub-thumbnailer)\e[0m" && exit 1;;
   */pgp-encrypted) gpg -d -- "$1" && exit 0 || echo -e "\e[31mgpg not installed\e[0m" && exit 1;;
   */pkix-cert) openssl x509 -text -noout -in "$1" && exit 0 || echo -e "\e[31mopenssl not installed\e[0m" && exit 1;;
-  image/*) image "$1" "$2" "$3" "$4" "$5" && exit 0;;
-  video/*) video "$1" "$2" "$3" "$4" "$5" && exit 0;;
+  image/*) image "$1" "$2" "$3" "$4" "$5" ;;
+  video/*) video "$1" "$2" "$3" "$4" "$5" ;;
   *opendocument*) odt2txt "$1" && exit 0 || echo -e "\e[31modt2txt not installed\e[0m" && exit 1;;
   */markdown) glow "$1" && exit 0 || echo -e "\e[31mglow not installed (https://github.com/charmbracelet/glow)\e[0m" && exit 1;;
   */html) w3m -dump "$1" && exit 0 || lynx -dump "$1" && exit 0 || echo -e "\e[31neither lynx nor w3m installed\e[0m" && exit 1;;
-  text/*|*/json|*/xml) batorcat "$1" "$2" && exit 0;;
+  text/*|*/json|*/xml) batorcat "$1" "$2" ;;
   */pdf) [ ! -f "${CACHE}.jpg" ] && pdftoppm -jpeg -f 1 -singlefile "$1" "$CACHE"; image "${CACHE}.jpg" "$2" "$3" "$4" "$5" && exit 0  || echo -e "\e[31mpoppler-utils not installed\e[0m" && exit 1;;
 esac
 case "$(file -bL --mime-type "$1")" in
-  text/*) batorcat "$1" "$2" && exit 0;;
+  text/*) batorcat "$1" "$2" ;;
 esac
-echo -e "\e[31mNo previewer configured for $(xdg-mime query filetype "$1")\e[0m"
-mediainfo "$1" && exit 0
+echo -e "\e[31mPreviewer for $(xdg-mime query filetype "$1") configured incorrectly\e[0m"
+mediainfo "$1"
 exit 1
