@@ -6,15 +6,26 @@ set scrolloff 10
 set icons
 set wrapscroll
 set period 1
-set findlen 2
 set previewer ~/.config/lf/preview
 set cleaner ~/.config/lf/clean
 set promptfmt "\033[34;1m%u\033[36m@\033[34m%h \033[35m[\033[0;1m%d\033[33m%f\033[35m]\033[0m"
 
 cmd open ${{
-  case $(file --mime-type "$(readlink -f $f)" -b) in
-  	application/vnd.openxmlformats-officedocument.spreadsheetml.sheet) localc $fx ;;
-  	image/vnd.djvu|application/pdf|application/octet-stream|application/postscript) setsid -f zathura $fx >/dev/null 2>&1 ;;
+  case $(xdg-mime query filetype "$1") in
+    */x-bzip-compressed-tar|*/x-compressed-tar|*/x-7z-compressed|*/vnd.rar|*/x-tar|*/zip|*/x-java-archive|*/x-xz|*/x-cd-image)
+    mntdir="$f-archivemount"
+    [ ! -d "$mntdir" ] && {
+        mkdir "$mntdir"
+        archivemount "$f" "$mntdir"
+        echo "$mntdir" >> "/tmp/__lf_archivemount_$id"
+    }
+    lf -remote "send $id cd \"$mntdir\""
+    lf -remote "send $id reload"
+    ;;
+  esac
+  case $(file -bL --mime-type) in
+  	*/vnd.openxmlformats-officedocument*) localc $fx ;;
+  	*/pdf|application/vnd*|application/epub*) setsid -f zathura $fx >/dev/null 2>&1 ;;
     text/*|application/json|inode/x-empty) $EDITOR $fx;;
   	image/x-xcf) setsid -f gimp $f >/dev/null 2>&1 ;;
   	image/svg+xml) display -- $f ;;
@@ -27,7 +38,6 @@ cmd open ${{
   		;;
   	audio/*) mpv --audio-display=no $f ;;
   	video/*) setsid -f mpv $f -quiet >/dev/null 2>&1 ;;
-  	application/pdf|application/vnd*|application/epub*) setsid -f zathura $fx >/dev/null 2>&1 ;;
   	application/pgp-encrypted) $EDITOR $fx ;;
     *) for f in $fx; do setsid -f $OPENER $f >/dev/null 2>&1; done;;
   esac
