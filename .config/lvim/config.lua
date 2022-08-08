@@ -145,7 +145,13 @@ lvim.keys.normal_mode = {
   ["<C-.>"] = ":bn<CR>",
   ["<C-,>"] = ":bp<CR>",
   ["<S-Up>"] = "<C-U>",
-  ["<S-Down>"] = "<C-D>"
+  ["<S-Down>"] = "<C-D>",
+  ["<C-Y>"] = "\"xy",
+  ["<C-S-Y>"] = "\"xY",
+  ["<C-X>"] = "\"xx",
+  ["<C-S-X>"] = "\"xX",
+  ["<C-P>"] = "\"xp",
+  ["<C-S-P>"] = "\"xP",
 }
 lvim.keys.term_mode = {
   ["<c-q>"] = ":lua Custom_Close()<CR>",
@@ -158,7 +164,13 @@ lvim.keys.visual_mode = {
   ["<"] = "<gv",
   [">"] = ">gv",
   ["<S-Up>"] = "<C-U>",
-  ["<S-Down>"] = "<C-D>"
+  ["<S-Down>"] = "<C-D>",
+  ["<C-Y>"] = "\"xy",
+  ["<C-S-Y>"] = "\"xY",
+  ["<C-X>"] = "\"xx",
+  ["<C-S-X>"] = "\"xX",
+  ["<C-P>"] = "\"xp",
+  ["<C-S-P>"] = "\"xP",
 }
 lvim.keys.visual_block_mode = {
   ["<c-s>"] = "<ESC>:w<CR>",
@@ -166,7 +178,13 @@ lvim.keys.visual_block_mode = {
   ["K"] = ":move '<-2<CR>gv-gv",
   ["J"] = ":move '>+1<CR>gv-gv",
   ["<S-Up>"] = "<C-U>",
-  ["<S-Down>"] = "<C-D>"
+  ["<S-Down>"] = "<C-D>",
+  ["<C-Y>"] = "\"xy",
+  ["<C-S-Y>"] = "\"xY",
+  ["<C-X>"] = "\"xx",
+  ["<C-S-X>"] = "\"xX",
+  ["<C-P>"] = "\"xp",
+  ["<C-S-P>"] = "\"xP",
 }
 
 
