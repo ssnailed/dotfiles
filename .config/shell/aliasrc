@@ -38,8 +38,8 @@ alias \
   e="$EDITOR" \
   z="zathura" \
 	p="pacman" \
-  au="apt uninstall" \
-  ar="apt reinstall" \
+  ar="apt remove" \
+  are="apt reinstall" \
   ai="apt install" \
   aur="apt autoremove" \
   kssh="kitty +kitten ssh"
