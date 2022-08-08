@@ -68,10 +68,14 @@ lfcd () {
     fi
     if [ -f "$tmp" ]; then
         dir="$(cat "$tmp")"
-        command rm -f "$tmp"
-        [ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir"
+        rm -f "$tmp"
+        if [ -d "$dir" ]; then
+            if [ "$dir" != "$(pwd)" ]; then
+                cd "$dir"
+            fi
+        fi
     fi
-    tput cuu1;tput el
+    # tput cuu1;tput el
 }
 
 _lfcd () {
