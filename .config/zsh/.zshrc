@@ -34,12 +34,6 @@ bindkey -M menuselect 'h' vi-backward-char
 bindkey -M menuselect 'k' vi-up-line-or-history
 bindkey -M menuselect 'l' vi-forward-char
 bindkey -M menuselect 'j' vi-down-line-or-history
-bindkey -v '^?' backward-delete-char
-bindkey '^[[P' delete-char
-bindkey "^[[H" beginning-of-line
-bindkey '^[[F' end-of-line
-bindkey '^[[1;5C' forward-word
-bindkey '^[[1;5D' backward-word 
 
 # Change cursor shape for different vi modes.
 function zle-keymap-select () {
@@ -87,6 +81,7 @@ _lfcd () {
 zle -N _lfcd
 bindkey '^o' _lfcd
 
+# bind lazygit to ctrl-g
 lg () {
   lazygit
   tput cuu1;tput el
@@ -103,6 +98,15 @@ bindkey '^g' _lazygit
 # Edit line in vim with ctrl-e:
 autoload edit-command-line; zle -N edit-command-line
 bindkey '^e' edit-command-line
+
+# other keybinds
+bindkey -v '^?' backward-delete-char
+bindkey '^[[P' delete-char
+bindkey "^[[H" beginning-of-line
+bindkey '^[[F' end-of-line
+bindkey '^[[1;5C' forward-word
+bindkey '^[[1;5D' backward-word 
+
 
 
 PLUGINS_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/zsh/plugins"
