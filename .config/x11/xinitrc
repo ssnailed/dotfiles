@@ -36,7 +36,7 @@ gpg-connect-agent updatestartuptty /bye > /dev/null
 xautolock -time 10 -locker 'slock -m "$(cowsay -f octopus "$(fortune)" | lolcat -ft)"' &
 
 # Check for updates
-checkup &
+checkup &>/dev/null &
 
 # Set GPU settings
 # gwe --hide-window &
