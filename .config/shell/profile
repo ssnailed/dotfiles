@@ -237,4 +237,4 @@ ex=:\
 sudo -n loadkeys ${XDG_DATA_HOME:-$HOME/.local/share}/ttymaps.kmap 2>/dev/null
 
 # NFS mounts
-mount cairo:/data/media/Music ~/Music >/dev/null 2>&1
+mount cairo:/data/media/Music ~/Music >/dev/null 2>&1 &
