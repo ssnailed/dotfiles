@@ -34,7 +34,7 @@ getforecast() { curl -sf "$url$opt" > "$weatherreport" && curl -sf "$url$emojiop
 # display them with coresponding emojis.
 showweather() { emoji=$(cat $weatheremoji) && printf "%s" "$(sed '16q;d' "$weatherreport" |
 	grep -wo "[0-9]*%" | sort -rn | sed "s/^/ ${emoji:0:1} /g;1q" | tr -d '\n')"
-sed '13q;d' "$weatherreport" | grep -o "m\\([-+]\\)*[0-9]\\+" | sed 's/+//g' | sort -n -t 'm' -k 2n | sed -e 1b -e '$!d' | tr '\n|m' ' ' | awk '{print "  " $1 "°"," " $2 "°"}' ;}
+sed '13q;d' "$weatherreport" | grep -o "m\\([-+]\\)*[0-9]\\+" | sed 's/+//g' | sort -n -t 'm' -k 2n | sed -e 1b -e '$!d' | tr '\n|m' ' ' | awk '{print "  " $1 "°"," " $2 "°"}' ;}
 
 case $BLOCK_BUTTON in
 	1) setsid -f "$TERMINAL" -e less -Srf "$weatherreport" ;;
@@ -42,8 +42,8 @@ case $BLOCK_BUTTON in
 	3) notify-send " Weather module" "\- Left click for full forecast.
 - Middle click to update forecast.
 ${emoji}: Chance of rain/snow
-: Daily low
-: Daily high" ;;
+: Daily low
+: Daily high" ;;
 	6) "$TERMINAL" -e "$EDITOR" "$0" ;;
 esac
 
