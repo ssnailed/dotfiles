@@ -56,6 +56,6 @@ esac
 case "$(file -bL --mime-type "$1")" in
   text/*) batorcat "$1" "$2" ;;
 esac
-echo -e "\e[31mPreviewer for $(xdg-mime query filetype "$1") configured incorrectly\e[0m"
+xdg-mime query filetype "$1"
 mediainfo "$1"
 exit 1
