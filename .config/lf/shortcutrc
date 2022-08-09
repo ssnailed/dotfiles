@@ -1,3 +1,4 @@
+map Ch cd "/home/luca" 
 map Cch cd "/home/luca/.cache" 
 map Ccf cd "/home/luca/.config" 
 map Cdt cd "/home/luca/.local/share" 

@@ -1,5 +1,6 @@
 # vim: filetype=sh
-alias ch="cd /home/luca/.cache && tput cuu1;tput el" \
+alias h="cd /home/luca && tput cuu1;tput el" \
+ch="cd /home/luca/.cache && tput cuu1;tput el" \
 cf="cd /home/luca/.config && tput cuu1;tput el" \
 dt="cd /home/luca/.local/share && tput cuu1;tput el" \
 rr="cd /home/luca/.local/src && tput cuu1;tput el" \

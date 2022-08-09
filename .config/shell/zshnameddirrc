@@ -1,3 +1,4 @@
+hash -d h=/home/luca 
 hash -d ch=/home/luca/.cache 
 hash -d cf=/home/luca/.config 
 hash -d dt=/home/luca/.local/share 
