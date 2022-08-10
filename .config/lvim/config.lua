@@ -56,17 +56,33 @@ vim.api.nvim_create_autocmd("FileType", {
 
 vim.api.nvim_create_autocmd("ColorScheme", {
   pattern = "*",
-  callback = function()
-    vim.cmd("hi FloatermBorder guibg=none")
-  end
+  command = "hi FloatermBorder guibg=none"
 })
 
--- vim.api.nvim_create_autocmd("ColorScheme", {
---   pattern = "*",
---   callback = function()
---     vim.cmd("ColorizerAttachToBuffer,")
---   end
--- })
+vim.api.nvim_create_autocmd("BufWritePost", {
+  pattern = { "bm-files", "bm-dirs" },
+  command = "!shortcuts"
+})
+
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+  pattern = { "Xresources", "Xdefaults", "xresources", "xdefaults" },
+  command = "set filetype=xdefaults"
+})
+
+vim.api.nvim_create_autocmd("BufWritePost", {
+  pattern = { "Xresources", "Xdefaults", "xresources", "xdefaults" },
+  command = "!xrdb %"
+})
+
+vim.api.nvim_create_autocmd("BufWritePost", {
+  pattern = "~/.local/src/dwmblocks/config.h",
+  command = "!cd ~/.local/src/dwmblocks/; sudo make install && { killall -q dwmblocks;setsid -f dwmblocks }"
+})
+
+vim.api.nvim_create_autocmd("VimLeave", {
+  pattern = "*.tex",
+  command = "!texclear %"
+})
 
 -- Lualine
 local components = require "lvim.core.lualine.components"
@@ -160,6 +176,8 @@ lvim.keys.insert_mode = {
   ["<C-S>"] = "<ESC>:w<CR>a",
   ["<C-Q>"] = "<ESC>:lua Custom_Close()<CR>",
   ["<C-BS>"] = "<C-W>",
+  ["<C-.>"] = "<ESC>:bn<CR>",
+  ["<C-,>"] = "<ESC>:bp<CR>",
 }
 lvim.keys.normal_mode = {
   ["<c-s>"] = ":w<CR>",
@@ -178,7 +196,6 @@ lvim.keys.normal_mode = {
   ["<C-S-P>"] = "\"xP",
 }
 lvim.keys.term_mode = {
-  ["<c-q>"] = ":lua Custom_Close()<CR>",
   ["<C-Right>"] = ":bn<CR>",
   ["<C-Left>"] = ":bp<CR>"
 }
@@ -187,6 +204,8 @@ lvim.keys.visual_mode = {
   ["<c-q>"] = "<ESC>:lua Custom_Close()<CR>",
   ["<"] = "<gv",
   [">"] = ">gv",
+  ["<C-.>"] = "<ESC>:bn<CR>",
+  ["<C-,>"] = "<ESC>:bp<CR>",
   ["<S-Up>"] = "<C-U>",
   ["<S-Down>"] = "<C-D>",
   ["<C-Y>"] = "\"xy",
@@ -199,6 +218,8 @@ lvim.keys.visual_mode = {
 lvim.keys.visual_block_mode = {
   ["<c-s>"] = "<ESC>:w<CR>",
   ["<c-q>"] = "<ESC>:lua Custom_Close()<CR>",
+  ["<C-.>"] = "<ESC>:bn<CR>",
+  ["<C-,>"] = "<ESC>:bp<CR>",
   ["K"] = ":move '<-2<CR>gv-gv",
   ["J"] = ":move '>+1<CR>gv-gv",
   ["<S-Up>"] = "<C-U>",
@@ -211,7 +232,6 @@ lvim.keys.visual_block_mode = {
   ["<C-S-P>"] = "\"xP",
 }
 
-
 lvim.builtin.which_key.mappings = {
   [";"] = { "<cmd>Alpha<CR>", "Dashboard" },
   ["/"] = { "<cmd>lua require('Comment.api').toggle_current_linewise()<CR>", "Comment" },
@@ -223,6 +243,7 @@ lvim.builtin.which_key.mappings = {
     j = { "<cmd>BufferLinePick<cr>", "Jump" },
     f = { "<cmd>Telescope buffers<cr>", "Find" },
     b = { "<cmd>BufferLineCyclePrev<cr>", "Previous" },
+    c = { "<cmd>w!<CR><cmd>!compiler %:p<CR>", "Compile" },
     -- w = { "<cmd>BufferWipeout<cr>", "Wipeout" }, -- TODO: implement this for bufferline
     e = {
       "<cmd>BufferLinePickClose<cr>",
