@@ -7,8 +7,8 @@
 # You could set up a shell alias to view the full file in a pager in the
 # terminal if desired. This function will only be run once a day when needed.
 # Options can be found at https://wttr.in/:help
-weatherreport="${XDG_DATA_HOME:-$HOME/.local/share}/weatherreport"
-weatheremoji="${XDG_DATA_HOME:-$HOME/.local/share}/weatheremoji"
+weatherreport="${XDG_CACHE_HOME:-$HOME/.cache}/weatherreport"
+weatheremoji="${XDG_CACHE_HOME:-$HOME/.cache}/weatheremoji"
 url="wttr.in/Karlsruhe"
 opt="?F"
 emojiopt="?format=1"
@@ -25,15 +25,15 @@ s/🌧//
 s/🌨//
 s/🌩//
 s/🌫//
-' ${weatheremoji}
+' "${weatheremoji}"
 }
 getforecast() { curl -sf "$url$opt" > "$weatherreport" && curl -sf "$url$emojiopt" > "$weatheremoji" || exit 1 ;}
 
 # Some very particular and terse stream manipulation. We get the maximum
 # precipitation chance and the daily high and low from the downloaded file and
 # display them with coresponding emojis.
-showweather() { emoji=$(cat $weatheremoji) && printf "%s" "$(sed '16q;d' "$weatherreport" |
-	grep -wo "[0-9]*%" | sort -rn | sed "s/^/ ${emoji:0:1} /g;1q" | tr -d '\n')"
+showweather() { emoji=$(cat "$weatheremoji") && printf "%s" "$(sed '16q;d' "$weatherreport" |
+	grep -wo "[0-9]*%" | sort -rn | sed "s/^/ $(printf %.1s "$emoji") /g;1q" | tr -d '\n')"
 sed '13q;d' "$weatherreport" | grep -o "m\\([-+]\\)*[0-9]\\+" | sed 's/+//g' | sort -n -t 'm' -k 2n | sed -e 1b -e '$!d' | tr '\n|m' ' ' | awk '{print "  " $1 "°"," " $2 "°"}' ;}
 
 case $BLOCK_BUTTON in
