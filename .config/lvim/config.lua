@@ -5,6 +5,7 @@ vim.g.tokyonight_style                    = "night"
 vim.opt.undodir                           = vim.fn.stdpath "cache" .. "/undo"
 vim.opt.undofile                          = true
 vim.opt.titlestring                       = " %t"
+vim.opt.termguicolors                     = true
 lvim.builtin.alpha.active                 = true
 lvim.builtin.alpha.mode                   = "dashboard"
 lvim.builtin.terminal.active              = true
@@ -13,7 +14,7 @@ lvim.builtin.treesitter.highlight.enabled = true
 lvim.lsp.automatic_servers_installation   = false
 vim.g.NERDTreeHijackNetrw                 = 0
 vim.g.lf_replace_netrw                    = 1
-vim.opt.foldmethod                        = "expr"
+-- vim.opt.foldmethod                        = "expr"
 vim.opt.foldexpr                          = "nvim_treesitter#foldexpr()"
 lvim.format_on_save                       = false
 lvim.line_wrap_cursor_movement            = false
@@ -57,6 +58,13 @@ vim.api.nvim_create_autocmd("ColorScheme", {
     vim.cmd("hi FloatermBorder guibg=none")
   end
 })
+
+-- vim.api.nvim_create_autocmd("ColorScheme", {
+--   pattern = "*",
+--   callback = function()
+--     vim.cmd("ColorizerAttachToBuffer,")
+--   end
+-- })
 
 -- Lualine
 local components = require "lvim.core.lualine.components"
@@ -113,7 +121,20 @@ lvim.plugins = {
   { "ptzz/lf.vim",
     requires = "voldikss/vim-floaterm",
   },
-  { "vimwiki/vimwiki" }
+  { "vimwiki/vimwiki" },
+  { "norcalli/nvim-colorizer.lua",
+      config = function()
+        require("colorizer").setup({ '*' }, {
+            RGB = true, -- #RGB hex codes
+            RRGGBB = true, -- #RRGGBB hex codes
+            RRGGBBAA = true, -- #RRGGBBAA hex codes
+            rgb_fn = true, -- CSS rgb() and rgba() functions
+            hsl_fn = true, -- CSS hsl() and hsla() functions
+            css = true, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
+            css_fn = true, -- Enable all CSS *functions*: rgb_fn, hsl_fn
+            })
+    end,
+  },
 }
 
 -- Functions for keymappings
