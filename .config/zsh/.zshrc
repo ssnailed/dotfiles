@@ -75,7 +75,7 @@ lfcd () {
             fi
         fi
     fi
-    # tput cuu1;tput el
+    tput cuu1;tput el
 }
 
 _lfcd () {
