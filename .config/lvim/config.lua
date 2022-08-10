@@ -14,13 +14,15 @@ lvim.builtin.treesitter.highlight.enabled = true
 lvim.lsp.automatic_servers_installation   = false
 vim.g.NERDTreeHijackNetrw                 = 0
 vim.g.lf_replace_netrw                    = 1
--- vim.opt.foldmethod                        = "expr"
+vim.opt.foldmethod                        = "expr"
+vim.opt.foldlevelstart                    = 99
 vim.opt.foldexpr                          = "nvim_treesitter#foldexpr()"
 lvim.format_on_save                       = false
 lvim.line_wrap_cursor_movement            = false
 
 -- Vimwiki Settings
-vim.g.vimwiki_ext2syntax = { ['.Rmd'] = 'markdown', ['.rmd'] = 'markdown', ['.md'] = 'markdown', ['.markdown'] = 'markdown', ['.mdown'] = 'markdown' }
+vim.g.vimwiki_ext2syntax = { ['.Rmd'] = 'markdown', ['.rmd'] = 'markdown', ['.md'] = 'markdown',
+  ['.markdown'] = 'markdown', ['.mdown'] = 'markdown' }
 vim.g.vimwiki_list = { { ['path'] = '~/Documents/vimwiki', ['syntax'] = 'markdown', ['ext'] = '.md' } }
 
 -- Completion settings
@@ -123,18 +125,19 @@ lvim.plugins = {
   },
   { "vimwiki/vimwiki" },
   { "norcalli/nvim-colorizer.lua",
-      config = function()
-        require("colorizer").setup({ '*' }, {
-            RGB = true, -- #RGB hex codes
-            RRGGBB = true, -- #RRGGBB hex codes
-            RRGGBBAA = true, -- #RRGGBBAA hex codes
-            rgb_fn = true, -- CSS rgb() and rgba() functions
-            hsl_fn = true, -- CSS hsl() and hsla() functions
-            css = true, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
-            css_fn = true, -- Enable all CSS *functions*: rgb_fn, hsl_fn
-            })
+    config = function()
+      require("colorizer").setup({ '*' }, {
+        RGB = true, -- #RGB hex codes
+        RRGGBB = true, -- #RRGGBB hex codes
+        RRGGBBAA = true, -- #RRGGBBAA hex codes
+        rgb_fn = true, -- CSS rgb() and rgba() functions
+        hsl_fn = true, -- CSS hsl() and hsla() functions
+        css = true, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
+        css_fn = true, -- Enable all CSS *functions*: rgb_fn, hsl_fn
+      })
     end,
   },
+  { "fladson/vim-kitty" },
 }
 
 -- Functions for keymappings
