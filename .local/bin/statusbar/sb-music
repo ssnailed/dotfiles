@@ -3,7 +3,7 @@
 filter() {
   if mpc &>/dev/null && [[ $(mpc | wc -l) -eq 3 ]]; then
     song=$(mpc current -f "%artist% - %title%" | xargs -0 )
-    [[ $(echo $song | wc -m) -gt 37 ]] && song="${song:0:36}…"
+    [[ $(echo $song | wc -m) -gt 35 ]] && song="${song:0:34}…"
     mpc | awk 'NR==2' | grep -q playing && icon="" || icon=""
     echo " $icon $song "
   elif mpc &>/dev/null && [[ $(mpc | wc -l) -eq 1 ]]; then
