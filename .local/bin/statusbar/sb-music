@@ -4,7 +4,7 @@ filter() {
   if mpc 1>/dev/null 2>&1 && [ "$(mpc | wc -l)" -eq 3 ]; then
     song=$(mpc current -f "%artist% - %title%" | xargs -0 )
     [ ${#song} -gt 35 ] && song="$(printf %.35s song)…"
-    mpc | awk 'NR==2' | grep -q playing && icon="" || icon=""
+    mpc | awk 'NR==2' | grep -q playing && icon="" || icon=""
     echo " $icon $song "
   elif mpc 1>/dev/null 2>&1 && [ "$(mpc | wc -l)" -eq 1 ]; then
     echo " ﱙ "
@@ -19,7 +19,7 @@ case $BLOCK_BUTTON in
 	1) mpc status | filter ; setsid -f "$TERMINAL" -e ncmpcpp ;;  # right click, pause/unpause
 	2) mpc toggle | filter ;;  # right click, pause/unpause
 	3) mpc status | filter ; notify-send " Music module" "\- Shows mpd song playing.
-- ⏸ when paused.
+-  when paused.
 - Left click opens ncmpcpp.
 - Middle click pauses.
 - Scroll changes track.";;  # right click, pause/unpause

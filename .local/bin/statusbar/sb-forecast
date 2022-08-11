@@ -1,6 +1,5 @@
 #!/bin/sh
 
-# Displays todays precipication chance (☔) and daily low (🥶) and high (🌞).
 # Usually intended for the statusbar.
 
 # If we have internet, get a weather report from wttr.in and store it locally.
