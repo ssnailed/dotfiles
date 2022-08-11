@@ -6,6 +6,7 @@ vim.opt.undodir                           = vim.fn.stdpath "cache" .. "/undo"
 vim.opt.undofile                          = true
 vim.opt.titlestring                       = " %t"
 vim.opt.termguicolors                     = true
+vim.opt.timeoutlen                        = 500
 lvim.builtin.alpha.active                 = true
 lvim.builtin.alpha.mode                   = "dashboard"
 lvim.builtin.terminal.active              = true
@@ -91,7 +92,7 @@ components.scrollbar = {
   function()
     local current_line = vim.fn.line "."
     local total_lines = vim.fn.line "$"
-    local chars = { "", "", "", "", "", "", "", "", "", "", "", "", "" }
+    local chars = { " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " " }
     local line_ratio = current_line / total_lines
     local index = math.ceil(line_ratio * #chars)
     return chars[index]
@@ -100,8 +101,8 @@ components.scrollbar = {
   cond = nil,
 }
 lvim.builtin.lualine.options = {
-  component_separators = { left = '', right = '' },
-  section_separators = { left = '', right = '' },
+  component_separators = { left = '', right = '' },
+  section_separators = { left = '', right = '' },
 }
 lvim.builtin.lualine.sections = {
   lualine_a = { components.filename },
@@ -154,6 +155,9 @@ lvim.plugins = {
     end,
   },
   { "fladson/vim-kitty" },
+  { "tpope/vim-surround" },
+  { "tpope/vim-repeat" },
+  { "svermeulen/vim-easyclip" },
 }
 
 -- Functions for keymappings
@@ -188,12 +192,6 @@ lvim.keys.normal_mode = {
   ["<C-,>"] = ":bp<CR>",
   ["<S-Up>"] = "<C-U>",
   ["<S-Down>"] = "<C-D>",
-  ["<C-Y>"] = "\"xy",
-  ["<C-S-Y>"] = "\"xY",
-  ["<C-X>"] = "\"xx",
-  ["<C-S-X>"] = "\"xX",
-  ["<C-P>"] = "\"xp",
-  ["<C-S-P>"] = "\"xP",
 }
 lvim.keys.term_mode = {
   ["<C-Right>"] = ":bn<CR>",
@@ -208,12 +206,6 @@ lvim.keys.visual_mode = {
   ["<C-,>"] = "<ESC>:bp<CR>",
   ["<S-Up>"] = "<C-U>",
   ["<S-Down>"] = "<C-D>",
-  ["<C-Y>"] = "\"xy",
-  ["<C-S-Y>"] = "\"xY",
-  ["<C-X>"] = "\"xx",
-  ["<C-S-X>"] = "\"xX",
-  ["<C-P>"] = "\"xp",
-  ["<C-S-P>"] = "\"xP",
 }
 lvim.keys.visual_block_mode = {
   ["<c-s>"] = "<ESC>:w<CR>",
@@ -224,12 +216,6 @@ lvim.keys.visual_block_mode = {
   ["J"] = ":move '>+1<CR>gv-gv",
   ["<S-Up>"] = "<C-U>",
   ["<S-Down>"] = "<C-D>",
-  ["<C-Y>"] = "\"xy",
-  ["<C-S-Y>"] = "\"xY",
-  ["<C-X>"] = "\"xx",
-  ["<C-S-X>"] = "\"xX",
-  ["<C-P>"] = "\"xp",
-  ["<C-S-P>"] = "\"xP",
 }
 
 lvim.builtin.which_key.mappings = {
