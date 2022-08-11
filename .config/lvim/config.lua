@@ -92,16 +92,16 @@ components.scrollbar = {
   function()
     local current_line = vim.fn.line "."
     local total_lines = vim.fn.line "$"
-    local chars = { " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " " }
+    local chars = { "", "", "", "", "", "", "", "", "", "", "", "", "" }
     local line_ratio = current_line / total_lines
     local index = math.ceil(line_ratio * #chars)
-    return chars[index]
+    return " " .. chars[index]
   end,
   color = { fg = colors.yellow },
   cond = nil,
 }
 lvim.builtin.lualine.options = {
-  component_separators = { left = '', right = '' },
+  -- component_separators = { left = '│', right = '│' },
   section_separators = { left = '', right = '' },
 }
 lvim.builtin.lualine.sections = {
