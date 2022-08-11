@@ -111,7 +111,8 @@ bindkey '^[[F' end-of-line
 bindkey '^[[1;5C' forward-word
 bindkey '^[[1;5D' backward-word 
 
-
+# other options
+zle_highlight+=(paste:none)
 
 PLUGINS_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/zsh/plugins"
 [ -f "$PLUGINS_HOME/fzf/key-bindings.zsh" ]                                         && source "$PLUGINS_HOME/fzf/key-bindings.zsh"
