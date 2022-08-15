@@ -229,7 +229,7 @@ lvim.builtin.which_key.mappings = {
     j = { "<cmd>BufferLinePick<cr>", "Jump" },
     f = { "<cmd>Telescope buffers<cr>", "Find" },
     b = { "<cmd>BufferLineCyclePrev<cr>", "Previous" },
-    c = { "<cmd>w!<CR><cmd>!compiler %:p<CR>", "Compile" },
+    c = { "<cmd>w!<CR><cmd>!compiler \"%:p\"<CR>", "Compile" },
     -- w = { "<cmd>BufferWipeout<cr>", "Wipeout" }, -- TODO: implement this for bufferline
     e = {
       "<cmd>BufferLinePickClose<cr>",
