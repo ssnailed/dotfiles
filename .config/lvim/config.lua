@@ -80,7 +80,7 @@ vim.api.nvim_create_autocmd("BufWritePost", {
   command = "!cd ~/.local/src/dwmblocks/; sudo make install && { killall -q dwmblocks;setsid -f dwmblocks }"
 })
 
-vim.api.nvim_create_autocmd("VimLeave", {
+vim.api.nvim_create_autocmd("BufLeave", {
   pattern = "*.tex",
   command = "!texclear %"
 })
@@ -219,7 +219,7 @@ lvim.builtin.which_key.mappings = {
     j = { "<cmd>BufferLinePick<cr>", "Jump" },
     f = { "<cmd>Telescope buffers<cr>", "Find" },
     b = { "<cmd>BufferLineCyclePrev<cr>", "Previous" },
-    c = { "<cmd>w!<CR><cmd>!compiler %:p<CR>", "Compile" },
+    c = { "<cmd>w!<CR><cmd>!compiler \"%:p\"<CR>", "Compile" },
     -- w = { "<cmd>BufferWipeout<cr>", "Wipeout" }, -- TODO: implement this for bufferline
     e = {
       "<cmd>BufferLinePickClose<cr>",
