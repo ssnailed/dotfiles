@@ -180,38 +180,28 @@ lvim.keys.insert_mode = {
   ["<C-S>"] = "<ESC>:w<CR>a",
   ["<C-Q>"] = "<ESC>:lua Custom_Close()<CR>",
   ["<C-BS>"] = "<C-W>",
-  ["<C-.>"] = "<ESC>:bn<CR>",
-  ["<C-,>"] = "<ESC>:bp<CR>",
 }
 lvim.keys.normal_mode = {
   ["<c-s>"] = ":w<CR>",
   ["<c-q>"] = ":lua Custom_Close()<CR>",
-  ["<C-Right>"] = "W",
-  ["<C-Left>"] = "gE",
-  ["<C-.>"] = ":bn<CR>",
-  ["<C-,>"] = ":bp<CR>",
-  ["<S-Up>"] = "<C-U>",
-  ["<S-Down>"] = "<C-D>",
+  ["<C-l>"] = "W",
+  ["<C-h>"] = "gE",
+  ["<C-k>"] = "<C-U>",
+  ["<C-j>"] = "<C-D>",
 }
 lvim.keys.term_mode = {
-  ["<C-Right>"] = ":bn<CR>",
-  ["<C-Left>"] = ":bp<CR>"
 }
 lvim.keys.visual_mode = {
   ["<c-s>"] = "<ESC>:w<CR>",
   ["<c-q>"] = "<ESC>:lua Custom_Close()<CR>",
   ["<"] = "<gv",
   [">"] = ">gv",
-  ["<C-.>"] = "<ESC>:bn<CR>",
-  ["<C-,>"] = "<ESC>:bp<CR>",
-  ["<S-Up>"] = "<C-U>",
-  ["<S-Down>"] = "<C-D>",
+  ["<C-k>"] = "<C-U>",
+  ["<C-j>"] = "<C-D>",
 }
 lvim.keys.visual_block_mode = {
   ["<c-s>"] = "<ESC>:w<CR>",
   ["<c-q>"] = "<ESC>:lua Custom_Close()<CR>",
-  ["<C-.>"] = "<ESC>:bn<CR>",
-  ["<C-,>"] = "<ESC>:bp<CR>",
   ["K"] = ":move '<-2<CR>gv-gv",
   ["J"] = ":move '>+1<CR>gv-gv",
   ["<S-Up>"] = "<C-U>",
