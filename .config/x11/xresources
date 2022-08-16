@@ -1,14 +1,11 @@
-!! NOTE: X11 OPTIONS
 !! Set cursor size (Check GTK in .config too):
 Xcursor.size: 24
-Xcursor.theme: Fluent-dark-cursors
+!! Set transparency (0-1):
+*.alpha: 0.8
 
+!! Set a default font and font size:
+*.font: NotoSans Nerd Font:style=Regular:pixelsize=14:antialias=true:autohint=true;
 
-!! NOTE: DWM OPTIONS 
-*.baralpha: 204
-*.borderalpha: 204
-*.mainmon: 0
-*.font: JetBrainsMono Nerd Font Mono:pixelsize=14:antialias=true:autohint=true;
 /* name		dark	light */
 /* black	0	8 */
 /* red		1	9 */
@@ -19,26 +16,71 @@ Xcursor.theme: Fluent-dark-cursors
 /* cyan		6	14 */
 /* white	7	15 */
 
-!! tokyo-night:
-*.color0        #15161E
-*.color1        #f7768e
-*.color2        #9ece6a
-*.color3        #e0af68
-*.color4        #7aa2f7
-*.color5        #bb9af7
-*.color6        #7dcfff
-*.color7        #a9b1d6
-*.color8        #414868
-*.color9        #f7768e
-*.color10       #9ece6a
-*.color11       #e0af68
-*.color12       #7aa2f7
-*.color13       #bb9af7
-*.color14       #7dcfff
-*.color15       #c0caf5
-*.color16       #ff9e64
-*.color17       #db4b4b
-*.inactivebg: 	#1a1b26
-*.activebg: 	  #1a1b26
-*.inactivefg: 	#a9b1d6
-*.activefg:	    #c0caf5
+! TokyoNight colors for Xresources
+
+*background: #1a1b26
+*foreground: #c0caf5
+
+*color0: #15161E
+*color1: #f7768e
+*color2: #9ece6a
+*color3: #e0af68
+*color4: #7aa2f7
+*color5: #bb9af7
+*color6: #7dcfff
+*color7: #a9b1d6
+
+*color8: #414868
+*color9: #f7768e
+*color10: #9ece6a
+*color11: #e0af68
+*color12: #7aa2f7
+*color13: #bb9af7
+*color14: #7dcfff
+*color15: #c0caf5
+
+! TokyoNight colors for Xresources
+
+! *background: #24283b
+! *foreground: #c0caf5
+
+! *color0: #1D202F
+! *color1: #f7768e
+! *color2: #9ece6a
+! *color3: #e0af68
+! *color4: #7aa2f7
+! *color5: #bb9af7
+! *color6: #7dcfff
+! *color7: #a9b1d6
+
+! *color8: #414868
+! *color9: #f7768e
+! *color10: #9ece6a
+! *color11: #e0af68
+! *color12: #7aa2f7
+! *color13: #bb9af7
+! *color14: #7dcfff
+! *color15: #c0caf5
+
+! TokyoNight colors for Xresources
+
+! *background: #e1e2e7
+! *foreground: #3760bf
+
+! *color0: #e9e9ed
+! *color1: #f52a65
+! *color2: #587539
+! *color3: #8c6c3e
+! *color4: #2e7de9
+! *color5: #9854f1
+! *color6: #007197
+! *color7: #6172b0
+
+! *color8: #a1a6c5
+! *color9: #f52a65
+! *color10: #587539
+! *color11: #8c6c3e
+! *color12: #2e7de9
+! *color13: #9854f1
+! *color14: #007197
+! *color15: #3760bf
