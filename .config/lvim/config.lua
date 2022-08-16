@@ -184,10 +184,6 @@ lvim.keys.insert_mode = {
 lvim.keys.normal_mode = {
   ["<c-s>"] = ":w<CR>",
   ["<c-q>"] = ":lua Custom_Close()<CR>",
-  ["<C-l>"] = "W",
-  ["<C-h>"] = "gE",
-  ["<C-k>"] = "<C-U>",
-  ["<C-j>"] = "<C-D>",
 }
 lvim.keys.term_mode = {
 }
@@ -196,16 +192,12 @@ lvim.keys.visual_mode = {
   ["<c-q>"] = "<ESC>:lua Custom_Close()<CR>",
   ["<"] = "<gv",
   [">"] = ">gv",
-  ["<C-k>"] = "<C-U>",
-  ["<C-j>"] = "<C-D>",
 }
 lvim.keys.visual_block_mode = {
   ["<c-s>"] = "<ESC>:w<CR>",
   ["<c-q>"] = "<ESC>:lua Custom_Close()<CR>",
   ["K"] = ":move '<-2<CR>gv-gv",
   ["J"] = ":move '>+1<CR>gv-gv",
-  ["<S-Up>"] = "<C-U>",
-  ["<S-Down>"] = "<C-D>",
 }
 
 lvim.builtin.which_key.mappings = {
