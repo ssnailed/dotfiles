@@ -80,9 +80,9 @@ vim.api.nvim_create_autocmd("BufWritePost", {
   command = "!cd ~/.local/src/dwmblocks/; sudo make install && { killall -q dwmblocks;setsid -f dwmblocks }"
 })
 
-vim.api.nvim_create_autocmd("BufLeave", {
+vim.api.nvim_create_autocmd({ "BufDelete", "VimLeave" }, {
   pattern = "*.tex",
-  command = "!texclear %"
+  command = "!texclear \"%:p\""
 })
 
 -- Lualine
