@@ -102,7 +102,7 @@ components.scrollbar = {
 }
 lvim.builtin.lualine.options = {
   -- component_separators = { left = '│', right = '│' },
-  section_separators = { left = '', right = '' },
+  -- section_separators = { left = '', right = '' },
 }
 lvim.builtin.lualine.sections = {
   lualine_a = { components.filename },
