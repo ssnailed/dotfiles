@@ -180,7 +180,7 @@ map c push A<c-u> # new rename
 map B bulkrename
 
 # Kitty Specific
-map W $kitty @ launch --cwd $PWD --no-response lf
+map W $setsid -f $TERMINAL -e lf >/dev/null 2>&1
 
 # source directory shortcuts
 source "~/.config/lf/shortcutrc"
