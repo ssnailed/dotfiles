@@ -1,0 +1,2 @@
+#!/bin/sh
+setxkbmap -layout de -variant nodeadkeys -option caps:super
