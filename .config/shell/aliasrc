@@ -18,7 +18,6 @@ alias \
 	ffmpeg="ffmpeg -hide_banner" \
 	exa="exa -abghHliS" \
   duf="duf -all" \
-	lock='slock -m "$(cowsay "$(fortune)" | lolcat -ft)"' \
   ls="ls -hN --color=auto --group-directories-first" \
 	grep="grep --color=auto" \
 	diff="diff --color=auto" \
@@ -47,7 +46,7 @@ alias \
 # Misc.
 alias \
 	ref="shortcuts >/dev/null; source ${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc ; source ${XDG_CONFIG_HOME:-$HOME/.config}/shell/zshnameddirrc" \
-	weath="less -S ${XDG_DATA_HOME:-$HOME/.local/share}/weatherreport" \
+	weath="less -S ${XDG_CACHE_HOME:-$HOME/.cache}/weatherreport" \
 	remvirt="virt-manager -c 'qemu+ssh://luca@192.168.178.200/system'" \
 	vim="lvim" \
   wikidown='rclone sync cloud:files/luca/Notes ~/Documents/vimwiki' \
