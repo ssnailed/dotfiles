@@ -231,7 +231,7 @@ ins_left {
     local index = math.ceil(line_ratio * #chars)
     return chars[index]
   end,
-  color = { fg = colors.fg, gui = 'bold' }
+  color = { fg = colors.yellow, gui = 'bold' }
 }
 
 ins_left {
