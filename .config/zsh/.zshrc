@@ -87,17 +87,13 @@ bindkey '^o' _lfcd
 
 # bind lazygit to ctrl-g
 lg () {
-  lazygit
-  tput cuu1;tput el
+  [ ! -d "$(pwd)/.git" ] && [[ $(read -ek "?Not in a git repository. Create a new git repository? (y/n): ") =~ ^[Yy]$ ]] && git init
+  [ -d "$(pwd)/.git" ] && lazygit -p $(pwd)
+  zle reset-prompt
 }
 
-_lazygit () {
-  BUFFER="lg"
-  zle accept-line
-}
-
-zle -N _lazygit
-bindkey '^g' _lazygit
+zle -N lg{,}
+bindkey '^g' lg
 
 # Edit line in vim with ctrl-e:
 autoload edit-command-line; zle -N edit-command-line
