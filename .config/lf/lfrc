@@ -44,6 +44,7 @@ cmd open ${{
     application/vnd.oasis.opendocument.database) setsid -f lobase $fx >/dev/null 2>&1 ;;
   esac
   case $(file --mime-type "$(readlink -f $f)" -b) in
+    text/csv) sc-im $fx ;;
     text/*|application/json|inode/x-empty) $EDITOR $fx;;
     application/pgp-encrypted) $EDITOR $fx ;;
     # *) for f in $fx; do setsid -f $OPENER $f >/dev/null 2>&1; done;;

@@ -49,9 +49,9 @@ case "$(xdg-mime query filetype "$1")" in
   video/*) video "$1" "$2" "$3" "$4" "$5" ;;
   *opendocument*) odt2txt "$1" && exit 0 || echo -e "\e[31modt2txt not installed\e[0m" && exit 1;;
   */markdown) lowdown -Tterm "$1" && exit 0 || echo -e "\e[31mlowdown not installed \e[0m" && exit 1;;
-  */html) w3m -dump "$1" && exit 0 || lynx -dump "$1" && exit 0 || echo -e "\e[31neither lynx nor w3m installed\e[0m" && exit 1;;
+  */html) lynx -dump "$1" && exit 0 || w3m -dump "$1" && exit 0 || echo -e "\e[31neither lynx nor w3m installed\e[0m" && exit 1;;
   text/*|*/json|*/xml) batorcat "$1" "$2" ;;
-  */pdf) [ ! -f "${CACHE}.jpg" ] && pdftoppm -jpeg -f 1 -singlefile "$1" "$CACHE"; image "${CACHE}.jpg" "$2" "$3" "$4" "$5" && exit 0  || echo -e "\e[31mpoppler-utils not installed\e[0m" && exit 1;;
+  */pdf) [ ! -f "${CACHE}.jpg" ] && pdftoppm -jpeg -f 1 -singlefile "$1" "$CACHE"; image "${CACHE}.jpg" "$2" "$3" "$4" "$5" && exit 0  || echo -e "\e[31mpoppler-utils/poppler not installed\e[0m" && exit 1;;
 esac
 case "$(file -bL --mime-type "$1")" in
   text/*) batorcat "$1" "$2" ;;
