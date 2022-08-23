@@ -127,6 +127,8 @@ def draw_tab(
     try:
         with open(f"/tmp/current_venv-{active_pid}", "r") as f:
             env = f.read()
+            if env != "":
+                env = f" {env}"
     except FileNotFoundError:
         env = ""
     cells = [(text_fg, env)]
