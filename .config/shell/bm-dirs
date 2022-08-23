@@ -3,7 +3,7 @@ h   $HOME
 ch  ${XDG_CACHE_HOME:-$HOME/.cache}
 cf  ${XDG_CONFIG_HOME:-$HOME/.config}
 dt  ${XDG_DATA_HOME:-$HOME/.local/share}
-rr  $HOME/.local/src
+rr  $HOME/.local/git
 sc  $HOME/.local/bin
 mn  /mnt
 dl  ${XDG_DOWNLOAD_DIR:-$HOME/Downloads}
