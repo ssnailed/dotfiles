@@ -1,5 +1,8 @@
-# Enable colors and change prompt:
-autoload -U colors && colors	# Load colors
+autoload -U colors && colors
+autoload edit-command-line && zle -N edit-command-line
+autoload -U add-zsh-hook
+autoload -U compinit
+autoload -Uz edit-command-line
 PS1="%B%F{blue}%n%F{cyan}@%F{blue}%m %F{magenta}[%f%3~%F{magenta}] %(?.%F{green}.%F{red})»%f%b "
 RPS1="%(?..%F{red}%?)"
 stty stop undef		# Disable ctrl-s to freeze terminal.
@@ -16,14 +19,12 @@ HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/history"
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/zshnameddirrc" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/zshnameddirrc"
 
 # Basic auto/tab complete:
-autoload -U compinit
 zstyle ':completion:*' menu select
 zmodload zsh/complist
 compinit
 _comp_options+=(globdots)		# Include hidden files.
 
 # vi mode
-autoload -Uz edit-command-line
 zle -N edit-command-line
 bindkey -M vicmd v edit-command-line
 bindkey -v
@@ -91,12 +92,16 @@ lg () {
   [ -d "$(pwd)/.git" ] && lazygit -p $(pwd)
   zle reset-prompt
 }
-
 zle -N lg{,}
 bindkey '^g' lg
 
+# This function simply writes the venv of the last executed command to a file to be read by external status indicators
+function write_venv(){
+  echo -n "${VIRTUAL_ENV:t}" > "/tmp/current_venv-$$"
+}
+add-zsh-hook precmd write_venv
+
 # Edit line in vim with ctrl-e:
-autoload edit-command-line; zle -N edit-command-line
 bindkey '^e' edit-command-line
 
 # other keybinds
