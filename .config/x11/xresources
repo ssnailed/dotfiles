@@ -9,7 +9,11 @@ Xcursor.theme: Fluent-dark-cursors
 
 !! DWM Settings
 dwm.bordernorm: #1D202F
-dwm.bordersel: #414868
+dwm.bordersel: #414868;
+dwm.font: NotoSans Nerd Font:style=Regular:pixelsize=14:antialias=true;
+
+!! dmenu settings
+dmenu.font: NotoSans Nerd Font:style=Regular:pixelsize=14:antialias=true;
 
 /* name   dark light */
 /* black  0    8 */

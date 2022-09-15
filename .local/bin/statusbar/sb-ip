@@ -1,0 +1,6 @@
+#!/bin/sh
+# https://www.maketecheasier.com/ip-address-geolocation-lookups-linux/
+loc_addr="$(ip route get 9.9.9.9 | head -1 | cut -d ' ' -f3)"
+pub_addr="$(curl snaile.de/ip 2>/dev/null)" || exit
+flag="$(grep "flag: " "${XDG_DATA_HOME:-$HOME/.local/share}/emoji" | grep "$(geoiplookup "$addr" | sed 's/.*, //')" | sed 's/ flag: .*//')"
+printf "%s %s" $loc_addr $pub_addr

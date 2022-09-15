@@ -1,7 +1,13 @@
 #!/bin/sh
+big="\033[11m"
+norm="\033[10m"
 if grep -xq 'up' /sys/class/net/w*/operstate 2>/dev/null ; then
-	wifiicon="$(awk '/^\s*w/ { print "直", int($3 * 100 / 70) "% " }' /proc/net/wireless)"
+	percent="$(cat /proc/net/wireless | tail -1 | tr -s ' ' | cut -d ' ' -f3 | sed 's/\.//')"
+	wifi_icon="直"
 elif grep -xq 'down' /sys/class/net/w*/operstate 2>/dev/null ; then
-	grep -xq '0x1003' /sys/class/net/w*/flags && wifiicon="睊" || wifiicon=" "
+	grep -xq '0x1003' /sys/class/net/w*/flags && wifi_icon="睊" || wifi_icon=""
 fi
-printf "%s%s%s%s\n" "$wifiicon" "$(sed "s/down/ /;s/up/ /" /sys/class/net/e*/operstate 2>/dev/null)" "$(sed "s/.*/嬨/" /sys/class/net/tun*/operstate 2>/dev/null)" "$(ip route get 8.8.8.8 | sed 's/.*src \([^ ]*\).*/\1/;t;d')"
+
+ls /sys/class/net/tun* 1>/dev/null 2>&1 && vpn_icon="$(sed "s/.*/嬨/" /sys/class/net/tun*/operstate 2>/dev/null)" || vpn_icon=""
+
+printf "$big%s$norm %s $big%s%s$norm" "$wifi_icon" " $percent" "$(sed "s/down//;s/up//" /sys/class/net/e*/operstate 2>/dev/null | tr "\n" " " | xargs echo -n)" "$vpn_icon"

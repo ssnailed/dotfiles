@@ -15,4 +15,4 @@ case "$clock" in
 	"11") icon="" ;;
 	"12") icon="" ;;
 esac
-printf "%s \033[11m%s\033[10m %s\n" "$(date "+%H:%M")" "$icon" "$(date "+%d.%M.%Y")"
+printf "%s \033[11m%s\033[10m %s\n" "$(date "+%H:%M")" "$icon" "$(date "+%d.%m.%Y")"

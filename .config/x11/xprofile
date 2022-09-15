@@ -5,11 +5,57 @@ xrandr 	--dpi 109 --fb 4480x1633 \
 setbg &			# set the background with the `setbg` script
 xrdb ${XDG_CONFIG_HOME:-$HOME/.config}/x11/xresources & xrdbpid=$!	# Uncomment to use Xresources colors/settings on startup
 
-autostart="checkup mpd dunst unclutter pipewire"
-
+autostart="checkup mpd dunst unclutter pipewire dwmblocks"
 for program in $autostart; do
 	pidof -s "$program" || "$program" &
 done >/dev/null 2>&1
 
+pidof -s "picom" || picom --experimental-backends &
+
 # Ensure that xrdb has finished running before moving on to start the WM/DE.
 [ -n "$xrdbpid" ] && wait "$xrdbpid"
+
+# Start gpg-agent if not already running
+if ! pgrep -x -u "${USER}" gpg-agent 1> /dev/null 2>&1; then
+     gpg-connect-agent /bye 1> /dev/null 2>&1
+fi
+
+# Set SSH to use gpg-agent (see 'man gpg-agent', section EXAMPLES)
+unset SSH_AGENT_PID
+if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
+    # export SSH_AUTH_SOCK="/run/user/$UID/gnupg/S.gpg-agent.ssh"
+    SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
+    export SSH_AUTH_SOCK
+fi
+
+# Set GPG TTY as stated in 'man gpg-agent'
+GPG_TTY="$(tty)"
+export GPG_TTY
+
+# Refresh gpg-agent tty
+gpg-connect-agent updatestartuptty /bye > /dev/null
+
+export XSECURELOCK_AUTH_BACKGROUND_COLOR="#24283b"
+export XSECURELOCK_AUTH_FOREGROUND_COLOR="#c0caf5"
+export XSECURELOCK_AUTH_WARNING_COLOR="#f7768e"
+export XSECURELOCK_BACKGROUND_COLOR="#15161E"
+export XSECURELOCK_DATETIME_FORMAT="%d.%m.%Y %H:%M"
+export XSECURELOCK_PASSWORD_PROMPT="time_hex"
+export XSECURELOCK_AUTH_TIMEOUT=10
+export XSECURELOCK_SHOW_DATETIME=1
+export XSECURELOCK_SAVER="saver_xscreensaver"
+export XSECURELOCK_COMPOSITE_OBSCURER=0
+xset s 300
+xss-lock -- xsecurelock &
+
+# Set GPU settings
+# gwe --hide-window &
+
+xset r rate 300 50
+killall xcape 2>/dev/null ; xcape -e 'Super_L=Escape'
+xset -q | grep "Caps Lock:\s*on" && xdotool key Caps_Lock
+setxkbmap -layout de -variant nodeadkeys -option caps:super
+
+# Start Console TDM
+exec dwm
+
