@@ -1,4 +1,0 @@
-#!/bin/sh
-while : ; do
-  mpc idle >/dev/null && kill -45 "$(pidof dwm)" || break
-done
