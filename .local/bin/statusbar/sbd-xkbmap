@@ -1,0 +1,4 @@
+#!/bin/sh
+while : ; do
+  xkb-switch -w && pkill -RTMIN+15 dwmblocks
+done
