@@ -178,6 +178,10 @@ map i push A<a-b><a-b><a-f> # before extension
 map c push A<c-u> # new rename
 map B bulkrename
 map b $cp "$f" "$f-COPY"
+map u :clear; unselect
+map n &echo $f | xclip -r -selection c
+map N
+map gh
 
 # Kitty Specific
 map W $setsid -f $TERMINAL -e lf >/dev/null 2>&1

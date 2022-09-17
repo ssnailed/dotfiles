@@ -12,4 +12,4 @@
 # Description = Updating statusbar...
 # When = PostTransaction
 # Exec = /usr/bin/pkill -RTMIN+8 dwmblocks # Or i3blocks if using i3.
-pacman -Qu | grep -Fcv "[ignored]" | sed "s/^/ /;s/^ 0$//g"
+echo -n $(pacman -Qu | grep -Fcv "[ignored]" | sed "s/^/ /;s/^ 0$//g")
