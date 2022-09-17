@@ -11,5 +11,5 @@ fi
 
 ls /sys/class/net/tun* 1> /dev/null 2>&1 && vpn_icon="$(sed "s/.*/嬨/" /sys/class/net/tun*/operstate 2>/dev/null)" || vpn_icon=""
 
-printf "%s%s%s%s" "$wifi_icon" "$percent" "$(sed "s/down//;s/up//;s/\n//" /sys/class/net/e*/operstate 2>/dev/null)" "$vpn_icon"
+printf "%s%s%s%s\n" "$wifi_icon" "$percent" "$(sed "s/down//;s/up//;s/\n//" /sys/class/net/e*/operstate 2>/dev/null)" "$vpn_icon"
 
