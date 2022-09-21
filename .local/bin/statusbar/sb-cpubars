@@ -21,5 +21,5 @@ echo "$stats" | while read -r row; do
 		"6"|"7"|"8") printf "\033[31m▇";;
 
 	esac
-done; printf "\033[0m\\n"
+done; printf "\033[0m\n"
 echo "$stats" > "$cache"
