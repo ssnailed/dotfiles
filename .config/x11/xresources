@@ -5,11 +5,11 @@ Xcursor.theme: Fluent-dark-cursors
 *.alpha: 0.8
 
 !! Set a default font and font size:
-*.font: NotoSans Nerd Font:style=Regular:pixelsize=14:antialias=true;
+*.font: Noto Sans:style=Regular:pixelsize=14:antialias=true;
 
 !! DWM Settings
-dwm.bordernorm: #1D202F
-dwm.bordersel: #414868
+dwm.bordernorm: #24283b
+dwm.bordersel: #383c4a
 dwm.font: NotoSans Nerd Font:style=Regular:pixelsize=14:antialias=true;
 
 !! dmenu settings
