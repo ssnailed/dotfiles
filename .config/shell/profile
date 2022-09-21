@@ -63,7 +63,6 @@ export AWT_TOOLKIT="MToolkit wmname LG3D"	#May have to install wmname
 export _JAVA_AWT_WM_NONREPARENTING=1	# Fix for Java applications in dwm
 export ANSIBLE_NOCOWS=1			# Stop those fucking cows in Ansible
 export VIRTUAL_ENV_DISABLE_PROMPT=1
-export PYENV_PROMPT=" %F{yellow}%F{reset} "
 
 
 # This is the list for lf icons:
@@ -232,5 +231,5 @@ ex=:\
 
 [ "$(tty)" = "/dev/tty1" ] && ! pidof -s Xorg >/dev/null 2>&1 && exec startx "$XINITRC"
 [ ! -f ${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc ] && setsid shortcuts >/dev/null 2>&1
-# sudo -n loadkeys ${XDG_DATA_HOME:-$HOME/.local/share}/ttymaps.kmap 2>/dev/null
+sudo -n loadkeys ${XDG_DATA_HOME:-$HOME/.local/share}/ttymaps.kmap 2>/dev/null
 
