@@ -1,6 +1,6 @@
 #!/bin/sh
 
-setxkbmap -layout de,us -variant nodeadkeys,dvp -option caps:super -option terminate:ctrl_alt_bksp
+setxkbmap -layout de,us -variant nodeadkeys,dvorak -option caps:super -option terminate:ctrl_alt_bksp
 xset r rate 300 50
 killall xcape 2>/dev/null ; xcape -e 'Super_L=Escape'
 xset -q | grep "Caps Lock:\s*on" && xdotool key Caps_Lock
