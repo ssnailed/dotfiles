@@ -20,6 +20,7 @@ vim.opt.foldlevelstart                    = 99
 vim.opt.foldexpr                          = "nvim_treesitter#foldexpr()"
 lvim.format_on_save                       = false
 lvim.line_wrap_cursor_movement            = false
+lvim.transparent_window                   = true
 
 -- Vimwiki Settings
 vim.g.vimwiki_ext2syntax = { ['.Rmd'] = 'markdown', ['.rmd'] = 'markdown', ['.md'] = 'markdown',
@@ -45,6 +46,14 @@ lvim.builtin.cmp.sources = {
 local formatters = require "lvim.lsp.null-ls.formatters"
 formatters.setup {
   { command = "black", filetypes = { "python" } },
+}
+
+local linters = require "lvim.lsp.null-ls.linters"
+linters.setup {
+  {
+    command = "shellcheck",
+    args = { "--severity", "warning" },
+  },
 }
 
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
