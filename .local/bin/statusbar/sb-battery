@@ -9,34 +9,37 @@ for battery in /sys/class/power_supply/BAT?*; do
 	[ -n "${capacity+x}" ] && printf " "
 	capacity="$(cat "$battery/capacity" 2>&1)"
 	case "$(cat "$battery/status" 2>&1)" in
-		"Full") icon=""; color="$green" ;;
-		"Charging") icon=""; color="$cyan" ;;
-		"Not charging") icon=""; color="$white" ;;
-		"Unknown") icon=""; color="$orange" ;;
+		"Full") icon=""; color="$green" ;;
+		"Charging") icon=""; color="$cyan" ;;
+		"Not charging") icon=""; color="$white" ;;
+		"Unknown") icon=""; color="$orange" ;;
 		"Discharging") 
       if [ "$capacity" -le 10 ]; then
-        icon=""; color="$red"
+        icon=""; color="$red"
       elif [ "$capacity" -le 20 ]; then
-        icon=""; color="$red"
+        icon=""; color="$red"
       elif [ "$capacity" -le 30 ]; then
-        icon=""; color="$white"
+        icon=""; color="$white"
       elif [ "$capacity" -le 40 ]; then
-        icon=""; color="$white"
+        icon=""; color="$white"
       elif [ "$capacity" -le 50 ]; then
-        icon=""; color="$white"
+        icon=""; color="$white"
       elif [ "$capacity" -le 60 ]; then
-        icon=""; color="$white"
+        icon=""; color="$white"
       elif [ "$capacity" -le 70 ]; then
-        icon=""; color="$white"
+        icon=""; color="$white"
       elif [ "$capacity" -le 80 ]; then
-        icon=""; color="$white"
+        icon=""; color="$white"
       elif [ "$capacity" -le 90 ]; then
-        icon=""; color="$white"
+        icon=""; color="$white"
+      elif [ "$capacity" -le 95 ]; then
+        icon=""; color="$white"
       else
-        icon=""; color="$white"
+        icon=""; color="$white"
       fi
+    
     ;;
 		*) exit 1 ;;
 	esac
-	printf "$color%s$reset %d%%" "$icon" "$capacity";
+	printf "$color%s$reset %d" "$icon" "$capacity";
 done && printf "\\n"

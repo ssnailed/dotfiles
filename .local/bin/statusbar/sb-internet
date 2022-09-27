@@ -1,15 +1,28 @@
 #!/bin/sh
-if grep -xq 'up' /sys/class/net/w*/operstate 2>/dev/null ; then
-  percent=$(tail -1 /proc/net/wireless | tr -s ' ' | cut -d ' ' -f3 | sed 's/\.//')
-  wifi_icon="直"
-elif grep -xq 'down' /sys/class/net/w*/operstate 2>/dev/null ; then
-  grep -xq '0x1003' /sys/class/net/w*/flags && wifi_icon="睊" || wifi_icon=""
-else
-  wifi_icon=""
-  percent=""
+shift=""
+
+if ls /sys/class/net/w*/operstate 1>/dev/null 2>&1; then
+  for w in /sys/class/net/w*/operstate; do
+    percent="$(cat /proc/net/wireless | grep "$(basename "$(dirname $w)")" | tr -s ' ' | cut -d ' ' -f3 | tr -dc "[:digit:]")"
+    grep -vxq '0x1003' &&  wifi_icon="" || wifi_icon="$(sed "s/up/直/;s/down/睊/" $w | tr -d "[:space:]")"
+    printf "$shift\033[11m%s\033[10m %s" "$wifi_icon" "$percent"
+    shift=" "
+  done
 fi
 
-ls /sys/class/net/tun* 1> /dev/null 2>&1 && vpn_icon="$(sed "s/.*/嬨/" /sys/class/net/tun*/operstate 2>/dev/null)" || vpn_icon=""
+if ls /sys/class/net/e*/operstate 1>/dev/null 2>&1; then
+  for e in /sys/class/net/e*/operstate; do
+    if_icon="$(sed "s/down//;s/up//" $e)"
+    printf "$shift\033[11m%s\033[10m" "$if_icon"
+    shift=" "
+  done
+fi
 
-printf "%s%s%s%s\n" "$wifi_icon" "$percent" "$(sed "s/down//;s/up//;s/\n//" /sys/class/net/e*/operstate 2>/dev/null)" "$vpn_icon"
+if ls /sys/class/net/tun*/operstate 1>/dev/null 2>&1; then
+  for _ in /sys/class/net/tun*/operstate; do
+    printf "$shift\033[11m%s\033[10m" "嬨"
+    shift=" "
+  done
+fi
 
+printf "\n"
