@@ -1,0 +1,15 @@
+#!/bin/sh
+vals=$(aptitude full-upgrade --simulate --assume-yes |\
+    grep -m1 '^[0-9]\+ packages upgraded,' |\
+    tr -cd '0-9 ' |\
+    tr ' ' '\n' |\
+    grep '[0-9]\+' |\
+    xargs echo)
+
+print=" "
+for i in $vals; do
+  [ $i != 0 ] && icon="\033[11m\033[10m"
+  print="$print$i/"
+done
+
+[ -n "$icon" ] && printf "$icon " && echo $print | sed 's/\/$//'

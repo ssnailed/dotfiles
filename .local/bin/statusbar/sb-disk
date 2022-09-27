@@ -2,4 +2,4 @@
 # $1 should be drive mountpoint, otherwise assumed /.
 location=${1:-/}
 [ -d "$location" ] || exit
-printf "\033[11m%s\033[10m\n" " $(df -h "$location" | awk ' /[0-9]/ {print $3 "/" $2}')"
+printf "\033[11m\033[10m %s\n" "$(df -h "$location" | awk ' /[0-9]/ {print $3 "/" $2}')"
