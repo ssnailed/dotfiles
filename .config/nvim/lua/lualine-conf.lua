@@ -1,0 +1,215 @@
+local lualine = require('lualine')
+local colors = require("tokyonight.colors").setup({ transform = true })
+local config = require("tokyonight.config").options
+local theme = {}
+theme.normal = {
+  a = { bg = colors.blue, fg = colors.black },
+  b = { bg = colors.fg_gutter, fg = colors.blue },
+  c = { bg = colors.bg_statusline, fg = colors.fg_sidebar },
+}
+theme.insert = {
+  a = { bg = colors.green, fg = colors.black },
+  b = { bg = colors.fg_gutter, fg = colors.green },
+}
+theme.command = {
+  a = { bg = colors.yellow, fg = colors.black },
+  b = { bg = colors.fg_gutter, fg = colors.yellow },
+}
+theme.visual = {
+  a = { bg = colors.magenta, fg = colors.black },
+  b = { bg = colors.fg_gutter, fg = colors.magenta },
+}
+theme.replace = {
+  a = { bg = colors.red, fg = colors.black },
+  b = { bg = colors.fg_gutter, fg = colors.red },
+}
+theme.inactive = {
+  a = { bg = colors.bg_statusline, fg = colors.blue },
+  b = { bg = colors.bg_statusline, fg = colors.fg_gutter, gui = "bold" },
+  c = { bg = colors.bg_statusline, fg = colors.fg_gutter },
+}
+if config.lualine_bold then
+  for _, mode in pairs(theme) do
+    mode.a.gui = "bold"
+  end
+end
+
+local conditions = {
+  buffer_not_empty = function()
+    return vim.fn.empty(vim.fn.expand('%:t')) ~= 1
+  end,
+  hide_in_width = function()
+    return vim.fn.winwidth(0) > 80
+  end,
+  check_git_workspace = function()
+    local filepath = vim.fn.expand('%:p:h')
+    local gitdir = vim.fn.finddir('.git', filepath .. ';')
+    return gitdir and #gitdir > 0 and #gitdir < #filepath
+  end,
+}
+
+lualine.options = {
+  component_separators = '',
+  section_separators = '',
+  theme = theme
+}
+lualine.sections = {
+  lualine_a = {},
+  lualine_b = {},
+  lualine_y = {},
+  lualine_z = {},
+  lualine_c = {},
+  lualine_x = {},
+}
+lualine.inactive_sections = {
+  lualine_a = {},
+  lualine_b = {},
+  lualine_y = {},
+  lualine_z = {},
+  lualine_c = {},
+  lualine_x = {},
+}
+
+local function ins_left(component)
+  table.insert(lualine.sections.lualine_c, component)
+end
+
+local function ins_right(component)
+  table.insert(lualine.sections.lualine_x, component)
+end
+
+local function mode_color()
+  local color = {
+    n = colors.red,
+    i = colors.green,
+    v = colors.magenta,
+    [''] = colors.magenta,
+    V = colors.magenta,
+    c = colors.blue,
+    no = colors.red,
+    s = colors.orange,
+    S = colors.orange,
+    [''] = colors.orange,
+    ic = colors.yellow,
+    R = colors.violet,
+    Rv = colors.violet,
+    cv = colors.red,
+    ce = colors.red,
+    r = colors.cyan,
+    rm = colors.cyan,
+    ['r?'] = colors.cyan,
+    ['!'] = colors.red,
+    t = colors.red,
+  }
+  return { fg = color[vim.fn.mode()] }
+end
+
+ins_left {
+  function()
+    return '▊'
+  end,
+  color = function ()
+    return mode_color()
+  end,
+  padding = { right = 1 },
+}
+
+ins_left {
+  function()
+    local msg = 'No Active Lsp'
+    local buf_ft = vim.api.nvim_buf_get_option(0, 'filetype')
+    local clients = vim.lsp.get_active_clients()
+    if next(clients) == nil then
+      return msg
+    end
+    for _, client in ipairs(clients) do
+      local filetypes = client.config.filetypes
+      if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
+        return client.name
+      end
+    end
+    return msg
+  end,
+  icon = ' LSP:',
+  color = { fg = colors.white },
+}
+
+ins_left {
+  'diagnostics',
+  sources = { 'nvim_diagnostic' },
+  symbols = { error = ' ', warn = ' ', info = ' ' },
+  diagnostics_color = {
+    color_error = { fg = colors.red },
+    color_warn = { fg = colors.yellow },
+    color_info = { fg = colors.cyan },
+  },
+}
+
+ins_left {
+  function()
+    return '%='
+  end,
+}
+
+ins_left {
+  'filename',
+  cond = conditions.buffer_not_empty,
+  color = { fg = colors.magenta, gui = 'bold' },
+}
+
+ins_left {
+  function()
+    local current_line = vim.fn.line "."
+    local total_lines = vim.fn.line "$"
+    local chars = { "", "", "", "", "", "", "", "", "", "", "", "", "" }
+    local line_ratio = current_line / total_lines
+    local index = math.ceil(line_ratio * #chars)
+    return chars[index]
+  end,
+  color = { fg = colors.yellow }
+}
+
+ins_left {
+  '%04l:%04c',
+}
+
+ins_right {
+  'o:encoding',
+  fmt = string.upper,
+  cond = conditions.hide_in_width,
+  color = { fg = colors.green, gui = 'bold' },
+}
+
+ins_right {
+  'fileformat',
+  fmt = string.upper,
+  icons_enabled = false,
+  color = { fg = colors.green, gui = 'bold' },
+}
+
+ins_right {
+  'branch',
+  icon = '',
+  color = { fg = colors.violet, gui = 'bold' },
+}
+
+ins_right {
+  'diff',
+  symbols = { added = ' ', modified = '柳 ', removed = ' ' },
+  diff_color = {
+    added = { fg = colors.green },
+    modified = { fg = colors.orange },
+    removed = { fg = colors.red },
+  },
+  cond = conditions.hide_in_width,
+}
+
+ins_right {
+  function()
+    return '▊'
+  end,
+  color = function ()
+    return mode_color()
+  end,
+  padding = { left = 1 },
+}
