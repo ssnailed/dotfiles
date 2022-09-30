@@ -1,4 +1,4 @@
 require('plugins')
-require('options')
+vim.opt = require('options')
 require('keybinds')
 require('autocmds')
