@@ -45,16 +45,20 @@ lvim.builtin.cmp.sources = {
 
 local formatters = require "lvim.lsp.null-ls.formatters"
 formatters.setup {
-  { command = "black", filetypes = { "python" } },
-}
-
-local linters = require "lvim.lsp.null-ls.linters"
-linters.setup {
   {
-    command = "shellcheck",
-    args = { "--severity", "warning" },
+    command = "black",
+    filetypes = { "python" }
   },
 }
+
+-- local linters = require "lvim.lsp.null-ls.linters"
+-- linters.setup {
+--   {
+--     command = "shellcheck",
+--     args = { "--severity", "warning" },
+--     filetypes = { "bash" }
+--   },
+-- }
 
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
 vim.api.nvim_create_autocmd({ "BufEnter", "FocusGained", "InsertLeave", "WinEnter" }, {
@@ -557,5 +561,6 @@ lvim.builtin.which_key.mappings = {
     i = { ":TSConfigInfo<cr>", "Info" },
   },
   w = { name = "VimWiki" },
+  W = { name = "Open Term" },
   z = { name = "Folding" }
 }
