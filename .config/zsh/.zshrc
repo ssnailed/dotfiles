@@ -119,4 +119,3 @@ PLUGINS_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/zsh/plugins"
 [ -f "$PLUGINS_HOME/fzf/key-bindings.zsh" ]                                         && source "$PLUGINS_HOME/fzf/key-bindings.zsh"
 [ -f "$PLUGINS_HOME/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh" ] && source "$PLUGINS_HOME/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
 [ -f "$PLUGINS_HOME/autopyenv/autopyenv.plugin.zsh" ]                               && source "$PLUGINS_HOME/autopyenv/autopyenv.plugin.zsh"
-
