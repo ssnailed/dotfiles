@@ -22,7 +22,16 @@ return require('packer').startup(function(use)
   use 'folke/lua-dev.nvim'
   use 'tpope/vim-surround'
   use 'tpope/vim-repeat'
-  use 'folke/tokyonight.nvim'
+  use { 'folke/tokyonight.nvim',
+    config = function()
+      require("tokyonight").setup({
+        transparent = true, -- Enable this to disable setting the background color
+        terminal_colors = true, -- Configure the colors used when opening a `:terminal` in Neovim
+        dim_inactive = true, -- dims inactive windows
+        lualine_bold = true, -- When `true`, section headers in the lualine theme will be bold
+      })
+    end,
+  }
   use 'vimwiki/vimwiki'
   use { 'nvim-treesitter/nvim-treesitter',
     run = ':TSUpdate'

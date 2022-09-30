@@ -1,10 +1,12 @@
-vim.opt.undodir                           = vim.fn.stdpath "cache" .. "/undo"
-vim.opt.undofile                          = true
-vim.opt.titlestring                       = " %t"
-vim.opt.termguicolors                     = true
-vim.opt.timeoutlen                        = 500
-vim.opt.foldmethod                        = "expr"
-vim.opt.foldlevelstart                    = 99
-vim.opt.foldexpr                          = "nvim_treesitter#foldexpr()"
+local opt = vim.opt
 
-vim.g.tokyonight_style                    = "night"
+opt.undodir        = vim.fn.stdpath "cache" .. "/undo"
+opt.undofile       = true
+opt.titlestring    = " %t"
+opt.termguicolors  = true
+opt.timeoutlen     = 500
+opt.foldmethod     = "expr"
+opt.foldlevelstart = 99
+opt.foldexpr       = "nvim_treesitter#foldexpr()"
+
+return opt

@@ -1,1 +1,2 @@
 vim.g.mapleader = "space"
+
