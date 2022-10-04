@@ -17,35 +17,47 @@ return require('packer').startup(function(use)
   use 'folke/lua-dev.nvim'
   use 'tpope/vim-surround'
   use 'tpope/vim-repeat'
-  use { 'folke/tokyonight.nvim',
-    config = function()
-      require("tokyonight").setup({
-        transparent = true, -- Enable this to disable setting the background color
-        terminal_colors = true, -- Configure the colors used when opening a `:terminal` in Neovim
-        dim_inactive = true, -- dims inactive windows
-        lualine_bold = true, -- When `true`, section headers in the lualine theme will be bold
-      })
-    end,
-  }
+  use 'norcalli/nvim-colorizer.lua'
+  use 'folke/tokyonight.nvim'
   use 'vimwiki/vimwiki'
-  use 'kyazdani42/nvim-web-devicons'
-  use 'nvim-lualine/lualine.nvim'
-  -- setup handled in lualine-conf.lua
+  use 'williamboman/mason.nvim'
+  use 'kyazdani42/nvim-tree.lua'
+  use 'mfussenegger/nvim-dap'
+  use {
+    'jose-elias-alvarez/null-ls.nvim'
+
+  }
   use {
     'akinsho/bufferline.nvim',
-    config = function()
+    config = function ()
       require('bufferline').setup()
+    end,
+    requires = 'kyazdani42/nvim-web-devicons'
+  }
+  use {
+    'folke/which-key.nvim',
+    config = function()
+      require('which-key').setup()
+      require('keybinds').wk_setup()
+    end
+  }
+  use {
+    'nvim-telescope/telescope.nvim',
+    requires = 'nvim-lua/plenary.nvim'
+  }
+  use {
+    'nvim-lualine/lualine.nvim',
+    config = require('lualine-conf')
+  }
+  use {
+    'lewis6991/gitsigns.nvim',
+    config = function()
+      require('gitsigns').setup()
     end
   }
   use {
     'nvim-treesitter/nvim-treesitter',
     run = ':TSUpdate'
-  }
-  use {
-    'kyazdani42/nvim-tree.lua',
-    config = function()
-      require('nvim-tree').setup()
-    end
   }
   use {
     'felipec/vim-sanegx',
@@ -57,43 +69,8 @@ return require('packer').startup(function(use)
     event = 'BufRead'
   }
   use {
-    'williamboman/mason.nvim',
-    config = function()
-      require('mason').setup()
-    end
-  }
-  use {
     'williamboman/mason-lspconfig.nvim',
     requires = 'neovim/nvim-lspconfig'
-  }
-  use {
-    'lewis6991/gitsigns.nvim',
-    config = function()
-      require('gitsigns').setup()
-    end
-  }
-  use {
-    'norcalli/nvim-colorizer.lua',
-    config = function()
-      require('colorizer').setup({'*'}, {
-        RGB = true, -- #RGB hex codes
-        RRGGBB = true, -- #RRGGBB hex codes
-        RRGGBBAA = true, -- #RRGGBBAA hex codes
-        rgb_fn = true, -- CSS rgb() and rgba() functions
-        hsl_fn = true, -- CSS hsl() and hsla() functions
-        css = true, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
-        css_fn = true, -- Enable all CSS *functions*: rgb_fn, hsl_fn
-      })
-    end,
-  }
-  use {
-    'folke/tokyonight.nvim',
-    config = function()
-      require("tokyonight").setup({
-        style = "night",
-        transparent = true,
-      })
-    end,
   }
   if packer_bootstrap then
     require('packer').sync()

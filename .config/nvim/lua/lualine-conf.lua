@@ -1,38 +1,4 @@
-local lualine = require('lualine')
 local colors = require("tokyonight.colors").setup({ transform = true })
-local config = require("tokyonight.config").options
-local theme = {}
-theme.normal = {
-  a = { bg = colors.blue, fg = colors.black },
-  b = { bg = colors.fg_gutter, fg = colors.blue },
-  c = { bg = colors.bg_statusline, fg = colors.fg_sidebar },
-}
-theme.insert = {
-  a = { bg = colors.green, fg = colors.black },
-  b = { bg = colors.fg_gutter, fg = colors.green },
-}
-theme.command = {
-  a = { bg = colors.yellow, fg = colors.black },
-  b = { bg = colors.fg_gutter, fg = colors.yellow },
-}
-theme.visual = {
-  a = { bg = colors.magenta, fg = colors.black },
-  b = { bg = colors.fg_gutter, fg = colors.magenta },
-}
-theme.replace = {
-  a = { bg = colors.red, fg = colors.black },
-  b = { bg = colors.fg_gutter, fg = colors.red },
-}
-theme.inactive = {
-  a = { bg = colors.bg_statusline, fg = colors.blue },
-  b = { bg = colors.bg_statusline, fg = colors.fg_gutter, gui = "bold" },
-  c = { bg = colors.bg_statusline, fg = colors.fg_gutter },
-}
-if config.lualine_bold then
-  for _, mode in pairs(theme) do
-    mode.a.gui = "bold"
-  end
-end
 
 local conditions = {
   buffer_not_empty = function()
@@ -48,34 +14,39 @@ local conditions = {
   end,
 }
 
-lualine.options = {
-  component_separators = '',
-  section_separators = '',
-  theme = theme
-}
-lualine.sections = {
-  lualine_a = {},
-  lualine_b = {},
-  lualine_y = {},
-  lualine_z = {},
-  lualine_c = {},
-  lualine_x = {},
-}
-lualine.inactive_sections = {
-  lualine_a = {},
-  lualine_b = {},
-  lualine_y = {},
-  lualine_z = {},
-  lualine_c = {},
-  lualine_x = {},
+local config = {
+  options = {
+    component_separators = '',
+    section_separators = '',
+    theme = {
+      normal = { c = { fg = colors.fg, bg = colors.bg } },
+      inactive = { c = { fg = colors.fg, bg = colors.bg } },
+    },
+  },
+  sections = {
+    lualine_a = {},
+    lualine_b = {},
+    lualine_y = {},
+    lualine_z = {},
+    lualine_c = {},
+    lualine_x = {},
+  },
+  inactive_sections = {
+    lualine_a = {},
+    lualine_b = {},
+    lualine_y = {},
+    lualine_z = {},
+    lualine_c = {},
+    lualine_x = {},
+  }
 }
 
 local function ins_left(component)
-  table.insert(lualine.sections.lualine_c, component)
+  table.insert(config.sections.lualine_c, component)
 end
 
 local function ins_right(component)
-  table.insert(lualine.sections.lualine_x, component)
+  table.insert(config.sections.lualine_x, component)
 end
 
 local function mode_color()
@@ -213,3 +184,5 @@ ins_right {
   end,
   padding = { left = 1 },
 }
+
+return require('lualine').setup(config)
