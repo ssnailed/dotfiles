@@ -1,10 +1,7 @@
 local M = {}
 vim.g.mapleader = "space"
 
-function M.wk_setup()
-end
-
-function M.kb_setup(maps)
+local function map(maps)
   local options = { noremap = true }
   for mode, binds in ipairs(maps) do
     for _, bind in ipairs(binds) do
@@ -16,6 +13,14 @@ function M.kb_setup(maps)
       vim.api.nvim_set_keymap(mode, key, cmd, opts)
     end
   end
+end
+
+function M.wk_setup()
+
+end
+
+function M.kb_setup()
+
 end
 
 return M
