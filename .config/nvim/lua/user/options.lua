@@ -1,4 +1,3 @@
-vim.cmd[[colorscheme tokyonight]]
 vim.opt.undodir        = vim.fn.stdpath "cache" .. "/undo"
 vim.opt.clipboard      = "unnamedplus"
 vim.opt.conceallevel   = 0
@@ -31,3 +30,4 @@ vim.opt.foldexpr       = "nvim_treesitter#foldexpr()"
 vim.opt.number         = true
 vim.opt.relativenumber = true
 
+vim.g.Illuminate_ftblacklist = {'alpha', 'NvimTree'}
