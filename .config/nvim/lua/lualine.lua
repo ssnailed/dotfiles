@@ -1,3 +1,8 @@
+local status_ok, lualine = pcall(require, "lualine")
+if not status_ok then
+  return
+end
+
 local colors = require("tokyonight.colors").setup({ transform = true })
 
 local conditions = {
@@ -185,4 +190,4 @@ ins_right {
   padding = { left = 1 },
 }
 
-return require('lualine').setup(config)
+lualine.setup(config)
