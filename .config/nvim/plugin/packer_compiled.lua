@@ -79,6 +79,11 @@ _G.packer_plugins = {
     path = "/home/luca/.local/share/nvim/site/pack/packer/start/Comment.nvim",
     url = "https://github.com/numToStr/Comment.nvim"
   },
+  ["DAPInstall.nvim"] = {
+    loaded = true,
+    path = "/home/luca/.local/share/nvim/site/pack/packer/start/DAPInstall.nvim",
+    url = "https://github.com/ravenxrz/DAPInstall.nvim"
+  },
   LuaSnip = {
     loaded = true,
     path = "/home/luca/.local/share/nvim/site/pack/packer/start/LuaSnip",
@@ -188,6 +193,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/luca/.local/share/nvim/site/pack/packer/start/nvim-dap",
     url = "https://github.com/mfussenegger/nvim-dap"
+  },
+  ["nvim-dap-ui"] = {
+    loaded = true,
+    path = "/home/luca/.local/share/nvim/site/pack/packer/start/nvim-dap-ui",
+    url = "https://github.com/rcarriga/nvim-dap-ui"
   },
   ["nvim-lspconfig"] = {
     loaded = true,

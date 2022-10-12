@@ -67,12 +67,14 @@ return packer.startup(function(use)
 	use 'rafamadriz/friendly-snippets'
 	-- LSP/DAP
 	use 'williamboman/mason.nvim'
-	use 'mfussenegger/nvim-dap'
 	use 'jose-elias-alvarez/null-ls.nvim'
 	use 'neovim/nvim-lspconfig'
 	use 'williamboman/mason-lspconfig.nvim'
+	use 'mfussenegger/nvim-dap'
+  use 'rcarriga/nvim-dap-ui'
+  use 'ravenxrz/DAPInstall.nvim'
 
 	if packer_bootstrap then
 	require('packer').sync()
 	end
-	end)
+end)

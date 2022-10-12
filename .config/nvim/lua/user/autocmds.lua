@@ -51,6 +51,15 @@ autocmds = {
     }
   },
   {
+    "BufWritePost",
+    {
+      pattern = "*.java",
+      callback = function()
+        vim.lsp.codelens.refresh()
+      end
+    }
+  },
+  {
     { "BufDelete", "VimLeave" },
     {
       pattern = "*.tex",
@@ -69,15 +78,13 @@ autocmds = {
       end
     }
   },
-  { -- Remove statusline and tabline when in Alpha
-    'User',
+  {
+    'Filetype',
     {
-      pattern = { "AlphaReady" },
+      pattern = { "gitcommit", "markdown" },
       callback = function()
-        vim.cmd [[
-          set showtabline=0 | autocmd BufUnload <buffer> set showtabline=2
-          set laststatus=0 | autocmd BufUnload <buffer> set laststatus=3
-        ]]
+        vim.opt_local.wrap = true
+        vim.opt_local.spell = true
       end,
     }
   },
@@ -87,6 +94,22 @@ autocmds = {
       group = 'packer_user_config',
       pattern = "plugins.lua",
       command = "source <afile> | PackerCompile"
+    }
+  },
+  { -- Fix auto comment
+    'BufWinEnter',
+    {
+      callback = function()
+        vim.cmd("set formatoptions-=cro")
+      end
+    }
+  },
+  { -- Highlight yanked text
+    'TextYankPost',
+    {
+      callback = function()
+        vim.highlight.on_yank({ higroup = "Visual", timeout = 200 })
+      end
     }
   }
 }
