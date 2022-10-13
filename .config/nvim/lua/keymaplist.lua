@@ -51,8 +51,8 @@ return {
       prefix = "<leader>",
       buffer = nil,
       silent = true,
-      noremap = true, -- use `noremap` when creating keymaps
-      nowait = true, -- use `nowait` when creating keymaps
+      noremap = true,
+      nowait = true,
     },
     nopts = {
       mode = "n",
@@ -92,6 +92,11 @@ return {
         s = { "<cmd>PackerSync<cr>", "Sync" },
         S = { "<cmd>PackerStatus<cr>", "Status" },
         u = { "<cmd>PackerUpdate<cr>", "Update" },
+      },
+      t = {
+        name = "Todo Comments",
+        j = { require("todo-comments").jump_next, "Next Comment" },
+        k = { require("todo-comments").jump_prev, "Previous Comment" },
       },
       g = {
         name = "Git",
