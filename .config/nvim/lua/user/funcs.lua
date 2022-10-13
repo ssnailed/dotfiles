@@ -1,10 +1,5 @@
 local M = {}
-
--- Common kill function for bdelete and bwipeout
--- credits: based on bbye and nvim-bufdel, stolen from LunarVim
----@param kill_command? string defaults to "bd"
----@param bufnr? number defaults to the current buffer
----@param force? boolean defaults to false
+-- Modified version of a function stolen from LunarVim
 function M.buf_kill(kill_command, bufnr, force)
   kill_command = kill_command or "bd"
 
@@ -65,6 +60,8 @@ function M.buf_kill(kill_command, bufnr, force)
         end
       end
     end
+  else
+    vim.cmd("quit")
   end
 
   -- Check if buffer still exists, to ensure the target buffer wasn't killed

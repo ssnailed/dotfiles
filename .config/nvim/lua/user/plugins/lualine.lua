@@ -4,6 +4,7 @@ if not status_ok then
 end
 
 local colors = require("tokyonight.colors").setup({ transform = true })
+local icons = require('iconlist')
 
 local conditions = {
   buffer_not_empty = function()
@@ -113,7 +114,7 @@ ins_left {
 ins_left {
   'diagnostics',
   sources = { 'nvim_diagnostic' },
-  symbols = { error = ' ', warn = ' ', info = ' ' },
+  symbols = { error = icons.diagnostics.BoldError .. ' ', warn = icons.diagnostics.BoldWarning .. ' ', info = icons.diagnostics.BoldInformation },
   diagnostics_color = {
     color_error = { fg = colors.red },
     color_warn = { fg = colors.yellow },
@@ -137,7 +138,7 @@ ins_left {
   function()
     local current_line = vim.fn.line "."
     local total_lines = vim.fn.line "$"
-    local chars = { "", "", "", "", "", "", "", "", "", "", "", "", "" }
+    local chars = icons.progress
     local line_ratio = current_line / total_lines
     local index = math.ceil(line_ratio * #chars)
     return chars[index]
@@ -165,13 +166,13 @@ ins_right {
 
 ins_right {
   'branch',
-  icon = '',
+  icon = icons.git.Branch,
   color = { fg = colors.violet, gui = 'bold' },
 }
 
 ins_right {
   'diff',
-  symbols = { added = ' ', modified = '柳 ', removed = ' ' },
+  symbols = { added = ' ', modified = '柳', removed = ' ' },
   diff_color = {
     added = { fg = colors.green },
     modified = { fg = colors.orange },

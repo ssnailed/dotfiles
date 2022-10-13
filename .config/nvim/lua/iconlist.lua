@@ -40,8 +40,8 @@ return {
     LineModified = "",
     LineRemoved = "",
     FileDeleted = "",
-    FileIgnored = "◌",
-    FileRenamed = "➜",
+    FileIgnored = "",
+    FileRenamed = "",
     FileStaged = "S",
     FileUnmerged = "",
     FileUnstaged = "",
@@ -49,7 +49,7 @@ return {
     Diff = "",
     Repo = "",
     Octoface = "",
-    Branch = "",
+    Branch = "",
   },
   ui = {
     ArrowCircleDown = "",
@@ -142,6 +142,7 @@ return {
     Debug = "",
     Trace = "✎",
   },
+  progress = { "", "", "", "", "", "", "", "", "", "", "", "", "" },
   misc = {
     Robot = "ﮧ",
     Squirrel = "",

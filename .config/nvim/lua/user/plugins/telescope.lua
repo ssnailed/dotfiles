@@ -4,7 +4,7 @@ if not status_ok then
 end
 
 local actions = require "telescope.actions"
-local icons = require "icons"
+local icons = require "iconlist"
 
 telescope.setup {
   defaults = {

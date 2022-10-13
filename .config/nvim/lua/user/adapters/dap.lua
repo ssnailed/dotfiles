@@ -1,3 +1,5 @@
+local icons = require('iconlist')
+
 local dap_status_ok, dap = pcall(require, "dap")
 if not dap_status_ok then
   return
@@ -8,17 +10,19 @@ if not dap_ui_status_ok then
   return
 end
 
-local dap_install_status_ok, dap_install = pcall(require, "dap-install")
-if not dap_install_status_ok then
-  return
-end
+-- Debugger installation is now handled by mason
 
-dap_install.setup {}
+-- local dap_install_status_ok, dap_install = pcall(require, "dap-install")
+-- if not dap_install_status_ok then
+--   return
+-- end
+-- 
+-- dap_install.setup {}
+-- 
+-- dap_install.config("python", {})
+-- -- add other configs here
 
-dap_install.config("python", {})
--- add other configs here
-
-require('dapui').setup{
+dapui.setup {
   layouts = {
     {
       elements = {
@@ -41,7 +45,7 @@ require('dapui').setup{
   },
 }
 
-vim.fn.sign_define("DapBreakpoint", { text = "", texthl = "DiagnosticSignError", linehl = "", numhl = "" })
+vim.fn.sign_define("DapBreakpoint", { text = icons.ui.Bug, texthl = "DiagnosticSignError", linehl = "", numhl = "" })
 
 dap.listeners.after.event_initialized["dapui_config"] = function()
   dapui.open()

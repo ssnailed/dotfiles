@@ -9,7 +9,7 @@ if not config_status_ok then
 end
 
 local tree_cb = nvim_tree_config.nvim_tree_callback
-local icons = require 'icons'
+local icons = require 'iconlist'
 
 nvim_tree.setup {
   update_focused_file = {
