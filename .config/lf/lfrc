@@ -146,10 +146,10 @@ cmd paste &{{
 cmd share $curl -F"file=@$fx" https://0x0.snaile.de | xclip -r -selection c
 
 # Bindings
-map Ca $lf -remote "send $id select '$(fzf)'"
-map Ct $lf -remote "send $id select '$(cat ${XDG_DATA_HOME:-$HOME/.local/share}/lf/tags | sed 's/:\*$//' | fzf)'"
-map Cf $lf -remote "send $id select '$(cat ${XDG_DATA_HOME:-$HOME/.local/share}/lf/shortcut-files | fzf)'"
-map Cd $lf -remote "send $id cd '$(cat ${XDG_DATA_HOME:-$HOME/.local/share}/lf/shortcut-dirs | fzf)'"
+map <c-c>a $lf -remote "send $id select '$(fzf)'"
+map <c-c>t $lf -remote "send $id select '$(cat ${XDG_DATA_HOME:-$HOME/.local/share}/lf/tags | sed 's/:\*$//' | fzf)'"
+map <c-c>f $lf -remote "send $id select '$(cat ${XDG_DATA_HOME:-$HOME/.local/share}/lf/shortcut-files | fzf)'"
+map <c-c>d $lf -remote "send $id cd '$(cat ${XDG_DATA_HOME:-$HOME/.local/share}/lf/shortcut-dirs | fzf)'"
 map J $dir=$(sed -e 's/\s*#.*//' -e '/^$/d' -e 's/^\S*\s*//' ${XDG_CONFIG_HOME:-$HOME/.config}/shell/bm-dirs | fzf) && lf -remote "send $id cd $(eval echo $dir)"
 map D trash
 map <c-d> delete
@@ -158,8 +158,9 @@ map R rsyncto
 map P link
 map S share
 map <c-g> $lazygit
-map V push :!$EDITOR<space>
+map <c-v> push :!$EDITOR<space>
 map <c-n> push :mkdir<space>
+map <c-t> push :&touch<space>
 map <c-r> reload
 map <c-s> set hidden!
 map <enter> shell
@@ -180,4 +181,4 @@ map N
 map gh
 
 # Kitty Specific
-map W $setsid -f $TERMINAL -e lf >/dev/null 2>&1
+map W $setsid -f $TERMINAL -e lf
