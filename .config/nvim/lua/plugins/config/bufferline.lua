@@ -7,7 +7,7 @@ local function is_ft(b, ft)
   return vim.bo[b].filetype == ft
 end
 
-local icons = require 'iconlist'
+local icons = require 'config.iconlist'
 
 local config = {
   highlights = {

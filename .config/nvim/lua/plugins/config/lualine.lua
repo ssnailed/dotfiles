@@ -1,10 +1,10 @@
-local status_ok, lualine = pcall(require, "lualine")
+local status_ok, lualine = pcall(require, 'lualine')
 if not status_ok then
   return
 end
 
-local colors = require("tokyonight.colors").setup({ transform = true })
-local icons = require('iconlist')
+local colors = require('tokyonight.colors').setup({ transform = true })
+local icons = require('config.iconlist')
 
 local conditions = {
   buffer_not_empty = function()

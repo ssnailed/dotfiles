@@ -1,10 +1,8 @@
-local status_ok, whichkey = pcall(require, "which-key")
+local status_ok, whichkey = pcall(require, 'which-key')
 if not status_ok then
   return
 end
-local icons = require('iconlist')
-
-local maps = require('keymaplist').wk
+local icons = require('config.iconlist')
 
 whichkey.setup {
   marks = false,
@@ -48,9 +46,7 @@ whichkey.setup {
   triggers = "auto",
   triggers_blacklist = {
     i = { "j", "k" },
-    v = { "j", "k" },
+    v = { "j", "k", "c", "y", "d", "v" },
   },
 }
 
-whichkey.register(maps.nmaps, maps.nopts)
-whichkey.register(maps.vmaps, maps.vopts)

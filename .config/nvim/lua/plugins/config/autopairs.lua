@@ -1,12 +1,11 @@
--- Setup nvim-cmp.
-local status_ok, npairs = pcall(require, "nvim-autopairs")
+local status_ok, autopairs = pcall(require, "nvim-autopairs")
 if not status_ok then
   return
 end
 
-npairs.setup({
-  check_ts = true, -- treesitter integration
-  disable_filetype = { "TelescopePrompt" },
+autopairs.setup({
+  check_ts = true,
+  disable_filetype = { "TelescopePrompt", "vim" },
   ts_config = {
     lua = { "string", "source" },
     javascript = { "string", "template_string" },
@@ -16,7 +15,7 @@ npairs.setup({
     map = "<M-e>",
     chars = { "{", "[", "(", '"', "'" },
     pattern = string.gsub([[ [%'%"%)%>%]%)%}%,] ]], "%s+", ""),
-    offset = 0, -- Offset from pattern match
+    offset = 0,
     end_key = "$",
     keys = "qwertyuiopzxcvbnmasdfghjkl",
     check_comma = true,
@@ -30,4 +29,4 @@ local cmp_status_ok, cmp = pcall(require, "cmp")
 if not cmp_status_ok then
   return
 end
-cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done({}))
+cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())

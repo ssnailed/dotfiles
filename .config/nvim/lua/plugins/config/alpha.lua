@@ -1,10 +1,10 @@
-local status_ok, alpha = pcall(require, "alpha")
+local status_ok, alpha = pcall(require, 'alpha')
 if not status_ok then
   return
 end
 
 local dashboard = require 'alpha.themes.dashboard'
-local icons = require 'iconlist'
+local icons = require 'config.iconlist'
 
 local banner = {
   "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣠⣴⣶⣿⣿⣿⣷⣶⣤⡀⠀⠀⠀⠀⠀⠀",
@@ -43,7 +43,7 @@ dashboard.section.buttons.val = {
   dashboard.button("p", icons.ui.Project .. " Find project", ":lua require('telescope').extensions.projects.projects()<CR>"),
   dashboard.button("r", icons.ui.History .. " Recent files", ":Telescope oldfiles <CR>"),
   dashboard.button("t", icons.ui.FindText .. " Find text", ":Telescope live_grep <CR>"),
-  dashboard.button("c", icons.ui.Gear .. " Config", ":e ~/.config/nvim/init.lua <CR>"),
+  --dashboard.button("c", icons.ui.Gear .. " Config", ":e ~/.config/nvim/init.lua <CR>"),
   dashboard.button("q", icons.ui.SignOut .. " Quit", ":qa<CR>"),
 }
 
