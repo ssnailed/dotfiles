@@ -182,3 +182,6 @@ map gh
 
 # Kitty Specific
 map W $setsid -f $TERMINAL -e lf
+
+# Load bookmark shortcuts
+source "~/.config/lf/shortcutrc"
