@@ -23,8 +23,8 @@ nvim_tree.setup {
         default = icons.ui.File,
         symlink = icons.ui.FileSymlink,
         folder = {
-          arrow_open = ChevronShortDown,
-          arrow_closed = ChevronShortRight,
+          arrow_open = icons.ui.ChevronShortDown,
+          arrow_closed = icons.ui.ChevronShortRight,
           default = icons.ui.Folder,
           open = icons.ui.FolderOpen,
           empty = icons.ui.EmptyFolder,

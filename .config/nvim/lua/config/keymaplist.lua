@@ -41,14 +41,6 @@ M.maps = {
       {"<a-p>", "<cmd>lua require('illuminate').next_reference{reverse=true,wrap=true}<CR>"},
     }
   },
-  toggleterm = {
-    t = {
-      {"<C-h>", [[<C-\><C-n><C-W>h]]},
-      {"<C-j>", [[<C-\><C-n><C-W>j]]},
-      {"<C-k>", [[<C-\><C-n><C-W>k]]},
-      {"<C-l>", [[<C-\><C-n><C-W>l]]},
-    }
-  }
 }
 
 M.whichkey = {
@@ -193,15 +185,6 @@ M.whichkey = {
     },
     n = {
       ["/"] = { "<Plug>(comment_toggle_linewise_current)", "Comment toggle current line" },
-    }
-  },
-  todo = {
-    n = {
-      t = {
-        name = "Todo Comments",
-        j = { function() require("todo-comments").jump_next() end, "Next Comment" },
-        k = { function() require("todo-comments").jump_prev() end, "Previous Comment" },
-      },
     }
   },
   gitsigns = {

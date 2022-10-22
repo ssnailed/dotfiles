@@ -20,8 +20,6 @@ toggleterm.setup({
   },
 })
 
-vim.cmd("autocmd! TermOpen term://* lua require('core.funcs').map('toggleterm')")
-
 local Terminal = require("toggleterm.terminal").Terminal
 local lazygit = Terminal:new({ cmd = "lazygit", hidden = true })
 

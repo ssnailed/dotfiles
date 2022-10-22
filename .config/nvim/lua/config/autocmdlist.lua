@@ -14,15 +14,6 @@ return {
     }
   },
   {
-    "FileType",
-    {
-      pattern = "zsh",
-      callback = function()
-        require("nvim-treesitter.highlight").attach(0, "bash")
-      end
-    }
-  },
-  {
     "BufWritePost",
     {
       pattern = { "bm-files", "bm-dirs" },

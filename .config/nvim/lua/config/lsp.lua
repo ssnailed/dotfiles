@@ -1,3 +1,5 @@
+-- custom formatters and diagnostic clients are handled by null-ls
+-- they can be configured in the null-ls plugin config file
 return {
   ["sumneko_lua"] = {
     settings = {

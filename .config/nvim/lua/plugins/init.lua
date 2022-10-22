@@ -18,7 +18,11 @@ local plugins = {
     ft = "kitty"
   },
   { "kyazdani42/nvim-web-devicons" },
-  { "felipec/vim-sanegx" },
+  { "felipec/vim-sanegx",
+    setup = function()
+      require('funcs').on_file_open("vim-sanegx")
+    end
+  },
   { "folke/which-key.nvim",
     config = function()
       require "plugins.config.whichkey"
@@ -34,7 +38,6 @@ local plugins = {
     after = "which-key.nvim",
     setup = function()
       require('funcs').on_file_open("todo-comments.nvim")
-      require('funcs').map("todo")
     end,
     config = function()
       require('plugins.config.todo-comments')
@@ -52,6 +55,9 @@ local plugins = {
     end,
   },
   { "nvim-lualine/lualine.nvim",
+    setup = function()
+      require('funcs').on_file_open("lualine.nvim")
+    end,
     config = function()
       require("plugins.config.lualine")
     end,
@@ -83,6 +89,7 @@ local plugins = {
   },
   { "RRethy/vim-illuminate",
     opt = true,
+    after = "which-key.nvim",
     setup = function()
       require('funcs').on_file_open("vim-illuminate")
       require('funcs').map("illuminate")
@@ -160,6 +167,7 @@ local plugins = {
     end,
   },
   { "rafamadriz/friendly-snippets",
+    event = "InsertEnter",
     module = { "cmp", "cmp_nvim_lsp" },
   },
   { "hrsh7th/nvim-cmp",
@@ -191,13 +199,12 @@ local plugins = {
     end,
   },
   { "numToStr/Comment.nvim",
-    module = "Comment",
     after = "which-key.nvim",
-    keys = { "gc", "gb" },
     config = function()
       require("plugins.config.comment")
     end,
     setup = function()
+      require('funcs').on_file_open("Comment.nvim")
       require('funcs').map("comment")
     end,
   },
@@ -223,8 +230,7 @@ local plugins = {
    end,
   },
   { "ahmedkhalf/project.nvim",
-    ft = "alpha",
-    cmd = "lua require('telescope').extensions.projects.projects()<CR>",
+    cmd = "Telescope",
     after = "telescope.nvim",
     config = function()
       require("plugins.config.project")
