@@ -1,0 +1,31 @@
+#!/bin/sh
+set -e
+getfsroot() {
+  printf "%s" "$(df "$1" --output=target | tail -1)"
+}
+list() {
+  # 1st arg is trash files directory
+  # 2nd arg is directory to match trash files for
+  [ ! "$(ls -A "$1")" ] && exit 1
+  for file in "$1"/* ; do
+    [ "$(head -1 "$file")" = "[Trash Info]" ] && \
+    fpath=$(grep Path "$file" | cut -d '=' -f2) && \
+    echo "$fpath" | grep -qP "^$2/[^/]+$" && \
+    printf "%s %s %s\n" \
+      "$(basename "$file")" \
+      "$fpath" \
+      "$(date -d "$(grep Date "$file" | cut -d '=' -f2)" +'%x %X')"
+  done
+}
+
+[ -n "$1" ] && dir="$(realpath "$1")" || dir="$(getfsroot "$PWD")"
+fsroot="$(getfsroot "$dir")"
+[ "$fsroot" = "$(getfsroot "${XDG_DATA_HOME:-$HOME/.local/share}")" ] \
+  && basedir="${XDG_DATA_HOME:-$HOME/.local/share}/Trash" \
+  || basedir="${fsroot}/.Trash"
+
+sel="$(list "$basedir/info" "$dir" | fzf)"
+file="$basedir/files/$(echo "$sel" | cut -d ' ' -f1)"
+dest="$(echo "$sel" | cut -d ' ' -f2)"
+command mv -ib "$file" "$dest"
+command rm "$basedir/info/$(echo "$sel" | cut -d ' ' -f1)"
