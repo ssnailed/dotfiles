@@ -1,17 +1,21 @@
 local icons = require "config.iconlist"
 local plugins = {
-  { "wbthomason/packer.nvim" },
+  { "wbthomason/packer.nvim",
+    setup = function()
+      require('funcs').map("packer")
+    end
+  },
   { "nvim-lua/plenary.nvim" },
   { "lewis6991/impatient.nvim" },
   { "tpope/vim-surround",
     setup = function()
       require('funcs').on_file_open("vim-surround")
-    end,
+    end
   },
   { "tpope/vim-repeat",
     setup = function()
       require('funcs').on_file_open("vim-repeat")
-    end,
+    end
   },
   { "fladson/vim-kitty",
     ft = "kitty"
@@ -33,7 +37,6 @@ local plugins = {
     end
   },
   { "folke/todo-comments.nvim",
-    after = "which-key.nvim",
     setup = function()
       require('funcs').on_file_open("todo-comments.nvim")
     end,
@@ -42,7 +45,7 @@ local plugins = {
     end
   },
   { "akinsho/bufferline.nvim",
-    after = "which-key.nvim",
+
     setup = function()
       require('funcs').on_file_open("bufferline.nvim")
       require('funcs').map("bufferline")
@@ -65,7 +68,7 @@ local plugins = {
     end,
   },
   { "lukas-reineke/indent-blankline.nvim",
-    after = "which-key.nvim",
+    after = "nvim-treesitter",
     setup = function()
       require('funcs').on_file_open("indent-blankline.nvim")
       require('funcs').map("blankline")
@@ -83,7 +86,6 @@ local plugins = {
     end,
   },
   { "RRethy/vim-illuminate",
-    after = "which-key.nvim",
     setup = function()
       require('funcs').on_file_open("vim-illuminate")
       require('funcs').map("illuminate")
@@ -196,7 +198,6 @@ local plugins = {
     end,
   },
   { "numToStr/Comment.nvim",
-    after = "which-key.nvim",
     config = function()
       require('plugins.config.comment')
     end,
@@ -208,7 +209,6 @@ local plugins = {
   { "kyazdani42/nvim-tree.lua",
     ft = "alpha",
     cmd = { "NvimTreeToggle", "NvimTreeFocus" },
-    after = "which-key.nvim",
     config = function()
       require('plugins.config.nvim-tree')
     end,
@@ -218,7 +218,6 @@ local plugins = {
   },
   { "nvim-telescope/telescope.nvim",
     cmd = "Telescope",
-    after = "which-key.nvim",
     config = function()
       require('plugins.config.telescope')
     end,

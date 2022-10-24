@@ -172,11 +172,12 @@ M.whichkey = {
     n = {
       p = {
         name = "Packer",
-        c = { function() require('packer').Compile() end, "Compile" },
-        i = { function() require('packer').Install() end, "Install" },
-        s = { function() require('packer').Sync() end, "Sync" },
-        S = { function() require('packer').Status() end, "Status" },
-        u = { function() require('packer').Update() end, "Update" },
+        c = { "<cmd>PackerCompile<CR>", "Compile" },
+        C = { "<cmd>PackerClean<CR>", "Compile" },
+        i = { "<cmd>PackerInstall<CR>", "Install" },
+        s = { "<cmd>PackerSync<CR>", "Sync" },
+        S = { "<cmd>PackerStatus<CR>", "Status" },
+        u = { "<cmd>PackerUpdate<CR>", "Update" },
       },
     }
   },
