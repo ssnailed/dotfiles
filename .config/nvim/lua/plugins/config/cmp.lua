@@ -12,7 +12,8 @@ local function border(hl_name)
     { "╯", hl_name },
     { "─", hl_name },
     { "╰", hl_name },
-    { "│", hl_name },}
+    { "│", hl_name },
+  }
 end
 
 local check_backspace = function()

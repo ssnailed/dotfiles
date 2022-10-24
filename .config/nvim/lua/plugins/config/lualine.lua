@@ -90,7 +90,7 @@ ins_left {
   function()
     return '▊'
   end,
-  color = function ()
+  color = function()
     return mode_color()
   end,
   padding = { right = 1 },
@@ -119,7 +119,8 @@ ins_left {
 ins_left {
   'diagnostics',
   sources = { 'nvim_diagnostic' },
-  symbols = { error = icons.diagnostics.BoldError .. ' ', warn = icons.diagnostics.BoldWarning .. ' ', info = icons.diagnostics.BoldInformation },
+  symbols = { error = icons.diagnostics.BoldError .. ' ', warn = icons.diagnostics.BoldWarning .. ' ',
+    info = icons.diagnostics.BoldInformation },
   diagnostics_color = {
     color_error = { fg = colors.red },
     color_warn = { fg = colors.yellow },
@@ -135,7 +136,6 @@ ins_left {
 
 ins_left {
   'filename',
-  cond = conditions.buffer_not_empty,
   color = { fg = colors.magenta, gui = 'bold' },
 }
 
@@ -190,7 +190,7 @@ ins_right {
   function()
     return '▊'
   end,
-  color = function ()
+  color = function()
     return mode_color()
   end,
   padding = { left = 1 },

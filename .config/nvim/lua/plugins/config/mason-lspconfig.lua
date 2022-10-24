@@ -5,7 +5,7 @@ end
 
 local serverlist = require('config.lsp')
 local servers = {}
-for key,_ in pairs(serverlist) do
+for key, _ in pairs(serverlist) do
   table.insert(servers, key)
 end
 

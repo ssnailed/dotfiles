@@ -1,4 +1,3 @@
-local packer_bootstrap = require('funcs').bootstrap()
 local icons = require "config.iconlist"
 local plugins = {
   { "wbthomason/packer.nvim" },
@@ -25,7 +24,7 @@ local plugins = {
   },
   { "folke/which-key.nvim",
     config = function()
-      require "plugins.config.whichkey"
+      require('plugins.config.whichkey')
     end,
   },
   { "folke/tokyonight.nvim",
@@ -34,7 +33,6 @@ local plugins = {
     end
   },
   { "folke/todo-comments.nvim",
-    opt = true,
     after = "which-key.nvim",
     setup = function()
       require('funcs').on_file_open("todo-comments.nvim")
@@ -44,14 +42,13 @@ local plugins = {
     end
   },
   { "akinsho/bufferline.nvim",
-    opt = true,
     after = "which-key.nvim",
     setup = function()
       require('funcs').on_file_open("bufferline.nvim")
       require('funcs').map("bufferline")
     end,
     config = function()
-      require("plugins.config.bufferline")
+      require('plugins.config.bufferline')
     end,
   },
   { "nvim-lualine/lualine.nvim",
@@ -59,43 +56,40 @@ local plugins = {
       require('funcs').on_file_open("lualine.nvim")
     end,
     config = function()
-      require("plugins.config.lualine")
+      require('plugins.config.lualine')
     end,
   },
   { "akinsho/toggleterm.nvim",
     config = function()
-      require("plugins.config.toggleterm")
+      require('plugins.config.toggleterm')
     end,
   },
   { "lukas-reineke/indent-blankline.nvim",
-    opt = true,
     after = "which-key.nvim",
     setup = function()
       require('funcs').on_file_open("indent-blankline.nvim")
       require('funcs').map("blankline")
     end,
     config = function()
-      require("plugins.config.indent-blankline")
+      require('plugins.config.indent-blankline')
     end,
   },
   { "norcalli/nvim-colorizer.lua",
-    opt = true,
     setup = function()
       require('funcs').on_file_open("nvim-colorizer.lua")
     end,
     config = function()
-      require("plugins.config.nvim-colorizer")
+      require('plugins.config.nvim-colorizer')
     end,
   },
   { "RRethy/vim-illuminate",
-    opt = true,
     after = "which-key.nvim",
     setup = function()
       require('funcs').on_file_open("vim-illuminate")
       require('funcs').map("illuminate")
     end,
     config = function()
-      require("plugins.config.illuminate")
+      require('plugins.config.illuminate')
     end,
   },
   { "nvim-treesitter/nvim-treesitter",
@@ -112,7 +106,7 @@ local plugins = {
     },
     run = ":TSUpdate",
     config = function()
-      require("plugins.config.treesitter")
+      require('plugins.config.treesitter')
     end,
   },
   { "lewis6991/gitsigns.nvim",
@@ -121,49 +115,52 @@ local plugins = {
       require('funcs').gitsigns()
     end,
     config = function()
-      require("plugins.config.gitsigns")
+      require('plugins.config.gitsigns')
     end,
   },
   { "williamboman/mason.nvim",
+    setup = function()
+      require('funcs').map("mason")
+    end,
     config = function()
       require "plugins.config.mason"
     end,
   },
   { "williamboman/mason-lspconfig.nvim",
     config = function()
-      require("plugins.config.mason-lspconfig")
+      require('plugins.config.mason-lspconfig')
     end,
   },
   { "neovim/nvim-lspconfig",
     setup = function()
       require('funcs').on_file_open("nvim-lspconfig")
+      require('funcs').map("lspconfig")
     end,
     config = function()
-      require("plugins.config.lspconfig")
+      require('plugins.config.lspconfig')
     end,
   },
   { "jose-elias-alvarez/null-ls.nvim",
     config = function()
-      require("plugins.config.null-ls")
+      require('plugins.config.null-ls')
     end,
   },
   { "rcarriga/nvim-dap-ui",
-    opt = true,
     after = "nvim-dap",
     setup = function()
       require('funcs').on_file_open("nvim-dap-ui")
     end,
     config = function()
-      require("plugins.config.dapui")
+      require('plugins.config.dapui')
     end,
   },
   { "mfussenegger/nvim-dap",
-    opt = true,
     setup = function()
       require('funcs').on_file_open("nvim-dap")
+      require('funcs').map("dap")
     end,
     config = function()
-      require("plugins.config.dap")
+      require('plugins.config.dap')
     end,
   },
   { "rafamadriz/friendly-snippets",
@@ -173,13 +170,13 @@ local plugins = {
   { "hrsh7th/nvim-cmp",
     after = "friendly-snippets",
     config = function()
-      require("plugins.config.cmp")
+      require('plugins.config.cmp')
     end,
   },
   { "L3MON4D3/LuaSnip",
     after = "nvim-cmp",
     config = function()
-      require("plugins.config.luasnip")
+      require('plugins.config.luasnip')
     end,
   },
   { "saadparwaiz1/cmp_luasnip", after = "LuaSnip" },
@@ -190,18 +187,18 @@ local plugins = {
   { "windwp/nvim-autopairs",
     after = "nvim-cmp",
     config = function()
-      require("plugins.config.autopairs")
+      require('plugins.config.autopairs')
     end,
   },
   { "goolord/alpha-nvim",
     config = function()
-      require("plugins.config.alpha")
+      require('plugins.config.alpha')
     end,
   },
   { "numToStr/Comment.nvim",
     after = "which-key.nvim",
     config = function()
-      require("plugins.config.comment")
+      require('plugins.config.comment')
     end,
     setup = function()
       require('funcs').on_file_open("Comment.nvim")
@@ -213,7 +210,7 @@ local plugins = {
     cmd = { "NvimTreeToggle", "NvimTreeFocus" },
     after = "which-key.nvim",
     config = function()
-      require("plugins.config.nvim-tree")
+      require('plugins.config.nvim-tree')
     end,
     setup = function()
       require('funcs').map("nvimtree")
@@ -223,17 +220,17 @@ local plugins = {
     cmd = "Telescope",
     after = "which-key.nvim",
     config = function()
-      require("plugins.config.telescope")
+      require('plugins.config.telescope')
     end,
-   setup = function()
-     require('funcs').map("telescope")
-   end,
+    setup = function()
+      require('funcs').map("telescope")
+    end,
   },
   { "ahmedkhalf/project.nvim",
     cmd = "Telescope",
     after = "telescope.nvim",
     config = function()
-      require("plugins.config.project")
+      require('plugins.config.project')
     end,
   },
 }
@@ -242,7 +239,7 @@ local status_ok, packer = pcall(require, "packer")
 if not status_ok then
   return
 end
-vim.cmd("packadd packer.nvim")
+vim.cmd "packadd packer.nvim"
 packer.init {
   auto_clean = true,
   compile_on_sync = true,
@@ -254,11 +251,8 @@ packer.init {
     removed_sym = icons.ui.MinusCircle,
     moved_sym = icons.ui.Forward,
     open_fn = function()
-      return require("packer.util").float { border = "single" }
+      return require('packer.util').float { border = "single" }
     end
   }
 }
 packer.startup { plugins }
-if packer_bootstrap then
-  require('packer').sync()
-end

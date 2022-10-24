@@ -49,4 +49,3 @@ whichkey.setup {
     v = { "j", "k", "c", "y", "d", "v" },
   },
 }
-

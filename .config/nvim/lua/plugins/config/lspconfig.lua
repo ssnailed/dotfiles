@@ -7,9 +7,6 @@ local servers = require('config.lsp')
 local opts = {}
 
 local on_attach = function(client, bufnr)
-  client.server_capabilities.documentFormattingProvider = false
-  client.server_capabilities.documentRangeFormattingProvider = false
-  -- TODO: load keymaps
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()

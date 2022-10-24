@@ -21,8 +21,6 @@ return {
       },
     },
   },
-  ["bashls"] = {
-  },
-  ["clangd"] = {
-  },
+  ["bashls"] = {},
+  ["clangd"] = {},
 }

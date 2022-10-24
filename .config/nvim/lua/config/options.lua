@@ -34,6 +34,5 @@ o.number         = true
 o.relativenumber = true
 o.laststatus     = 3
 
-g.Illuminate_ftblacklist = {'alpha', 'NvimTree'}
+g.Illuminate_ftblacklist = { 'alpha', 'NvimTree' }
 g.mapleader = ' '
-

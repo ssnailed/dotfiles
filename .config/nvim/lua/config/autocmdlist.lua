@@ -3,14 +3,14 @@ return {
     { "BufEnter", "FocusGained", "InsertLeave", "WinEnter" },
     {
       pattern = "*",
-      command="if &nu && mode() != \"i\" | set rnu | endif"
+      command = "if &nu && mode() != \"i\" | set rnu | endif"
     }
   },
   { -- Handles the automatic line numeration changes
     { "BufLeave", "FocusLost", "InsertEnter", "WinLeave" },
     {
       pattern = "*",
-      command="if &nu | set nornu | endif"
+      command = "if &nu | set nornu | endif"
     }
   },
   {

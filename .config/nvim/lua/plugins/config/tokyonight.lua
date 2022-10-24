@@ -9,4 +9,4 @@ tokyonight.setup({
   dim_inactive = true,
   lualine_bold = true,
 })
-vim.cmd[[colorscheme tokyonight]]
+vim.cmd [[colorscheme tokyonight]]

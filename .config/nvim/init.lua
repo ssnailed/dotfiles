@@ -1,4 +1,9 @@
+vim.defer_fn(function()
+  pcall(require, "impatient")
+end, 0)
+
 require('config.options')
+require('funcs').bootstrap()
 require('plugins')
 require('funcs').autocmd(require('config.autocmdlist'))
 require('funcs').map('general')

@@ -3,42 +3,42 @@ M.maps = {
   general = {
     n = { -- normal mode
       -- Better window navigation
-      {"<C-h>", "<C-w>h"},
-      {"<C-j>", "<C-w>j"},
-      {"<C-k>", "<C-w>k"},
-      {"<C-l>", "<C-w>l"},
+      { "<C-h>", "<C-w>h" },
+      { "<C-j>", "<C-w>j" },
+      { "<C-k>", "<C-w>k" },
+      { "<C-l>", "<C-w>l" },
       -- Resize with arrows
-      {"<C-Up>", ":resize -2<CR>"},
-      {"<C-Down>", ":resize +2<CR>"},
-      {"<C-Left>", ":vertical resize -2<CR>"},
-      {"<C-Right>", ":vertical resize +2<CR>"},
+      { "<C-Up>", ":resize -2<CR>" },
+      { "<C-Down>", ":resize +2<CR>" },
+      { "<C-Left>", ":vertical resize -2<CR>" },
+      { "<C-Right>", ":vertical resize +2<CR>" },
       -- Navigate buffers
-      {"<TAB>", ":bnext<CR>"},
-      {"<S-TAB>", ":bprevious<CR>"},
-      -- LSP
-      {"gD", "<cmd>lua vim.lsp.buf.declaration()<CR>"},
-      {"gd", "<cmd>lua vim.lsp.buf.definition()<CR>"},
-      {"K",  "<cmd>lua vim.lsp.buf.hover()<CR>"},
-      {"gI", "<cmd>lua vim.lsp.buf.implementation()<CR>"},
-      {"gr", "<cmd>lua vim.lsp.buf.references()<CR>"},
-      {"gl", "<cmd>lua vim.diagnostic.open_float()<CR>"},
+      { "<TAB>", ":bnext<CR>" },
+      { "<S-TAB>", ":bprevious<CR>" },
+      -- lsp
+      { "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>" },
+      { "gd", "<cmd>lua vim.lsp.buf.definition()<CR>" },
+      { "K", "<cmd>lua vim.lsp.buf.hover()<CR>" },
+      { "gI", "<cmd>lua vim.lsp.buf.implementation()<CR>" },
+      { "gr", "<cmd>lua vim.lsp.buf.references()<CR>" },
+      { "gl", "<cmd>lua vim.diagnostic.open_float()<CR>" },
     },
     i = { -- insert mode
       -- Delete last word with ctrl + del
-      {"<C-BS>", "<C-W>"},
+      { "<C-BS>", "<C-W>" },
     },
     v = { -- visual mode
       -- Better paste
-      {"p", '"_dP'},
+      { "p", '"_dP' },
       -- Stay in indent mode
-      {"<", "<gv"},
-      {">", ">gv"},
+      { "<", "<gv" },
+      { ">", ">gv" },
     }
   },
   illuminate = {
     n = {
-      {"<a-n>", "<cmd>lua require('illuminate').next_reference{wrap=true}<CR>"},
-      {"<a-p>", "<cmd>lua require('illuminate').next_reference{reverse=true,wrap=true}<CR>"},
+      { "<a-n>", "<cmd>lua require('illuminate').next_reference{wrap=true}<CR>" },
+      { "<a-p>", "<cmd>lua require('illuminate').next_reference{reverse=true,wrap=true}<CR>" },
     }
   },
 }
@@ -50,34 +50,53 @@ M.whichkey = {
       ["q"] = { function() require("funcs").buf_kill() end, "Close" },
       -- TODO: filepicker ["f"] = {},
       ["h"] = { "<cmd>nohlsearch<CR>", "Clear Highlights" },
+      u = {
+        name = "Utility",
+        c = { "<cmd>w!<CR><cmd>!compiler \"%:p\"<CR>", "Compile" },
+      },
       l = {
         name = "LSP",
         a = { function() vim.lsp.buf.code_action() end, "Code Action" },
-        f = { function() vim.lsp.buf.format{ async = true }() end, "Format" },
-        i = { "<cmd>LspInfo<cr>", "Info" },
-        I = { "<cmd>Mason<cr>", "Mason Info" },
+        f = { function() vim.lsp.buf.format { async = true } end, "Format" },
         j = { function() vim.diagnostic.goto_next() end, "Next Diagnostic" },
         k = { function() vim.diagnostic.goto_prev() end, "Prev Diagnostic" },
         l = { function() vim.lsp.codelens.run() end, "CodeLens Action" },
         q = { function() vim.diagnostic.setloclist() end, "Quickfix" },
         r = { function() vim.lsp.buf.rename() end, "Rename" },
-      },
+      }
+
+    }
+  },
+  lspconfig = {
+    n = {
+      l = {
+        name = "LSP",
+        i = { "<cmd>LspInfo<cr>", "Info" },
+      }
+    }
+  },
+  mason = {
+    n = {
+      l = {
+        name = "LSP",
+        I = { "<cmd>Mason<cr>", "Mason Info" },
+      }
+    }
+  },
+  dap = {
+    n = {
       d = {
         name = "DAP",
-        b = { function() require("dap").toggle_breakpoint() end, "Toggle Breakpoint"},
-        c = { function() require("dap").continue() end, "Continue"},
-        i = { function() require("dap").step_into() end, "Step Into"},
-        o = { function() require("dap").step_over() end, "Step Over"},
-        O = { function() require("dap").step_out() end, "Step Out"},
-        r = { function() require("dap").repl.toggle() end, "Toggle REPL"},
-        l = { function() require("dap").run_last() end, "Run Last"},
-        t = { function() require("dap").terminate() end, "Stop Debugger"},
-        u = { function() require("dapui").toggle() end, "Toggle DAP UI"},
-      },
-      u = {
-        name = "Utility",
-        c = { "<cmd>w!<CR><cmd>!compiler \"%:p\"<CR>", "Compile" },
-      },
+        b = { function() require("dap").toggle_breakpoint() end, "Toggle Breakpoint" },
+        c = { function() require("dap").continue() end, "Continue" },
+        i = { function() require("dap").step_into() end, "Step Into" },
+        o = { function() require("dap").step_over() end, "Step Over" },
+        O = { function() require("dap").step_out() end, "Step Out" },
+        r = { function() require("dap").repl.toggle() end, "Toggle REPL" },
+        l = { function() require("dap").run_last() end, "Run Last" },
+        t = { function() require("dap").terminate() end, "Stop Debugger" },
+        u = { function() require("dapui").toggle() end, "Toggle DAP UI" },
+      }
     }
   },
   telescope = {
@@ -103,7 +122,6 @@ M.whichkey = {
       },
       s = {
         name = "Search",
-        b = { "<cmd>Telescope git_branches<cr>", "Checkout branch" },
         c = { "<cmd>Telescope colorscheme<cr>", "Colorscheme" },
         f = { "<cmd>Telescope find_files<cr>", "Find File" },
         h = { "<cmd>Telescope help_tags<cr>", "Find Help" },
@@ -112,14 +130,15 @@ M.whichkey = {
         r = { "<cmd>Telescope oldfiles<cr>", "Open Recent File" },
         R = { "<cmd>Telescope registers<cr>", "Registers" },
         t = { "<cmd>Telescope live_grep<cr>", "Text" },
+        T = { "<cmd>TodoTelescope<cr>", "Todo Comments" },
         k = { "<cmd>Telescope keymaps<cr>", "Keymaps" },
         C = { "<cmd>Telescope commands<cr>", "Commands" },
       }
     }
   },
   blankline = {
-    n ={
-      ["c"] = {
+    n = {
+      c = {
         function()
           local ok, start = require("indent_blankline.utils").get_current_context(
             vim.g.indent_blankline_context_patterns,
