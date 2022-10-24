@@ -1,4 +1,2 @@
- BUG: Formatting broken along with some other lsp keybinds https://github.com/neovim/nvim-lspconfig
- TODO: Separate DAP and LSP bindings into own section
  TODO: Make keybinds for packer
  NOTE: Maybe use autocmds to register to which-key to allow late startup
