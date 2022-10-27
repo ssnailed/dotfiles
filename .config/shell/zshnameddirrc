@@ -7,6 +7,7 @@ hash -d sc=/home/luca/.local/bin
 hash -d mn=/mnt 
 hash -d dl=/home/luca/Downloads 
 hash -d dm=/home/luca/Documents 
+hash -d co=/home/luca/Documents/Code 
 hash -d ms=/home/luca/Music 
 hash -d pc=/home/luca/Pictures 
 hash -d vd=/home/luca/Videos 
