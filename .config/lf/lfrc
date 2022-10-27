@@ -169,7 +169,7 @@ map J $dir=$(sed -e 's/\s*#.*//' -e '/^$/d' -e 's/^\S*\s*//' ${XDG_CONFIG_HOME:-
 map D trash
 map <c-d> delete
 map T $trash-restore $PWD
-map E extract
+map <c-e> extract
 map R rsyncto
 map P link
 map S share
