@@ -33,6 +33,8 @@ o.foldexpr       = "nvim_treesitter#foldexpr()"
 o.number         = true
 o.relativenumber = true
 o.laststatus     = 3
+o.modeline       = true
+o.modelines      = 3
 
 g.Illuminate_ftblacklist = { 'alpha', 'NvimTree' }
 g.mapleader = ' '

@@ -3,11 +3,6 @@ if not status_ok then
   return
 end
 
-local serverlist = require('config.lsp')
-local servers = {}
-for key, _ in pairs(serverlist) do
-  table.insert(servers, key)
-end
 local icons = require('config.iconlist')
 
 local settings = {

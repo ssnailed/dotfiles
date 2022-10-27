@@ -1,7 +1,7 @@
 local icons = require "config.iconlist"
 local plugins = {
   { "wbthomason/packer.nvim",
-    setup = function()
+    config = function()
       require('funcs').map("packer")
     end
   },
@@ -48,9 +48,9 @@ local plugins = {
 
     setup = function()
       require('funcs').on_file_open("bufferline.nvim")
-      require('funcs').map("bufferline")
     end,
     config = function()
+      require('funcs').map("bufferline")
       require('plugins.config.bufferline')
     end,
   },
@@ -71,9 +71,9 @@ local plugins = {
     after = "nvim-treesitter",
     setup = function()
       require('funcs').on_file_open("indent-blankline.nvim")
-      require('funcs').map("blankline")
     end,
     config = function()
+      require('funcs').map("blankline")
       require('plugins.config.indent-blankline')
     end,
   },
@@ -88,9 +88,9 @@ local plugins = {
   { "RRethy/vim-illuminate",
     setup = function()
       require('funcs').on_file_open("vim-illuminate")
-      require('funcs').map("illuminate")
     end,
     config = function()
+      require('funcs').map("illuminate")
       require('plugins.config.illuminate')
     end,
   },
@@ -128,17 +128,14 @@ local plugins = {
       require "plugins.config.mason"
     end,
   },
-  { "williamboman/mason-lspconfig.nvim",
-    config = function()
-      require('plugins.config.mason-lspconfig')
-    end,
-  },
+  { "williamboman/mason-lspconfig.nvim" },
   { "neovim/nvim-lspconfig",
+    after = "mason-lspconfig.nvim",
     setup = function()
       require('funcs').on_file_open("nvim-lspconfig")
-      require('funcs').map("lspconfig")
     end,
     config = function()
+      require('funcs').map("lspconfig")
       require('plugins.config.lspconfig')
     end,
   },
@@ -159,9 +156,9 @@ local plugins = {
   { "mfussenegger/nvim-dap",
     setup = function()
       require('funcs').on_file_open("nvim-dap")
-      require('funcs').map("dap")
     end,
     config = function()
+      require('funcs').map("dap")
       require('plugins.config.dap')
     end,
   },
@@ -198,31 +195,27 @@ local plugins = {
     end,
   },
   { "numToStr/Comment.nvim",
-    config = function()
-      require('plugins.config.comment')
-    end,
     setup = function()
       require('funcs').on_file_open("Comment.nvim")
+    end,
+    config = function()
       require('funcs').map("comment")
+      require('plugins.config.comment')
     end,
   },
   { "kyazdani42/nvim-tree.lua",
     ft = "alpha",
     cmd = { "NvimTreeToggle", "NvimTreeFocus" },
     config = function()
-      require('plugins.config.nvim-tree')
-    end,
-    setup = function()
       require('funcs').map("nvimtree")
+      require('plugins.config.nvim-tree')
     end,
   },
   { "nvim-telescope/telescope.nvim",
     cmd = "Telescope",
     config = function()
-      require('plugins.config.telescope')
-    end,
-    setup = function()
       require('funcs').map("telescope")
+      require('plugins.config.telescope')
     end,
   },
   { "ahmedkhalf/project.nvim",
