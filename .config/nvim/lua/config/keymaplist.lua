@@ -48,7 +48,7 @@ M.whichkey = {
     n = {
       ["w"] = { "<cmd>w!<CR>", "Save" },
       ["q"] = { function() require("funcs").buf_kill() end, "Close" },
-      -- TODO: filepicker ["f"] = {},
+      ["f"] = { function() require("lf").start("~") end, "File Picker" },
       ["h"] = { "<cmd>nohlsearch<CR>", "Clear Highlights" },
       u = {
         name = "Utility",
@@ -181,9 +181,9 @@ M.whichkey = {
       },
     }
   },
-  nvimtree = {
+  lf = {
     n = {
-      ["e"] = { "<cmd>NvimTreeToggle<CR>", "Toggle Filetree" },
+      ["e"] = { function() require('lf').start() end, "File Picker" },
     }
   },
   alpha = {

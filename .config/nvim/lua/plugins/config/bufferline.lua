@@ -10,14 +10,14 @@ end
 local icons = require 'config.iconlist'
 
 local config = {
-  highlights = {
-    background = {
-      italic = true,
-    },
-    buffer_selected = {
-      bold = true,
-    },
-  },
+  -- highlights = {
+    -- background = {
+      -- italic = true,
+    -- },
+    -- buffer_selected = {
+      -- bold = true,
+    -- },
+  -- },
   options = {
     mode = "buffers", -- set to "tabs" to only show tabpages instead
     numbers = "none", -- can be "none" | "ordinal" | "buffer_id" | "both" | function
@@ -50,9 +50,6 @@ local config = {
     tab_size = 18,
     diagnostics = "nvim_lsp",
     diagnostics_update_in_insert = false,
-    diagnostics_indicator = diagnostics_indicator,
-    -- NOTE: this will be called a lot so don't do any heavy processing here
-    custom_filter = custom_filter,
     offsets = {
       {
         filetype = "undotree",
@@ -103,38 +100,5 @@ local config = {
     sort_by = "id",
   },
 }
-
-local function diagnostics_indicator(num, _, diagnostics, _)
-  local result = {}
-  local symbols = {
-    error = icons.diagnostics.Error,
-    warning = icons.diagnostics.Warning,
-    info = icons.diagnostics.Info,
-  }
-  for name, count in pairs(diagnostics) do
-    if symbols[name] and count > 0 then
-      table.insert(result, symbols[name] .. " " .. count)
-    end
-  end
-  result = table.concat(result, " ")
-  return #result > 0 and result or ""
-end
-
-local function custom_filter(buf, buf_nums)
-  local logs = vim.tbl_filter(function(b)
-    return is_ft(b, "log")
-  end, buf_nums)
-  if vim.tbl_isempty(logs) then
-    return true
-  end
-  local tab_num = vim.fn.tabpagenr()
-  local last_tab = vim.fn.tabpagenr "$"
-  local is_log = is_ft(buf, "log")
-  if last_tab == 1 then
-    return true
-  end
-  -- only show log buffers in secondary tabs
-  return (tab_num == last_tab and is_log) or (tab_num ~= last_tab and not is_log)
-end
 
 bufferline.setup(config)
