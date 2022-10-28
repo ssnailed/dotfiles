@@ -193,11 +193,12 @@ map B bulkrename
 map b dupe
 map u :clear; unselect
 map n &echo $f | xclip -r -selection c
+map <esc> quit
 map N
 map gh
 
 # Kitty Specific
-map W $setsid -f $TERMINAL -e lf
+map W kitty --detach lf
 
 # Load bookmark shortcuts
 source "~/.config/lf/shortcutrc"
