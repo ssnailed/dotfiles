@@ -183,7 +183,7 @@ M.whichkey = {
   },
   lf = {
     n = {
-      ["e"] = { function() require('lf').start() end, "File Picker" },
+      ["e"] = { function() require("lf").start() end, "File Picker" },
     }
   },
   alpha = {
@@ -200,12 +200,12 @@ M.whichkey = {
     }
   },
   comment = {
+    n = {
+      ["/"] = { "<Plug>(comment_toggle_linewise_current)", "Comment toggle current line" },
+    },
     v = {
       ["/"] = { "<Plug>(comment_toggle_linewise_visual)", "Comment toggle linewise" },
     },
-    n = {
-      ["/"] = { "<Plug>(comment_toggle_linewise_current)", "Comment toggle current line" },
-    }
   },
   gitsigns = {
     n = {

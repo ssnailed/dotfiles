@@ -1,5 +1,4 @@
 local M = {}
-
 function M.autocmd(list)
   vim.api.nvim_create_augroup('packer_user_config', {clear = true})
 
@@ -100,20 +99,18 @@ function M.map(section)
   end
 
   local wk_ok, whichkey = pcall(require, 'which-key')
-  local wkopts = {
-    mode = "",
-    prefix = "<leader>",
-    buffer = nil,
-    silent = true,
-    noremap = true,
-    nowait = true,
-  }
   if wk_ok then
     local wkmaps = require('config.keymaplist').whichkey[section]
     if wkmaps then
       for mode, binds in pairs(wkmaps) do
-        wkopts.mode = mode
-        whichkey.register(binds, wkopts)
+        whichkey.register(binds, {
+          mode = mode,
+          prefix = "<leader>",
+          buffer = nil,
+          silent = true,
+          noremap = true,
+          nowait = true,
+        })
       end
     end
   end

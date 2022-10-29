@@ -45,7 +45,6 @@ local plugins = {
     end
   },
   { "akinsho/bufferline.nvim",
-
     setup = function()
       require('funcs').on_file_open("bufferline.nvim")
       require('funcs').map("bufferline")
@@ -210,16 +209,12 @@ local plugins = {
     end
   },
   { "nvim-telescope/telescope.nvim",
-    cmd = "Telescope",
     config = function()
       require('plugins.config.telescope')
-    end,
-    setup = function()
       require('funcs').map("telescope")
     end,
   },
   { "ahmedkhalf/project.nvim",
-    cmd = "Telescope",
     after = "telescope.nvim",
     config = function()
       require('plugins.config.project')
@@ -233,8 +228,6 @@ if not status_ok then
 end
 vim.cmd "packadd packer.nvim"
 packer.init {
-  auto_clean = true,
-  compile_on_sync = true,
   git = { clone_timeout = 6000 },
   display = {
     working_sym = icons.misc.Watch,
