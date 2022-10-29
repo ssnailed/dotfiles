@@ -8,8 +8,8 @@ Xcursor.theme: Fluent-dark-cursors
 *.font: Noto Sans:style=Regular:pixelsize=14:antialias=true;
 
 !! DWM Settings
-dwm.bordernorm: #24283b
-dwm.bordersel: #383c4a
+dwm.bordernorm: #383c4a 
+dwm.bordersel: #7aa2f7 
 dwm.font: NotoSans Nerd Font:style=Regular:pixelsize=14:antialias=true;
 
 !! dmenu settings
