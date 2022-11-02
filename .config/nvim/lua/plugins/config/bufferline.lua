@@ -63,8 +63,8 @@ local config = {
     left_mouse_command = "buffer %d", -- can be a string | function, see "Mouse actions"
     middle_mouse_command = nil, -- can be a string | function, see "Mouse actions"
     indicator = {
-      icon = icons.ui.DoubleChevronRight, -- this should be omitted if indicator style is not 'icon'
-      style = "icon", -- can also be 'underline'|'none',
+      -- icon = icons.ui.DoubleChevronRight, -- this should be omitted if indicator style is not 'icon'
+      style = "none", -- can also be 'underline'|'none',
     },
     buffer_close_icon = icons.ui.Close,
     modified_icon = icons.ui.Circle,
