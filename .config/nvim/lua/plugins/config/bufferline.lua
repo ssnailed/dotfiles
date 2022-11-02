@@ -1,23 +1,60 @@
+local colors = require('tokyonight.colors').setup({ transform = true })
+
 local status_ok, bufferline = pcall(require, "bufferline")
 if not status_ok then
   return
 end
 
+local icons = require 'config.iconlist'
+
 local function is_ft(b, ft)
   return vim.bo[b].filetype == ft
 end
 
-local icons = require 'config.iconlist'
+local function diagnostics_indicator(_, _, diagnostics, _)
+  local result = {}
+  local symbols = {
+    error = icons.diagnostics.Error,
+    warning = icons.diagnostics.Warning,
+    info = icons.diagnostics.Information,
+  }
+  for name, count in pairs(diagnostics) do
+    if symbols[name] and count > 0 then
+      table.insert(result, symbols[name] .. " " .. count)
+    end
+  end
+  result = table.concat(result, " ")
+  return #result > 0 and result or ""
+end
+
+local function custom_filter(buf, buf_nums)
+  local logs = vim.tbl_filter(function(b)
+    return is_ft(b, "log")
+  end, buf_nums)
+  if vim.tbl_isempty(logs) then
+    return true
+  end
+  local tab_num = vim.fn.tabpagenr()
+  local last_tab = vim.fn.tabpagenr "$"
+  local is_log = is_ft(buf, "log")
+  if last_tab == 1 then
+    return true
+  end
+  -- only show log buffers in secondary tabs
+  return (tab_num == last_tab and is_log) or (tab_num ~= last_tab and not is_log)
+end
 
 local config = {
-  -- highlights = {
-    -- background = {
-      -- italic = true,
-    -- },
-    -- buffer_selected = {
-      -- bold = true,
-    -- },
-  -- },
+  highlights = {
+    background = {
+      italic = true,
+      bold = false,
+    },
+    buffer_selected = {
+      italic = false,
+      bold = true,
+    },
+  },
   options = {
     mode = "buffers", -- set to "tabs" to only show tabpages instead
     numbers = "none", -- can be "none" | "ordinal" | "buffer_id" | "both" | function
@@ -26,7 +63,7 @@ local config = {
     left_mouse_command = "buffer %d", -- can be a string | function, see "Mouse actions"
     middle_mouse_command = nil, -- can be a string | function, see "Mouse actions"
     indicator = {
-      icon = icons.ui.BoldLineLeft, -- this should be omitted if indicator style is not 'icon'
+      icon = icons.ui.DoubleChevronRight, -- this should be omitted if indicator style is not 'icon'
       style = "icon", -- can also be 'underline'|'none',
     },
     buffer_close_icon = icons.ui.Close,
@@ -50,6 +87,9 @@ local config = {
     tab_size = 18,
     diagnostics = "nvim_lsp",
     diagnostics_update_in_insert = false,
+    diagnostics_indicator = diagnostics_indicator,
+    -- NOTE: this will be called a lot so don't do any heavy processing here
+    custom_filter = custom_filter,
     offsets = {
       {
         filetype = "undotree",
@@ -89,7 +129,7 @@ local config = {
     persist_buffer_sort = true, -- whether or not custom sorted buffers should persist
     -- can also be a table containing 2 custom separators
     -- [focused and unfocused]. eg: { '|', '|' }
-    separator_style = "thin",
+    separator_style = { '', '' },
     enforce_regular_tabs = false,
     always_show_bufferline = false,
     hover = {

@@ -63,7 +63,7 @@ export AWT_TOOLKIT="MToolkit wmname LG3D"	#May have to install wmname
 export _JAVA_AWT_WM_NONREPARENTING=1	# Fix for Java applications in dwm
 export ANSIBLE_NOCOWS=1			# Stop those fucking cows in Ansible
 export VIRTUAL_ENV_DISABLE_PROMPT=1
-export VAULT_ADDR='https://vault.tralios.de:8200'
+export VAULT_ADDR='https://vault.tralios.de'
 
 
 # This is the list for lf icons:
