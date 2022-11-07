@@ -195,7 +195,7 @@ map u :clear; unselect
 map n &echo $f | xclip -r -selection c
 map <esc> quit
 map N
-map gh
+map g/ cd "/" 
 
 # Kitty Specific
 map W kitty --detach lf
