@@ -35,18 +35,8 @@ local opts = {
   capabilities = capabilities
 }
 
--- for server, config in pairs(servers) do
---   opts = {
---     on_attach = on_attach,
---     capabilities = capabilities
---   }
---   server = vim.split(server, "@")[1]
---   opts = vim.tbl_deep_extend("force", config, opts)
---   lspconfig[server].setup(opts)
--- end
-
 mason_lspconfig.setup({
-  ensure_installed = servers,
+  ensure_installed = {},
   automatic_installation = true,
 })
 
