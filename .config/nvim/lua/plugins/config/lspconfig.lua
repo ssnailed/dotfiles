@@ -44,6 +44,24 @@ mason_lspconfig.setup_handlers({
   function(server_name)
     lspconfig[server_name].setup(opts)
   end,
+  ["intelephense"] = function()
+    opts = {
+      on_attach = on_attach,
+      capabilities = capabilities,
+      init_options = {
+        storagePath = vim.fn.expand "$XDG_CACHE_HOME" .. "/intelephense",
+        globalStoragePath = vim.fn.expand "$XDG_DATA_HOME" .. "/intelephense"
+      },
+      settings = {
+        intelephense = {
+          telemetry = {
+            enable = false,
+          }
+        }
+      }
+    }
+    lspconfig["intelephense"].setup(opts)
+  end,
   ["sumneko_lua"] = function()
     opts = {
       on_attach = on_attach,
