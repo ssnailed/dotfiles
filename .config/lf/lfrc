@@ -183,7 +183,7 @@ map <enter> shell
 map x $$f
 map X !$f
 map o &mimeopen $f
-map O $mimeopen --ask $f
+map O $mimeopen -a $f
 map A rename # at the very end
 map a push A<c-a> # at the very beginning
 map I push A<a-b> # after extension
