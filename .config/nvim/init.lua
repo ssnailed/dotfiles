@@ -5,7 +5,8 @@ end, 0)
 require('config.options')
 require('funcs').bootstrap()
 require('plugins')
-require('funcs').autocmd(require('config.autocmdlist'))
+require('config.autocmdlist')
+require('config.filetypelist')
 require('funcs').map('general')
 
 local icons = require('config.iconlist').diagnostics
