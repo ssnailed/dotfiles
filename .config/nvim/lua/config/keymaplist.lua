@@ -57,7 +57,7 @@ M.whichkey = {
       l = {
         name = "LSP",
         a = { function() vim.lsp.buf.code_action() end, "Code Action" },
-        f = { function() vim.lsp.buf.format { async = true } end, "Format" },
+        f = { function() require("funcs").format { async = true } end, "Format" },
         j = { function() vim.diagnostic.goto_next() end, "Next Diagnostic" },
         k = { function() vim.diagnostic.goto_prev() end, "Prev Diagnostic" },
         l = { function() vim.lsp.codelens.run() end, "CodeLens Action" },
