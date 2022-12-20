@@ -13,7 +13,8 @@ autopairs.setup({
   },
   fast_wrap = {
     map = "<M-e>",
-    chars = { "{", "[", "(", '"', "'" },
+    chars = { "{", "[", "("},
+    -- chars = { "{", "[", "(", '"', "'" },
     pattern = string.gsub([[ [%'%"%)%>%]%)%}%,] ]], "%s+", ""),
     offset = 0,
     end_key = "$",
