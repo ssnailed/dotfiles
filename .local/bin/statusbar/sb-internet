@@ -1,4 +1,5 @@
 #!/bin/sh
+# FIX: Script dies when ethernet cable is plugged in through docking station
 shift=""
 
 if ls /sys/class/net/w*/operstate 1>/dev/null 2>&1; then
