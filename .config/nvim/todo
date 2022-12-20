@@ -1,2 +1,2 @@
- TODO: Function to decide between LS and null-ls for formatting
- TODO: Learn fennel and rewrite this config in it!
+ TODO: Clean up autocomplete bindings
+ TODO: Clean up telescope triggers
