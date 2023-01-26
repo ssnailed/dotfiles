@@ -182,6 +182,7 @@ local plugins = {
   { "hrsh7th/cmp-nvim-lsp", after = "cmp-nvim-lua" },
   { "hrsh7th/cmp-buffer", after = "cmp-nvim-lsp" },
   { "hrsh7th/cmp-path", after = "cmp-buffer" },
+  { "onsails/lspkind.nvim" },
   { "windwp/nvim-autopairs",
     after = "nvim-cmp",
     config = function()
