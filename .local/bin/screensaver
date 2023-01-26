@@ -1,0 +1,183 @@
+#!/bin/sh
+#
+# Copyright 2014 Google Inc. All rights reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+: ${XSECURELOCK_XSCREENSAVER_PATH:=/usr/share/xscreensaver/}
+
+TAB='	'
+
+# Note: the following logic is somewhat derived from parse_screenhack in
+# XScreenSaver.
+convert_xscreensaver_programs() {
+  i=0
+  while IFS= read -r line; do
+    skipwhite() {
+      while :; do
+        case "$line" in
+          $TAB*) line=${line#$TAB} ;;
+          \ *)   line=${line# } ;;
+          *)     break ;;
+        esac
+      done
+    }
+    skipwhite
+    # Read disabled field.
+    case "$line" in
+      -*) enabled=false; line=${line#-}; skipwhite ;;
+      *)  enabled=true ;;
+    esac
+    # Strip visual name (VISUAL:, where VISUAL can't contain " or whitespace).
+    case "${line%%[\" $TAB]*}" in
+      *:*) line=${line#*:}; skipwhite ;;
+    esac
+    # Strip textual description ("description").
+    case "$line" in
+      '"'*) line=${line#\"*\"}; skipwhite ;;
+    esac
+    # What's remaining is the program name with its options.
+    echo "$i $enabled $line"
+    i=$((i+1))
+  done
+}
+
+convert_program_list() {
+  i=0
+  while IFS= read -r line; do
+    echo "$i true $line -root"
+    i=$((i+1))
+  done
+}
+
+list_savers() {
+  want_all=$1
+  if [ -f ~/.xscreensaver ]; then
+    printf "%b" "$(
+      xrdb -n ~/.config/xscreensaver 2>/dev/null |\
+      grep ^programs: |\
+      cut -d : -f 2-
+    )" | convert_xscreensaver_programs
+  else
+    ls "$XSECURELOCK_XSCREENSAVER_PATH" | convert_program_list
+  fi | while read -r number enabled saver flags; do
+    $want_all || $enabled || continue
+    [ -x "$XSECURELOCK_XSCREENSAVER_PATH/$saver" ] || continue
+    printf '%d\t%s/%s\n' "$number" "$XSECURELOCK_XSCREENSAVER_PATH" "$saver $flags"
+  done
+}
+
+mode=
+
+# Debug mode to list all savers.
+case "$1" in
+  --list_savers)
+    list_savers false
+    exit 0
+    ;;
+  --list_all_savers)
+    list_savers true
+    exit 0
+    ;;
+  --internal-override-mode=*)
+    mode=${1#*=}
+    ;;
+esac
+
+if [ -z "$mode" ]; then
+  mode=$(
+    xrdb -n ~/.config/xscreensaver 2>/dev/null |\
+      grep ^mode: |\
+      cut -f 2
+  )
+fi
+
+selected=
+case "$mode" in
+  one)
+    selected=$(
+      xrdb -n ~/.config/xscreensaver 2>/dev/null |\
+        grep ^selected: |\
+        cut -f 2
+    )
+    ;;
+  random)  # NOT random-same.
+    # Try bash's $RANDOM, but if it's not there, just use the PID.
+    selected=${RANDOM:-$$}
+    ;;
+esac
+
+if [ -z "$selected" ]; then  # Note: random-same hits this.
+  # We're using the parent process ID here, which may be a saver_multiplex
+  # instance. This ensures that multiple instances of this always spawn the same
+  # saver on each screen.
+  selected=$PPID
+fi
+
+# Prepare the saver list so we only parse once.
+case "$mode" in
+  one)
+    savers=$(list_savers true)
+    count=$(printf '%s\n' "$savers" | wc -l)
+    ;;
+  *)
+    savers=$(list_savers false)
+    count=$(printf '%s\n' "$savers" | wc -l)
+    ;;
+esac
+
+select_saver() {
+  case "$mode" in
+    one)
+      printf '%s\n' "$savers" | grep "^$selected$(printf '\t')"
+      ;;
+    *)
+      printf '%s\n' "$savers" | tail -n +$((selected % count + 1))
+      ;;
+  esac | head -n 1 | cut -f 2-
+}
+
+# On SIGUSR1, we exit the saver and retry the selection.
+sigusr1_caught=false
+trap 'sigusr1_caught=true' USR1
+
+while :; do
+  saver=$(select_saver)
+  if [ -z "$saver" ]; then
+    echo >&2 "xsecurelock: No saver selected. Giving up."
+    exec ./saver_blank
+  fi
+  sigusr1_caught=false
+  eval $saver
+  status=$?
+  if [ $status -eq 0 ] || $sigusr1_caught; then
+    # Immediately try the next saver.
+    case "$mode" in
+      one)
+        ;;
+      *)
+        selected=$((selected + 1))
+        ;;
+    esac
+  else
+    # Saver failed entirely. Just give up.
+    echo >&2 "xsecurelock: Screen saver failed with status $status: $saver."
+    sleep 2  # Anti-spam delay.
+    if [ x"$mode" != x"random" ]; then
+      # As a fallback, when the saver failed, try random.
+      exec "$0" --internal-override-mode=random
+    fi
+    exit $status
+  fi
+done
+
