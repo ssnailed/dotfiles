@@ -33,10 +33,12 @@ export XSECURELOCK_DATETIME_FORMAT="%d.%m.%Y %H:%M"
 export XSECURELOCK_PASSWORD_PROMPT="time_hex"
 export XSECURELOCK_AUTH_TIMEOUT=10
 export XSECURELOCK_SHOW_DATETIME=1
-export XSECURELOCK_SAVER="saver_xscreensaver"
 export XSECURELOCK_COMPOSITE_OBSCURER=0
+export XSECURELOCK_SAVER="/usr/libexec/xscreensaver/cubicgrid"
+export XSECURELOCK_SHOW_DATETIME=1
+export XSECURELOCK_SHOW_HOSTNAME=1
 xset s 300
-xss-lock -- xsecurelock &
+xss-lock -n /usr/lib/xsecurelock/dimmer -l -- xsecurelock &
 
 # Ensure that xrdb has finished running before moving on to start the WM/DE.
 [ -n "$xrdbpid" ] && wait "$xrdbpid"
