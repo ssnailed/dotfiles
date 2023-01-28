@@ -4,6 +4,7 @@ if not status_ok then
 end
 todo_comments.setup({
   highlight = {
+    multiline = false,
     comments_only = false
   }
 })

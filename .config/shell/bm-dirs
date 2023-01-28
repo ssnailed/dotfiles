@@ -10,7 +10,7 @@ dl  ${XDG_DOWNLOAD_DIR:-$HOME/Downloads}
 dm  ${XDG_DOCUMENTS_DIR:-$HOME/Documents}
 co  ${XDG_DOCUMENTS_DIR:-$HOME/Documents}/Code
 ms  ${XDG_MUSIC_DIR:-$HOME/Music}
-pc  ${XDG_PICTURES_DIR:-$HOME/Pictures}
+ph  ${XDG_PICTURES_DIR:-$HOME/Photos}
 vd  ${XDG_VIDEOS_DIR:-$HOME/Videos}
 
 dot ${XDG_DATA_HOME:-$HOME/.local/share}/dotfiles

@@ -35,6 +35,7 @@ o.relativenumber = true
 o.laststatus     = 3
 o.modeline       = true
 o.modelines      = 3
+o.listchars      = "eol:$,tab:>-,trail:~,extends:>,precedes:<"
 
 g.Illuminate_ftblacklist = { 'alpha', 'NvimTree' }
 g.mapleader = ' '

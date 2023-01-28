@@ -153,7 +153,7 @@ cmd dupe &{{
     find "$PWD" "$file" | grep -oP '(?<=.\.~)\d+(?=~$)' | sort -n | tail -1 | (
       ext=$(($(cat /dev/stdin)+1))
       filedest="$(echo "$file" | sed 's/.~[[:digit:]]*~$//').~$ext~"
-      cp "$file" "$filedest"
+      cp -r "$file" "$filedest"
     )
   done
 }}
@@ -198,7 +198,7 @@ map N
 map g/ cd "/" 
 
 # Kitty Specific
-map W kitty --detach lf
+map W &kitty --detach lf
 
 # Load bookmark shortcuts
 source "~/.config/lf/shortcutrc"

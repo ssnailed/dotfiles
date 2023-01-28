@@ -1,20 +1,4 @@
 local M = {}
-function M.autocmd(list)
-  vim.api.nvim_create_augroup('packer_user_config', {clear = true})
-
-  for _, entry in ipairs(list) do
-    local event = entry[1]
-    local opts = entry[2]
-    if type(opts.group) == "string" and opts.group ~= "" then
-      local exists, _ = pcall(vim.api.nvim_get_autocmds, { group = opts.group })
-      if not exists then
-        vim.api.nvim_create_augroup(opts.group, {})
-      end
-    end
-    vim.api.nvim_create_autocmd(event, opts)
-  end
-end
-
 function M.lazy_load(tb)
   vim.api.nvim_create_autocmd(tb.events, {
     group = vim.api.nvim_create_augroup(tb.augroup_name, {}),
@@ -38,6 +22,18 @@ function M.lazy_load(tb)
   })
 end
 
+function M.on_file_open(plugin_name)
+  M.lazy_load {
+    events = { "BufRead", "BufWinEnter", "BufNewFile" },
+    augroup_name = "BeLazyOnFileOpen" .. plugin_name,
+    plugin = plugin_name,
+    condition = function()
+      local file = vim.fn.expand "%"
+      return file ~= "NvimTree_1" and file ~= "[packer]" and file ~= ""
+    end,
+  }
+end
+
 function M.gitsigns()
   vim.api.nvim_create_autocmd({ "BufRead" }, {
     group = vim.api.nvim_create_augroup("GitSignsLazyLoad", { clear = true }),
@@ -51,18 +47,6 @@ function M.gitsigns()
       end
     end,
   })
-end
-
-function M.on_file_open(plugin_name)
-  M.lazy_load {
-    events = { "BufRead", "BufWinEnter", "BufNewFile" },
-    augroup_name = "BeLazyOnFileOpen" .. plugin_name,
-    plugin = plugin_name,
-    condition = function()
-      local file = vim.fn.expand "%"
-      return file ~= "NvimTree_1" and file ~= "[packer]" and file ~= ""
-    end,
-  }
 end
 
 function M.bootstrap()
@@ -114,6 +98,28 @@ function M.map(section)
       end
     end
   end
+end
+
+function M.format_filter(client)
+  local filetype = vim.bo.filetype
+  local n = require "null-ls"
+  local s = require "null-ls.sources"
+  local method = n.methods.FORMATTING
+  local available_formatters = s.get_available(filetype, method)
+
+  if #available_formatters > 0 then
+    return client.name == "null-ls"
+  elseif client.supports_method "textDocument/formatting" then
+    return true
+  else
+    return false
+  end
+end
+
+function M.format(opts)
+  opts = opts or {}
+  opts.filter = opts.filter or M.format_filter
+  return vim.lsp.buf.format(opts)
 end
 
 -- Modified version of a function stolen from LunarVim
