@@ -6,11 +6,10 @@ setbg &
 xrdb "${XDG_CONFIG_HOME:-$HOME/.config}/x11/xresources" & xrdbpid=$!
 remaps &
 
-autostart="checkup mpd dunst unclutter pipewire dwmblocks"
+autostart="picom checkup mpd dunst unclutter pipewire dwmblocks"
 for program in $autostart; do
 	pidof -s "$program" || "$program" &
 done >/dev/null 2>&1
-pidof -s "picom" || picom --experimental-backends &
 
 if ! pgrep -x -u "${USER}" gpg-agent 1> /dev/null 2>&1; then
      gpg-connect-agent /bye 1> /dev/null 2>&1
