@@ -36,7 +36,7 @@ case "$ext" in
 	go) go run "$file" ;;
 	h) sudo make install ;;
   # findup is a script available here: https://unix.stackexchange.com/a/35265
-  java) loc=$(findup . -name gradlew); [ "$loc":w != "" ] && exec "$loc" run -q -p "$(dirname $loc)" ;;
+    java) loc=$(findup . -name gradlew); [ "$loc" != "" ] && exec "$loc" run -q -p "$(dirname "$loc")" ;;
 	m) octave "$file" ;;
 	md)	if  [ -x "$(command -v lowdown)" ]; then
 			lowdown --parse-no-intraemph "$file" -Tms | groff -mpdfmark -ms -kept > "$base".pdf
@@ -55,5 +55,6 @@ case "$ext" in
 	scad) openscad -o "$base".stl "$file" ;;
 	sent) setsid -f sent "$file" 2>/dev/null ;;
 	tex) textype "$file" ;;
+    fnl) fennel --compile "$file" > "$base.lua" ;;
 	*) sed -n '/^#!/s/^#!//p; q' "$file" | xargs -r -I % "$file" ;;
 esac
