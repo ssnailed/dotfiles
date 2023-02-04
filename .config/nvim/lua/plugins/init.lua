@@ -161,8 +161,6 @@ local plugins = {
             require('plugins.config.dap')
         end,
     },
-    { "olical/aniseed" },
-    { "olical/conjure" },
     { "rafamadriz/friendly-snippets",
         event = "InsertEnter",
         module = { "cmp", "cmp_nvim_lsp" },
@@ -184,10 +182,6 @@ local plugins = {
     { "hrsh7th/cmp-nvim-lsp", after = "cmp-nvim-lua" },
     { "hrsh7th/cmp-buffer", after = "cmp-nvim-lsp" },
     { "hrsh7th/cmp-path", after = "cmp-buffer" },
-    { "paterjason/cmp-conjure",
-        after = { "cmp-buffer", "conjure" },
-        ft = "fennel"
-    },
     { "onsails/lspkind.nvim" },
     { "windwp/nvim-autopairs",
         after = "nvim-cmp",
