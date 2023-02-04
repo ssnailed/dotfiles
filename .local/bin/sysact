@@ -9,8 +9,8 @@ case "$(printf " lock\nﴚ leave dwm\n累 renew dwm\nﭦ hibernate\n sleep
 	' lock') xset s activate & gpg-connect-agent --no-autostart reloadagent /bye;;
 	'ﴚ leave dwm') kill -TERM "$(pgrep -u "$USER" "\bdwm$")" ;;
 	'累 renew dwm') kill -HUP "$(pgrep -u "$USER" "\bdwm$")" ;;
-	# 'ﭦ hibernate') slock $ctl hibernate ;;
-	# ' sleep') slock $ctl suspend ;;
+	# 'ﭦ hibernate') slock $ctl hibernate -i ;;
+	# ' sleep') slock $ctl suspend -i ;;
 	'ﰇ reboot') $ctl reboot ;;
 	'襤 shutdown') $ctl poweroff ;;
 	' display off') xset dpms force off ;;

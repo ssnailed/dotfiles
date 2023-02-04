@@ -1,0 +1,10 @@
+#!/bin/sh
+
+current="$(setxkbmap -query | grep -oP '(layout|variant):\s*\K\w+' | sed ':a;N;s/\n/:/')"
+
+setxkbmap -layout "$(echo "$current" | cut -d ':' -f1)" -variant "$(echo "$current" | cut -d ':' -f2)" -option caps:super -option terminate:ctrl_alt_bksp
+xset r rate 300 50
+killall xcape 2>/dev/null ; xcape -e 'Super_L=Escape'
+xset -q | grep "Caps Lock:\s*on" && xdotool key Caps_Lock
+sleep 0.03
+pkill -RTMIN+15 dwmblocks
