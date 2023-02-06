@@ -6,6 +6,7 @@ green="\033[32m"
 white="\033[37m"
 reset="\033[0m"
 for battery in /sys/class/power_supply/BAT?*; do
+    pidof -x sbd-battery >/dev/null 2>&1 || sbd-battery "$battery" >/dev/null 2>&1 &
 	[ -n "${capacity+x}" ] && printf " "
 	capacity="$(cat "$battery/capacity" 2>&1)"
 	case "$(cat "$battery/status" 2>&1)" in
