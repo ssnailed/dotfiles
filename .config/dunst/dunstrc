@@ -10,20 +10,20 @@
     font = Monospace 12
     format = "<b>%s</b>\n%b"
     frame_width = 2
-    frame_color = "#414868"
+    frame_color = "#383c4a"
 
 [urgency_low]
-    background = "#32344a"
-    foreground = "#787c99"
+    background = "#1a1b26"
+    foreground = "#c0caf5"
     timeout = 3
 
 [urgency_normal]
+    background = "#1a1b26"
     foreground = "#7aa2f7"
-    background = "#32344a"
     timeout = 5
 
 [urgency_critical]
-    background = "#32344a"
+    background = "#1a1b26"
     foreground = "#7aa2f7"
     frame_color = "#ff768e"
     timeout = 10
