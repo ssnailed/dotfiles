@@ -2,5 +2,5 @@
 while : ; do
     dmesg -W -f kern | grep "input:" -q
     sleep 1
-    remaps-dvorak
+    remaps us:dvorak
 done

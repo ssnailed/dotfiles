@@ -6,7 +6,7 @@ setbg &
 xrdb "${XDG_CONFIG_HOME:-$HOME/.config}/x11/xresources" & xrdbpid=$!
 remaps &
 
-autostart="picom checkup dunst unclutter pipewire dwmblocks"
+autostart="picom checkup dunst unclutter pipewire dwmblocks remapd"
 for program in $autostart; do
 	pidof -s "$program" || "$program" &
 done >/dev/null 2>&1
