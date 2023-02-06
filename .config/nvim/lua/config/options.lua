@@ -15,8 +15,8 @@ o.splitbelow     = true
 o.updatetime     = 250
 o.writebackup    = false
 o.expandtab      = true
-o.shiftwidth     = 2
-o.tabstop        = 2
+o.shiftwidth     = 4
+o.tabstop        = 4
 o.cursorline     = true
 o.signcolumn     = "yes"
 o.wrap           = false
@@ -39,3 +39,17 @@ o.listchars      = "eol:$,tab:>-,trail:~,extends:>,precedes:<"
 
 g.Illuminate_ftblacklist = { 'alpha', 'NvimTree' }
 g.mapleader = ' '
+
+local icons = require 'config.iconlist'
+
+local signs = {
+    DiagnosticSignError = icons.BoldError,
+    DiagnosticSignWarn = icons.BoldWarning,
+    DiagnosticSignHint = icons.BoldHint,
+    DiagnosticSignInfo = icons.BoldInformation
+}
+
+for type, icon in pairs(signs) do
+    local hl = type
+    vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+end
