@@ -1,0 +1,8 @@
+#!/bin/sh
+pidof -x sbd-playerctl >/dev/null 2>&1 || sbd-playerctl >/dev/null 2>&1 &
+[ "$(playerctl status 2>&1)" = "No players found" ] && echo ""ﱙ && exit 1
+# song="$(playerctl metadata xesam:artist) - $(playerctl metadata xesam:title)"
+song="$(playerctl metadata xesam:title)"
+[ ${#song} -gt 35 ] && song="$(printf %.35s "$song")…"
+icon=$(playerctl status | sed "s/Playing//;s/Paused//;")
+echo "$icon $song"
