@@ -5,8 +5,8 @@ image() {
     h=$3
     x=$4
     y=$5
-    [[ -v f ]] && kitty +icat --silent --transfer-mode file --place "${w}x${h}@${x}x${y}" "$f" && exit 1
-    chafa "$f" -f symbols -s "$(($w-2))x$h" && exit 1
+    kitty +kitten icat --transfer-mode file --place "${w}x${h}@${x}x${y}" -- "$f"
+    chafa "$f" -f symbols -s "$((w-2))x$h" && exit 1
     echo -e "\e[31mImage previewer not installed\e[0m"
     return 1
 }
@@ -17,7 +17,7 @@ video() {
     h=$3
     x=$4
     y=$5
-    thumb="$(vidthumb $f)" || ( echo -e "\e[31mvidthumb script not in path\e[0m" && return 1 )
+    thumb="$(vidthumb "$f")" || ( echo -e "\e[31mvidthumb script not in path\e[0m" && return 1 )
     image "$thumb" "$w" "$h" "$x" "$y" 
     return 1
 }
@@ -25,8 +25,8 @@ video() {
 batorcat() {
 	f=$1
   w=$2
-	command -v bat > /dev/null 2>&1 && bat --color=always --style=plain --pager=never --terminal-width "$(($w-2))" "$f" && exit 0
-  command -v batcat > /dev/null 2>&1 && batcat --color=always --style=plain --pager=never --terminal-width "$(($w-2))" "$f" && exit 0
+	command -v bat > /dev/null 2>&1 && bat --color=always --style=plain --pager=never --terminal-width "$((w-2))" "$f" && exit 0
+  command -v batcat > /dev/null 2>&1 && batcat --color=always --style=plain --pager=never --terminal-width "$((w-2))" "$f" && exit 0
 	cat "$f" && exit 0
 }
 

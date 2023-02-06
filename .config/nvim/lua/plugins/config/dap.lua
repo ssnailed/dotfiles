@@ -1,4 +1,4 @@
-local icons = require('config.iconlist')
+local icons = require('config.icons').list
 
 local dap_status_ok, dap = pcall(require, 'dap')
 if not dap_status_ok then

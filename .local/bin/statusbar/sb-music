@@ -12,3 +12,4 @@ filter() {
   fi
 }
 pidof -x sbd-music >/dev/null 2>&1 || sbd-music >/dev/null 2>&1 &
+filter

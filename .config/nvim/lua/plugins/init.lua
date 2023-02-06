@@ -1,4 +1,4 @@
-local icons = require "config.iconlist"
+local icons = require('config.icons').list
 local plugins = {
     { "wbthomason/packer.nvim",
         config = function()

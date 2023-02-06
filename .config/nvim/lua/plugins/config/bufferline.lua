@@ -5,7 +5,7 @@ if not status_ok then
     return
 end
 
-local icons = require 'config.iconlist'
+local icons = require('config.icons').list
 
 local function is_ft(b, ft)
     return vim.bo[b].filetype == ft

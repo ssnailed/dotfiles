@@ -4,7 +4,7 @@ if not status_ok then
 end
 
 local colors = require('tokyonight.colors').setup({ transform = true })
-local icons = require('config.iconlist')
+local icons = require('config.icons').list
 
 local conditions = {
     buffer_not_empty = function()
@@ -106,8 +106,11 @@ ins_left {
         end
         for _, client in ipairs(clients) do
             local filetypes = client.config.filetypes
-            if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 and client.name ~= "null-ls" then
-                return client.name
+            if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
+                if client.name ~= "null-ls" then
+                    return client.name
+                end
+                msg = client.name
             end
         end
         return msg

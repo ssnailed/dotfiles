@@ -3,7 +3,7 @@ if not status_ok then
     return
 end
 
-local icons = require('config.iconlist')
+local icons = require('config.icons').list
 
 local settings = {
     ui = {

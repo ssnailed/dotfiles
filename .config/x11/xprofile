@@ -6,11 +6,11 @@ setbg &
 xrdb "${XDG_CONFIG_HOME:-$HOME/.config}/x11/xresources" & xrdbpid=$!
 remaps &
 
-autostart="checkup mpd dunst unclutter pipewire dwmblocks"
+autostart="picom checkup dunst unclutter pipewire dwmblocks"
 for program in $autostart; do
 	pidof -s "$program" || "$program" &
 done >/dev/null 2>&1
-pidof -s "picom" || picom --experimental-backends &
+playerctld daemon
 
 if ! pgrep -x -u "${USER}" gpg-agent 1> /dev/null 2>&1; then
      gpg-connect-agent /bye 1> /dev/null 2>&1
@@ -34,7 +34,7 @@ export XSECURELOCK_PASSWORD_PROMPT="time_hex"
 export XSECURELOCK_AUTH_TIMEOUT=10
 export XSECURELOCK_SHOW_DATETIME=1
 export XSECURELOCK_COMPOSITE_OBSCURER=0
-export XSECURELOCK_SAVER="/usr/libexec/xscreensaver/cubicgrid"
+export XSECURELOCK_SAVER="/usr/lib/xscreensaver/cubicgrid"
 export XSECURELOCK_SHOW_DATETIME=1
 export XSECURELOCK_SHOW_HOSTNAME=1
 xset s 300

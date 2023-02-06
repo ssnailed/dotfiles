@@ -3,8 +3,8 @@ if not status_ok then
     return
 end
 
-local dashboard = require 'alpha.themes.dashboard'
-local icons = require 'config.iconlist'
+local dashboard = require('alpha.themes.dashboard')
+local icons = require('config.icons').list
 
 local banner = {
     "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣠⣴⣶⣿⣿⣿⣷⣶⣤⡀⠀⠀⠀⠀⠀⠀",
