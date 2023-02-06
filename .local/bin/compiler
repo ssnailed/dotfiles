@@ -17,8 +17,8 @@ cd "$dir" || exit 1
 
 textype() { \
 	command="pdflatex"
-  texroot=$(readlink -f "$(grep -Poi "^ *% *\! *tex root *= *\w+(?:\.\w*)?" "$file" | cut -d "=" -f 2 | tr -d "[:blank:]")")
-  [ -n "$texroot" ] && base=$texroot && echo "Compiling from TeX root: $texroot"
+    texroot=$(readlink -f "$(grep -Poi "^ *% *\! *tex root *= *\w+(?:\.\w*)?" "$file" | cut -d "=" -f 2 | tr -d "[:blank:]")")
+    [ -n "$texroot" ] && base=$texroot && echo "Compiling from TeX root: $texroot"
 	( head -n5 "$file" | grep -qi 'xelatex' ) && command="xelatex"
 	$command --output-directory="$dir" "$base" &&
 	grep -qi addbibresource "$file" &&
@@ -36,7 +36,7 @@ case "$ext" in
 	go) go run "$file" ;;
 	h) sudo make install ;;
   # findup is a script available here: https://unix.stackexchange.com/a/35265
-  java) loc=$(findup . -name gradlew); [ "$loc":w != "" ] && exec "$loc" run -q -p "$(dirname $loc)" ;;
+    java) loc=$(findup . -name gradlew); [ "$loc":w != "" ] && exec "$loc" run -q -p "$(dirname $loc)" ;;
 	m) octave "$file" ;;
 	md)	if  [ -x "$(command -v lowdown)" ]; then
 			lowdown --parse-no-intraemph "$file" -Tms | groff -mpdfmark -ms -kept > "$base".pdf
