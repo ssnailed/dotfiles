@@ -1,5 +1,4 @@
 [Desktop Entry]
 Type=Application
 Name=Mail
-Exec=/usr/local/bin/kitty -e neomutt %u
-# FIX:
+Exec=/usr/bin/thunderbird %u
