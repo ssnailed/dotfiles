@@ -59,7 +59,6 @@ export XSECURELOCK_SAVER="/usr/libexec/xscreensaver/cubicgrid"
 export XSECURELOCK_SHOW_DATETIME=1
 export XSECURELOCK_SHOW_HOSTNAME=1
 
-
 # Other program settings:
 export SUDO_ASKPASS="$HOME/.local/bin/dmenupass"
 export FZF_DEFAULT_OPTS="--layout=reverse --height 40%"
@@ -79,7 +78,6 @@ export _JAVA_AWT_WM_NONREPARENTING=1	# Fix for Java applications in dwm
 export ANSIBLE_NOCOWS=1			# Stop those fucking cows in Ansible
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 export VAULT_ADDR='https://vault.tralios.de'
-
 
 # This is the list for lf icons:
 export LF_ICONS="\

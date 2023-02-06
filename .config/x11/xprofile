@@ -25,18 +25,6 @@ GPG_TTY="$(tty)"
 export GPG_TTY
 gpg-connect-agent updatestartuptty /bye > /dev/null
 
-export XSECURELOCK_AUTH_BACKGROUND_COLOR="#24283b"
-export XSECURELOCK_AUTH_FOREGROUND_COLOR="#c0caf5"
-export XSECURELOCK_AUTH_WARNING_COLOR="#f7768e"
-export XSECURELOCK_BACKGROUND_COLOR="#15161E"
-export XSECURELOCK_DATETIME_FORMAT="%d.%m.%Y %H:%M"
-export XSECURELOCK_PASSWORD_PROMPT="time_hex"
-export XSECURELOCK_AUTH_TIMEOUT=10
-export XSECURELOCK_SHOW_DATETIME=1
-export XSECURELOCK_COMPOSITE_OBSCURER=0
-export XSECURELOCK_SAVER="/usr/lib/xscreensaver/cubicgrid"
-export XSECURELOCK_SHOW_DATETIME=1
-export XSECURELOCK_SHOW_HOSTNAME=1
 xset s 300
 xss-lock -n /usr/lib/xsecurelock/dimmer -l -- xsecurelock &
 
