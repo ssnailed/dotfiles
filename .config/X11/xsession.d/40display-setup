@@ -1,5 +1,0 @@
-# vim:set ft=sh
-
-xrandr 	--dpi 109 --fb 4480x1633 \
-	--output DP-2 --mode 2560x1440 --pos 1920x0 \
-	--output HDMI-0 --mode 1920x1080 --pos 0x553
