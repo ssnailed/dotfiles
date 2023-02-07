@@ -1,8 +1,7 @@
 # vim:set ft=sh
 
-start()
-{
-    pidof -s $1 || $@ >/dev/null 2>&1 &
+start() {
+	pidof -s $1 || $@ >/dev/null 2>&1 &
 }
 
 start playerctld daemon

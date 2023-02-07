@@ -1,18 +1,18 @@
-#!/bin/sh 
+#!/bin/sh
 
 # Arbitrary but unique message tag
 msgTag="volume"
 
 # Change the volume using alsa(might differ if you use pulseaudio)
-pamixer "$@" > /dev/null
+pamixer "$@" >/dev/null
 
 # Query amixer for the current volume and whether or not the speaker is muted
 volume="$(pamixer --get-volume)"
 
 if [ "$volume" -gt "100" ]; then
-    urgency="critical"
+	urgency="critical"
 else
-    urgency="low"
+	urgency="low"
 fi
 
 if [ "$volume" -gt "70" ]; then
@@ -25,10 +25,10 @@ fi
 
 mute="$(pamixer --get-mute)"
 if [ "$volume" = 0 ] || [ "$mute" = "true" ]; then
-    notify-send -a "changeVolume" -i "audio-volume-muted" -u $urgency -h string:x-dunst-stack-tag:$msgTag "Volume muted"
+	notify-send -a "changeVolume" -i "audio-volume-muted" -u $urgency -h string:x-dunst-stack-tag:$msgTag "Volume muted"
 else
-    notify-send -a "changeVolume" -i "$icon" -u $urgency -h string:x-dunst-stack-tag:$msgTag \
-    -h int:value:"$volume" "Volume: ${volume}%"
+	notify-send -a "changeVolume" -i "$icon" -u $urgency -h string:x-dunst-stack-tag:$msgTag \
+		-h int:value:"$volume" "Volume: ${volume}%"
 fi
 
 # Play the volume changed sound

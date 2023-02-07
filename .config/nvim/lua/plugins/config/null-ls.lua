@@ -15,6 +15,7 @@ null_ls.setup {
     debug = false,
     sources = {
         formatting.black.with { extra_args = { "--fast" } },
+        formatting.shfmt,
         -- formatting.stylua,
         -- diagnostics.flake8,
     },

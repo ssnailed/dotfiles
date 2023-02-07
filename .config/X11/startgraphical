@@ -1,46 +1,46 @@
 #!/bin/sh
 
 if [ -r "${XDG_CONFIG_HOME:-$HOME/.config}/X11/xserverrc" ]; then
-    server=${XDG_CONFIG_HOME:-$HOME/.config}/X11/xserverrc
+	server=${XDG_CONFIG_HOME:-$HOME/.config}/X11/xserverrc
 elif [ -r "$HOME/.xserverrc" ]; then
-    server=$HOME/.xserverrc
+	server=$HOME/.xserverrc
 else
-    server=/etc/X11/xinit/xserverrc
+	server=/etc/X11/xinit/xserverrc
 fi
 
 if [ -r "${XDG_CONFIG_HOME:-$HOME/.config}/X11/xsession" ]; then
-    client=${XDG_CONFIG_HOME:-$HOME/.config}/X11/xsession
+	client=${XDG_CONFIG_HOME:-$HOME/.config}/X11/xsession
 elif [ -r "$HOME/.xsession" ]; then
-    client="$HOME/.xsession"
+	client="$HOME/.xsession"
 else
-    client=/etc/X11/xinit/xinitrc
+	client=/etc/X11/xinit/xinitrc
 fi
 
 # Automatically determine an unused $DISPLAY
 d=0
-while true ; do
-    [ -e "/tmp/.X$d-lock" ] || [ -S "/tmp/.X11-unix/X$d" ] || break
-    d=$((d + 1))
+while true; do
+	[ -e "/tmp/.X$d-lock" ] || [ -S "/tmp/.X11-unix/X$d" ] || break
+	d=$((d + 1))
 done
 display=":$d"
 unset d
 
 if [ -n "${XAUTHORITY+x}" ]; then
-    XAUTHORITY=$HOME/.Xauthority
-    export XAUTHORITY
+	XAUTHORITY=$HOME/.Xauthority
+	export XAUTHORITY
 fi
 
 removelist=
 
 # check for GNU hostname
-if hostname --version > /dev/null 2>&1; then
-    if ! hostname --version 2>&1 | grep GNU -q; then
-        hostname=$(hostname -f)
-    fi
+if hostname --version >/dev/null 2>&1; then
+	if ! hostname --version 2>&1 | grep GNU -q; then
+		hostname=$(hostname -f)
+	fi
 fi
 
 if [ -z "$hostname" ]; then
-    hostname=$(hostname)
+	hostname=$(hostname)
 fi
 
 authdisplay=${display:-:0}
@@ -48,15 +48,15 @@ authdisplay=${display:-:0}
 mcookie=$(/usr/bin/mcookie)
 
 if [ -z "${mcookie+x}" ]; then
-    echo "Couldn't create cookie"
-    exit 1
+	echo "Couldn't create cookie"
+	exit 1
 fi
 dummy=0
 
 # create a file with auth information for the server. ':0' is a dummy.
 xserverauthfile=$(mktemp --tmpdir serverauth.XXXXXXXXXX)
 trap "rm -f '$xserverauthfile'" HUP INT QUIT ILL TRAP BUS TERM
-xauth -q -f "$xserverauthfile" << EOF
+xauth -q -f "$xserverauthfile" <<EOF
 add :$dummy . $mcookie
 EOF
 
@@ -66,18 +66,18 @@ serverargs=${serverargs}" -auth "${xserverauthfile}
 # if '$displayname' already exists do not overwrite it as another
 # server may need it. Add them to the '$xserverauthfile' instead.
 for displayname in $authdisplay $hostname$authdisplay; do
-    authcookie=$(xauth list "$displayname" | sed -n "s/.*$displayname[[:space:]*].*[[:space:]*]//p") 2>/dev/null;
-    if [ -n "${authcookie+x}" ]; then
-        xauth -q << EOF
+	authcookie=$(xauth list "$displayname" | sed -n "s/.*$displayname[[:space:]*].*[[:space:]*]//p") 2>/dev/null
+	if [ -n "${authcookie+x}" ]; then
+		xauth -q <<EOF
 add $displayname . $mcookie
 EOF
-    removelist="$displayname $removelist"
-    else
-        dummy=$((dummy+1));
-        xauth -q -f "$xserverauthfile" << EOF
+		removelist="$displayname $removelist"
+	else
+		dummy=$((dummy + 1))
+		xauth -q -f "$xserverauthfile" <<EOF
 add :$dummy . $authcookie
 EOF
-    fi
+	fi
 done
 
 xinit $client -- $server $serverargs $display
@@ -85,14 +85,14 @@ xinit $client -- $server $serverargs $display
 retval=$?
 
 if [ -z "${removelist+x}" ]; then
-    xauth remove $removelist
+	xauth remove $removelist
 fi
 if [ x"$xserverauthfile" != x ]; then
-    rm -f "$xserverauthfile"
+	rm -f "$xserverauthfile"
 fi
 
-if command -v deallocvt > /dev/null 2>&1; then
-    deallocvt
+if command -v deallocvt >/dev/null 2>&1; then
+	deallocvt
 fi
 
 exit $retval

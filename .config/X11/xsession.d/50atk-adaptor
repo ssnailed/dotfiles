@@ -1,18 +1,16 @@
 # vim:set ft=sh
 
-add_module()
-{
+add_module() {
 	case :$GTK_MODULES: in
-		*:$1:*)
-			;;
-		*)
-			if [ -z "$GTK_MODULES" ]
-			then
-				GTK_MODULES=$1
-			else
-				GTK_MODULES=$GTK_MODULES:$1
-			fi
-			;;
+	*:$1:*) ;;
+
+	*)
+		if [ -z "$GTK_MODULES" ]; then
+			GTK_MODULES=$1
+		else
+			GTK_MODULES=$GTK_MODULES:$1
+		fi
+		;;
 	esac
 }
 
@@ -21,5 +19,5 @@ add_module atk-bridge
 
 export GTK_MODULES
 if [ -x "/usr/bin/dbus-update-activation-environment" ]; then
-        dbus-update-activation-environment --verbose --systemd GTK_MODULES
+	dbus-update-activation-environment --verbose --systemd GTK_MODULES
 fi

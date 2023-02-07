@@ -12,7 +12,7 @@ url="wttr.in/Karlsruhe"
 opt="?F"
 emojiopt="?format=1"
 convertemoji() {
-sed -i '
+	sed -i '
 s/☀️//
 s/☁️//
 s/⛅️//
@@ -26,11 +26,11 @@ s/🌩//
 s/🌫//
 ' "$emojifile"
 }
-getforecast() { curl -sf "$url$opt" > "$weatherfile" && curl -sf "$url$emojiopt" > "$emojifile" || exit 1 ;}
-showweather() { 
-  emoji="$(printf "\033[12m%s\033[10m" "$(cut -d ' ' -f 1 "$emojifile")")"
-  sed '16q;d' "$weatherfile" | grep -wo "[0-9]*%" | sort -rn | sed "s/^/$emoji /g;1q" | tr -d '\n'
-  sed '13q;d' "$weatherfile" | grep -o "m\\([-+]\\)*[0-9]\\+" | sed 's/+//g' | sort -n -t 'm' -k 2n | sed -e 1b -e '$!d' | tr '\n|m' ' ' | awk '{print " \033[34m\033[0m " $1 "°","\033[31m\033[0m " $2 "°"}';
+getforecast() { curl -sf "$url$opt" >"$weatherfile" && curl -sf "$url$emojiopt" >"$emojifile" || exit 1; }
+showweather() {
+	emoji="$(printf "\033[12m%s\033[10m" "$(cut -d ' ' -f 1 "$emojifile")")"
+	sed '16q;d' "$weatherfile" | grep -wo "[0-9]*%" | sort -rn | sed "s/^/$emoji /g;1q" | tr -d '\n'
+	sed '13q;d' "$weatherfile" | grep -o "m\\([-+]\\)*[0-9]\\+" | sed 's/+//g' | sort -n -t 'm' -k 2n | sed -e 1b -e '$!d' | tr '\n|m' ' ' | awk '{print " \033[34m\033[0m " $1 "°","\033[31m\033[0m " $2 "°"}'
 }
 getforecast && convertemoji
 showweather

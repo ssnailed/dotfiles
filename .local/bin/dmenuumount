@@ -4,22 +4,25 @@
 # Provides you with mounted partitions, select one to unmount.
 # Drives mounted at /, /boot and /home will not be options to unmount.
 
-drives="$(lsblk -nrpo "name,type,size,mountpoint,label" | awk -F':' '{gsub(/ /,":")}$4!~/\/boot|\/efi|\/home$|SWAP/&&length($4)>1{printf "%s (%s) %s\n",$4,$3,$5}'; awk '/simple-mtpfs/ { print "", $2; }' /etc/mtab)"
+drives="$(
+	lsblk -nrpo "name,type,size,mountpoint,label" | awk -F':' '{gsub(/ /,":")}$4!~/\/boot|\/efi|\/home$|SWAP/&&length($4)>1{printf "%s (%s) %s\n",$4,$3,$5}'
+	awk '/simple-mtpfs/ { print "", $2; }' /etc/mtab
+)"
 
 chosen="$(echo "$drives" | dmenu -i -p "Unmount which drive?")" || exit 1
 
 case "$chosen" in
-	*)
-		chosen="${chosen#📱 }"
-		sudo -A umount -l "$chosen"
-		;;
-	*)
-		chosen="${chosen% (*}"
-		sudo -A umount -l "$chosen"
-		;;
+*)
+	chosen="${chosen#📱 }"
+	sudo -A umount -l "$chosen"
+	;;
+*)
+	chosen="${chosen% (*}"
+	sudo -A umount -l "$chosen"
+	;;
 esac && notify-send "禍 Drive unmounted." "$chosen successfully unmounted." ||
 	notify-send "禍 Drive failed to unmount." "Possibly a permissions or I/O issue."
 
-	sudo -A umount "$chosen" && notify-send "禍 USB unmounting" "$chosen unmounted."
+sudo -A umount "$chosen" && notify-send "禍 USB unmounting" "$chosen unmounted."
 
-	sudo -A umount -l "$chosen" && notify-send " Android unmounting" "$chosen unmounted."
+sudo -A umount -l "$chosen" && notify-send " Android unmounting" "$chosen unmounted."

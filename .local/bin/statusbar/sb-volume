@@ -9,9 +9,9 @@ elif [ "$vol" -gt "30" ]; then
 	icon=""
 elif [ "$vol" -gt "0" ]; then
 	icon=""
-elif [ "$vol" -eq "0" ]; then 
-  icon=""
+elif [ "$vol" -eq "0" ]; then
+	icon=""
 else
-  printf "\033[11m\033[10m " && exit
+	printf "\033[11m\033[10m " && exit
 fi
 printf "\033[11m%s\033[10m %s\n" "$icon" "$vol"

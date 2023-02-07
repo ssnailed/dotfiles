@@ -1,15 +1,15 @@
 #!/bin/sh
 filter() {
-  if mpc 1>/dev/null 2>&1 && [ "$(mpc | wc -l)" -eq 3 ]; then
-    song=$(mpc current -f "%artist% - %title%" | xargs -0 )
-    [ ${#song} -gt 35 ] && song="$(printf %.35s "$song")…"
-    mpc | awk 'NR==2' | grep -q playing && icon="" || icon=""
-    echo "$icon $song"
-  elif mpc 1>/dev/null 2>&1 && [ "$(mpc | wc -l)" -eq 1 ]; then
-    echo "ﱙ"
-  else
-    exit 1
-  fi
+	if mpc 1>/dev/null 2>&1 && [ "$(mpc | wc -l)" -eq 3 ]; then
+		song=$(mpc current -f "%artist% - %title%" | xargs -0)
+		[ ${#song} -gt 35 ] && song="$(printf %.35s "$song")…"
+		mpc | awk 'NR==2' | grep -q playing && icon="" || icon=""
+		echo "$icon $song"
+	elif mpc 1>/dev/null 2>&1 && [ "$(mpc | wc -l)" -eq 1 ]; then
+		echo "ﱙ"
+	else
+		exit 1
+	fi
 }
 pidof -x sbd-music >/dev/null 2>&1 || sbd-music >/dev/null 2>&1 &
 filter
