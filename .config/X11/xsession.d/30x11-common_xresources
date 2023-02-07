@@ -1,0 +1,6 @@
+# vim:set ft=sh
+
+if has_option allow-user-resources && [ -f "$USRRESOURCES" ]; then
+    if type xrdb >/dev/null 2>&1; then
+        xrdb -merge $USRRESOURCES
+fi

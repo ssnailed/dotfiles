@@ -6,10 +6,8 @@ PROGNAME=Xsession
 
 OPTIONFILE=/etc/X11/Xsession.options
 
-SYSRESOURCES=/etc/X11/Xresources
 [ -r "${XDG_CONFIG_HOME:-$HOME/.config}/X11/xresources" ] && USRRESOURCES=${XDG_CONFIG_HOME:-$HOME/.config}/X11/xresources || USRRESOURCES=$HOME/.Xresources
-
-SYSSESSIONDIR=/etc/X11/Xsession.d
+[ -r "${XDG_CONFIG_HOME:-$HOME/.config}/X11/xsession.d" ] && SESSIONDIR=${XDG_CONFIG_HOME:-$HOME/.config}/X11/xsession.d || SESSIONDIR=/etc/X11/Xsession.d
 [ -d "${XDG_DATA_HOME:-$HOME/.local/share}/xorg/" ] && ERRFILE=${XDG_DATA_HOME:-$HOME/.local/share}/xorg/xsession-errors || ERRFILE=$HOME/.xsession-errors
 
 message () {
@@ -90,8 +88,8 @@ fi
 exec >>"$ERRFILE" 2>&1
 
 # sanity check; is our session script directory present?
-if [ ! -d "$SYSSESSIONDIR" ]; then
-  errormsg "no \"$SYSSESSIONDIR\" directory found; aborting."
+if [ ! -d "$SESSIONDIR" ]; then
+  errormsg "no \"$SESSIONDIR\" directory found; aborting."
 fi
 
 # Attempt to create a file of non-zero length in /tmp; a full filesystem can
@@ -106,7 +104,7 @@ if ! echo "*" >>"$WRITE_TEST"; then
 fi
 rm -f "$WRITE_TEST"
 
-SESSIONFILES=$(run-parts --list $SYSSESSIONDIR)
+SESSIONFILES=$(run-parts --list $SESSIONDIR)
 if [ -n "$SESSIONFILES" ]; then
   set +e
   for SESSIONFILE in $SESSIONFILES; do

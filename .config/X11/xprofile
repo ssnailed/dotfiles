@@ -36,21 +36,8 @@ for program in $autostart; do
 done >/dev/null 2>&1
 playerctld daemon
 
-if ! pgrep -x -u "${USER}" gpg-agent 1> /dev/null 2>&1; then
-     gpg-connect-agent /bye 1> /dev/null 2>&1
-fi
-unset SSH_AGENT_PID
-if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
-    # export SSH_AUTH_SOCK="/run/user/$UID/gnupg/S.gpg-agent.ssh"
-    SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
-    export SSH_AUTH_SOCK
-fi
-GPG_TTY="$(tty)"
-export GPG_TTY
-gpg-connect-agent updatestartuptty /bye > /dev/null
-
 xset s 300
-xss-lock -n /usr/lib/xsecurelock/dimmer -l -- xsecurelock &
+xss-lock -l -- xsecurelock &
 
 # Ensure that xrdb has finished running before moving on to start the WM/DE.
 # [ -n "$xrdbpid" ] && wait "$xrdbpid"
