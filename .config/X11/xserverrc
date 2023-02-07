@@ -1,4 +1,4 @@
 #!/bin/sh
 
-stty onclr
-exec /usr/bin/Xorg -nolisten tcp "$@" vt"$XDG_VTNR"
+# stty icrnl
+exec /usr/bin/Xorg -nolisten tcp "$@" vt$XDG_VTNR

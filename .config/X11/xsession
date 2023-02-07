@@ -10,19 +10,16 @@ SYSRESOURCES=/etc/X11/Xresources
 [ -r "${XDG_CONFIG_HOME:-$HOME/.config}/X11/xresources" ] && USRRESOURCES=${XDG_CONFIG_HOME:-$HOME/.config}/X11/xresources || USRRESOURCES=$HOME/.Xresources
 
 SYSSESSIONDIR=/etc/X11/Xsession.d
-[ -r "${XDG_CONFIG_HOME:-$HOME/.config}/X11/xsession" ] && USERXSESSION=${XDG_CONFIG_HOME:-$HOME/.config}/X11/xsession || USERXSESSION=$HOME/.xsession
-[ -r "${XDG_CONFIG_HOME:-$HOME/.config}/X11/Xsession" ] && ALTUSERXSESSION=${XDG_CONFIG_HOME:-$HOME/.config}/X11/Xsession || ALTUSERXSESSION=$HOME/.Xsession
-[ -r "${XDG_CONFIG_HOME:-$HOME/.config}X11/xsessionrc" ] && USERXSESSIONRC=${XDG_CONFIG_HOME:-$HOME/.config}X11/xsessionrc || USERXSESSIONRC=$HOME/.xsessionrc
-[ -r "${XDG_DATA_HOME:-$HOME/.local/share}/xorg/xsession-errors" ] && ERRFILE=${XDG_DATA_HOME:-$HOME/.local/share}/xorg/xsession-errors || ERRFILE=$HOME/.xsession-errors 
+[ -d "${XDG_DATA_HOME:-$HOME/.local/share}/xorg/" ] && ERRFILE=${XDG_DATA_HOME:-$HOME/.local/share}/xorg/xsession-errors || ERRFILE=$HOME/.xsession-errors
 
 message () {
   # pretty-print messages of arbitrary length; use xmessage if it
   # is available and $DISPLAY is set
   MESSAGE="$PROGNAME: $*"
   echo "$MESSAGE" | fold -s -w ${COLUMNS:-80} >&2
-  if [ -n "$DISPLAY" ] && command -v xmessage > /dev/null 2>&1; then
-    echo "$MESSAGE" | fold -s -w ${COLUMNS:-80} | xmessage -center -file -
-  fi
+  # if [ -n "$DISPLAY" ] && command -v xmessage > /dev/null 2>&1; then
+  #   echo "$MESSAGE" | fold -s -w ${COLUMNS:-80} | xmessage -center -file -
+  # fi
 }
 
 message_nonl () {
@@ -30,9 +27,9 @@ message_nonl () {
   # xmessage if it is available and $DISPLAY is set
   MESSAGE="$PROGNAME: $*"
   echo -n "$MESSAGE" | fold -s -w ${COLUMNS:-80} >&2;
-  if [ -n "$DISPLAY" ] && command -v xmessage > /dev/null 2>&1; then
-    echo -n "$MESSAGE" | fold -s -w ${COLUMNS:-80} | xmessage -center -file -
-  fi
+  # if [ -n "$DISPLAY" ] && command -v xmessage > /dev/null 2>&1; then
+  #   echo -n "$MESSAGE" | fold -s -w ${COLUMNS:-80} | xmessage -center -file -
+  # fi
 }
 
 errormsg () {
@@ -113,6 +110,7 @@ SESSIONFILES=$(run-parts --list $SYSSESSIONDIR)
 if [ -n "$SESSIONFILES" ]; then
   set +e
   for SESSIONFILE in $SESSIONFILES; do
+      message "Executing $SESSIONFILE"
     . $SESSIONFILE
   done
   set -e

@@ -47,7 +47,7 @@ authdisplay=${display:-:0}
 
 mcookie=$(/usr/bin/mcookie)
 
-if [ -n "${mcookie+x}" ]; then
+if [ -z "${mcookie+x}" ]; then
     echo "Couldn't create cookie"
     exit 1
 fi
