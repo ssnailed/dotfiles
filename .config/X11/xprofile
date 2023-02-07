@@ -1,0 +1,220 @@
+#!/bin/sh
+
+# Graphical program vars
+export XCURSOR_PATH="${XDG_DATA_HOME:-$HOME/.local/share}/icons"
+export _JAVA_AWT_WM_NONREPARENTING=1	# Fix for Java applications in dwm
+export QT_QPA_PLATFORMTHEME="gtk2"	# Have QT use gtk2 theme.
+export SUDO_ASKPASS="$HOME/.local/bin/dmenupass"
+export VIRTUAL_ENV_DISABLE_PROMPT=1
+export MOZ_USE_XINPUT2="1"		# Mozilla smooth scrolling/touchpads.
+export AWT_TOOLKIT="MToolkit wmname LG3D"	#May have to install wmname
+
+# xsecurelock vars
+export XSECURELOCK_AUTH_BACKGROUND_COLOR="#24283b"
+export XSECURELOCK_AUTH_FOREGROUND_COLOR="#c0caf5"
+export XSECURELOCK_AUTH_WARNING_COLOR="#f7768e"
+export XSECURELOCK_BACKGROUND_COLOR="#15161E"
+export XSECURELOCK_DATETIME_FORMAT="%d.%m.%Y %H:%M"
+export XSECURELOCK_PASSWORD_PROMPT="time_hex"
+export XSECURELOCK_AUTH_TIMEOUT=10
+export XSECURELOCK_SHOW_DATETIME=1
+export XSECURELOCK_COMPOSITE_OBSCURER=0
+export XSECURELOCK_SAVER="/usr/libexec/xscreensaver/cubicgrid"
+export XSECURELOCK_SHOW_DATETIME=1
+export XSECURELOCK_SHOW_HOSTNAME=1
+
+xrandr 	--dpi 109 --fb 4480x1633 \
+	--output DP-2 --mode 2560x1440 --pos 1920x0 \
+	--output HDMI-0 --mode 1920x1080 --pos 0x553
+setbg &
+# xrdb "${XDG_CONFIG_HOME:-$HOME/.config}/x11/xresources" & xrdbpid=$!
+remaps &
+
+autostart="picom checkup dunst unclutter pipewire dwmblocks remapd"
+for program in $autostart; do
+	pidof -s "$program" || "$program" &
+done >/dev/null 2>&1
+playerctld daemon
+
+if ! pgrep -x -u "${USER}" gpg-agent 1> /dev/null 2>&1; then
+     gpg-connect-agent /bye 1> /dev/null 2>&1
+fi
+unset SSH_AGENT_PID
+if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
+    # export SSH_AUTH_SOCK="/run/user/$UID/gnupg/S.gpg-agent.ssh"
+    SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
+    export SSH_AUTH_SOCK
+fi
+GPG_TTY="$(tty)"
+export GPG_TTY
+gpg-connect-agent updatestartuptty /bye > /dev/null
+
+xset s 300
+xss-lock -n /usr/lib/xsecurelock/dimmer -l -- xsecurelock &
+
+# Ensure that xrdb has finished running before moving on to start the WM/DE.
+# [ -n "$xrdbpid" ] && wait "$xrdbpid"
+
+# lf icons:
+export LF_ICONS="\
+tw=:\
+st=:\
+ow=:\
+dt=:\
+di=:\
+fi=:\
+ln=:\
+or=:\
+ex=:\
+*.c=:\
+*.cc=:\
+*.clj=:\
+*.coffee=:\
+*.cpp=:\
+*.css=:\
+*.d=:\
+*.dart=:\
+*.erl=:\
+*.exs=:\
+*.fs=:\
+*.go=:\
+*.h=:\
+*.hh=:\
+*.hpp=:\
+*.hs=:\
+*.html=:\
+*.java=:\
+*.jl=:\
+*.js=:\
+*.json=:\
+*.lua=:\
+*.md=:\
+*.php=:\
+*.pl=:\
+*.pro=:\
+*.py=:\
+*.rb=:\
+*.rs=:\
+*.scala=:\
+*.ts=:\
+*.vim=:\
+*.cmd=:\
+*.ps1=:\
+*.sh=:\
+*.bash=:\
+*.zsh=:\
+*.fish=:\
+*.tar=:\
+*.tgz=:\
+*.arc=:\
+*.arj=:\
+*.taz=:\
+*.lha=:\
+*.lz4=:\
+*.lzh=:\
+*.lzma=:\
+*.tlz=:\
+*.txz=:\
+*.tzo=:\
+*.t7z=:\
+*.zip=:\
+*.z=:\
+*.dz=:\
+*.gz=:\
+*.lrz=:\
+*.lz=:\
+*.lzo=:\
+*.xz=:\
+*.zst=:\
+*.tzst=:\
+*.bz2=:\
+*.bz=:\
+*.tbz=:\
+*.tbz2=:\
+*.tz=:\
+*.deb=:\
+*.rpm=:\
+*.jar=:\
+*.war=:\
+*.ear=:\
+*.sar=:\
+*.rar=:\
+*.alz=:\
+*.ace=:\
+*.zoo=:\
+*.cpio=:\
+*.7z=:\
+*.rz=:\
+*.cab=:\
+*.wim=:\
+*.swm=:\
+*.dwm=:\
+*.esd=:\
+*.jpg=:\
+*.jpeg=:\
+*.mjpg=:\
+*.mjpeg=:\
+*.gif=:\
+*.bmp=:\
+*.pbm=:\
+*.pgm=:\
+*.ppm=:\
+*.tga=:\
+*.xbm=:\
+*.xpm=:\
+*.tif=:\
+*.tiff=:\
+*.png=:\
+*.svg=:\
+*.svgz=:\
+*.mng=:\
+*.pcx=:\
+*.mov=:\
+*.mpg=:\
+*.mpeg=:\
+*.m2v=:\
+*.mkv=:\
+*.webm=:\
+*.ogm=:\
+*.mp4=:\
+*.m4v=:\
+*.mp4v=:\
+*.vob=:\
+*.qt=:\
+*.nuv=:\
+*.wmv=:\
+*.asf=:\
+*.rm=:\
+*.rmvb=:\
+*.flc=:\
+*.avi=:\
+*.fli=:\
+*.flv=:\
+*.gl=:\
+*.dl=:\
+*.xcf=:\
+*.xwd=:\
+*.yuv=:\
+*.cgm=:\
+*.emf=:\
+*.ogv=:\
+*.ogx=:\
+*.aac=:\
+*.au=:\
+*.flac=:\
+*.m4a=:\
+*.mid=:\
+*.midi=:\
+*.mka=:\
+*.mp3=:\
+*.mpc=:\
+*.ogg=:\
+*.ra=:\
+*.wav=:\
+*.oga=:\
+*.opus=:\
+*.spx=:\
+*.xspf=:\
+*.pdf=:\
+*.nix=:\
+"
