@@ -5,8 +5,8 @@ start() {
 }
 
 start playerctld daemon
-start picom --experimental-backends
-start unclutter -noevents
+start picom
+start unclutter
 start dunst
 start pipewire
 start dwmblocks
