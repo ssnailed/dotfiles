@@ -3,7 +3,10 @@
 # profile file. Runs on login. Environmental variables are set here.
 
 # Adds `~/.local/bin` to $PATH
-export PATH="$PATH:~/.local/share/npm-global/bin:${$(find -L ~/.local/bin -type d -printf %p:)%%:}"
+export PATH="$PATH:${$(find -L ~/.local/bin -type d -printf %p:)%%:}"
+
+# Adds `~/.local/share/npm-global` to $PATH
+export PATH=~/.npm-global/bin:$PATH
 
 unsetopt PROMPT_SP
 

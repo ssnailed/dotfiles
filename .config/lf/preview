@@ -24,9 +24,9 @@ video() {
 
 batorcat() {
 	f=$1
-  w=$2
+    w=$2
 	command -v bat > /dev/null 2>&1 && bat --color=always --style=plain --pager=never --terminal-width "$((w-2))" "$f" && exit 0
-  command -v batcat > /dev/null 2>&1 && batcat --color=always --style=plain --pager=never --terminal-width "$((w-2))" "$f" && exit 0
+    command -v batcat > /dev/null 2>&1 && batcat --color=always --style=plain --pager=never --terminal-width "$((w-2))" "$f" && exit 0
 	cat "$f" && exit 0
 }
 
