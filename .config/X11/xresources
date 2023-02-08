@@ -1,6 +1,6 @@
 !! Set cursor size (Check GTK in .config too):
 Xcursor.size: 24
-Xcursor.theme: Fluent-dark-cursors
+Xcursor.theme: Qogir-dark
 !! Set transparency (0-1):
 *.alpha: 0.8
 

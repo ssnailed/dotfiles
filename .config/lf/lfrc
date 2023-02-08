@@ -198,6 +198,8 @@ map N
 map g/ cd "/" 
 map W &setsid $TERMINAL -e $SHELL -c "lf; $SHELL"
 
+# Kitty Specific
+map W &setsid $TERMINAL $SHELL -c "lf; exec $SHELL"
 
 # Load bookmark shortcuts
 source "~/.config/lf/shortcutrc"

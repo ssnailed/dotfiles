@@ -1,3 +1,3 @@
 #/bin/sh
 # pidof -x sbd-xkbmap >/dev/null 2>&1 || sbd-xkbmap >/dev/null 2>&1 &
-printf "\033[11m\033[10m %s\n" "$(setxkbmap -query | grep -oP '(layout|variant):\s*\K\w+' | sed ':a;N;s/\n/ /')"
+printf "\033[11m\033[10m %s\n" "$(setxkbmap -query | grep -oP '(layout|variant):\s*\K\w+' | sed ':a;N;s/\n/:/')"

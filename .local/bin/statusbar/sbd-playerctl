@@ -1,2 +1,0 @@
-#!/bin/sh
-playerctl status -F | tee "/tmp/playerctl-status" | (while read -r _; do pkill -RTMIN+11 dwmblocks; done;)

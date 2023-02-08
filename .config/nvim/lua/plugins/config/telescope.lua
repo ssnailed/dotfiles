@@ -7,15 +7,6 @@ local icons = require('config.icons').list
 
 telescope.setup {
     defaults = {
-
-        prompt_prefix = icons.ui.Telescope,
-        selection_caret = icons.ui.Forward,
-        file_ignore_patterns = { ".git/", "node_modules" },
-
-    },
-}
-telescope.setup {
-    defaults = {
         vimgrep_arguments = {
             "rg",
             "-L",

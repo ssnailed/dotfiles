@@ -1,0 +1,15 @@
+# vim:set ft=sh
+
+start() {
+	pidof -s $1 || $@ >/dev/null 2>&1 &
+}
+
+start playerctld daemon
+start picom --experimental-backends
+start unclutter -noevents
+start dunst
+start pipewire
+start dwmblocks
+start remapd
+start setbg
+start xwallpaper --zoom "${XDG_DATA_HOME:-$HOME/.local/share/}/bg"

@@ -1,29 +1,35 @@
 #!/bin/sh
 
-groups="us:dvorak de:nodeadkeys"
-current="$(setxkbmap -query | grep -oP '(layout|variant):\s*\K\w+' | sed ':a;N;s/\n/:/')"
-
 index() {
-  echo "$groups" | cut -d ' ' -f "$1"
+	echo "$groups" | cut -d ' ' -f "$1"
 }
 
-i=1
-while [ ! "$found" ]; do
-  group=$(index $i)
-  if [ "$group" = "$current" ]; then
-    newgroup=$(index $((i+1)))
-    [ -z "$newgroup" ] && newgroup=$(index 1)
-    found=true
-  elif [ -z "$group" ]; then
-    newgroup=$(index 1)
-    found=true
-  fi
-  i=$((i+1))
-done
+if [ "$1" = "-n" ]; then
+	newgroup="$(setxkbmap -query | grep -oP '(layout|variant):\s*\K\w+' | sed ':a;N;s/\n/:/')"
+elif [ "$1" = "" ]; then
+	groups="us:dvorak de:nodeadkeys"
+	current="$(setxkbmap -query | grep -oP '(layout|variant):\s*\K\w+' | sed ':a;N;s/\n/:/')"
+	i=1
+	while [ ! "$found" ]; do
+		group=$(index $i)
+		if [ "$group" = "$current" ]; then
+			newgroup=$(index $((i + 1)))
+			[ -z "$newgroup" ] && newgroup=$(index 1)
+			found=true
+		elif [ -z "$group" ]; then
+			newgroup=$(index 1)
+			found=true
+		fi
+		i=$((i + 1))
+	done
+else
+	newgroup="$1"
+fi
 
-setxkbmap -layout "$(echo "$newgroup" | cut -d ':' -f1)" -variant "$(echo "$newgroup" | cut -d ':' -f2)" -option caps:super -option terminate:ctrl_alt_bksp
+setxkbmap -layout "$(echo "$newgroup" | cut -d ':' -f1)" -variant "$(echo "$newgroup" | cut -d ':' -f2)" -option caps:super -option terminate:ctrl_alt_bksp 1>/dev/null 2>&1 || echo "Unkown keyboard layout"
 xset r rate 300 50
-killall xcape 2>/dev/null ; xcape -e 'Super_L=Escape'
+killall xcape 2>/dev/null
+xcape -e 'Super_L=Escape'
 xset -q | grep "Caps Lock:\s*on" && xdotool key Caps_Lock
 sleep 0.03
 pkill -RTMIN+15 dwmblocks

@@ -35,4 +35,3 @@ json="$(jq -r --arg "$movie" "$thumbnail" ". + {\"$movie\": \"$thumbnail\"}" <"$
 echo "$json" >"$index"
 
 echo "$cache/$thumbnail"
-

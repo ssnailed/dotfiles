@@ -5,7 +5,7 @@ image() {
     h=$3
     x=$4
     y=$5
-    kitty +kitten icat --transfer-mode file --place "${w}x${h}@${x}x${y}" -- "$f"
+    kitty +kitten icat --transfer-mode file --place "${w}x${h}@${x}x${y}" -- "$f" && exit 1
     chafa "$f" -f symbols -s "$((w-2))x$h" && exit 1
     echo -e "\e[31mImage previewer not installed\e[0m"
     return 1
