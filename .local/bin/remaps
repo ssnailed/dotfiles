@@ -32,4 +32,4 @@ killall xcape 2>/dev/null
 xcape -e 'Super_L=Escape'
 xset -q | grep "Caps Lock:\s*on" && xdotool key Caps_Lock
 sleep 0.03
-pkill -RTMIN+15 dwmblocks
+[ "$1" != "-n" ] && pkill -RTMIN+15 dwmblocks

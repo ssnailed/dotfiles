@@ -25,7 +25,7 @@ done
 display=":$d"
 unset d
 
-if [ -n "${XAUTHORITY+x}" ]; then
+if [ -z "${XAUTHORITY+x}" ]; then
 	XAUTHORITY=$HOME/.Xauthority
 	export XAUTHORITY
 fi
