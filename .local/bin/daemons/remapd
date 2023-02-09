@@ -1,6 +1,8 @@
 #!/bin/sh
+trap "rm -f /tmp/udev_pipe" HUP INT QUIT ILL TRAP BUS TERM
+mkfifo -m 600 /tmp/udev_pipe
+udevadm monitor -u -t seat -s input -s usb >> /tmp/udev_pipe &
 while :; do
-	dmesg -W -f kern | grep "input:" -q
-	sleep 1
+    grep -q "add" /tmp/udev_pipe && grep -q " bind" /tmp/udev_pipe
 	remaps us:dvorak
 done
