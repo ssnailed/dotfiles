@@ -1,19 +1,9 @@
 !! Set cursor size (Check GTK in .config too):
 Xcursor.size: 24
 Xcursor.theme: Qogir-dark
-!! Set transparency (0-1):
-*.alpha: 0.8
 
 !! Set a default font and font size:
 *.font: Noto Sans:style=Regular:pixelsize=14:antialias=true;
-
-!! DWM Settings
-dwm.bordernorm: #383c4a 
-dwm.bordersel: #7aa2f7 
-dwm.font: NotoSans Nerd Font:style=Regular:pixelsize=14:antialias=true;
-
-!! dmenu settings
-dmenu.font: NotoSans Nerd Font:style=Regular:pixelsize=14:antialias=true;
 
 /* name   dark light */
 /* black  0    8 */
