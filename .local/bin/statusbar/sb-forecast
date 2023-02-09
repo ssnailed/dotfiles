@@ -1,36 +1,19 @@
 #!/bin/sh
 
-# Usually intended for the statusbar.
-
-# If we have internet, get a weather report from wttr.in and store it locally.
-# You could set up a shell alias to view the full file in a pager in the
-# terminal if desired. This function will only be run once a day when needed.
 # Options can be found at https://wttr.in/:help
-weatherfile="${XDG_CACHE_HOME:-$HOME/.cache}/weatherreport"
-emojifile="${XDG_CACHE_HOME:-$HOME/.cache}/weatheremoji"
-url="wttr.in/Karlsruhe"
-opt="?F"
-emojiopt="?format=1"
-convertemoji() {
-	sed -i '
-s/☀️//
-s/☁️//
-s/⛅️//
-s/⛈//
-s/✨//
-s/❄️//
-s/🌦//
-s/🌧//
-s/🌨//
-s/🌩//
-s/🌫//
-' "$emojifile"
+
+weatherfile="$XDG_CACHE_HOME/weatherreport"
+emojifile="$XDG_CACHE_HOME/weatheremoji"
+url="wttr.in/?FA"
+
+getforecast() {
+	curl -sf4 "$url" >$weatherfile || exit 1
+	curl -sf4 "$url&format=%c" | sed 's/☀️//;s/☁️//;s/⛅️//;s/⛈//;s/✨//;s/❄️//;s/🌦//;s/🌧//;s/🌨//;s/🌩//;s/🌫//;' >$emojifile || exit 1
 }
-getforecast() { curl -sf "$url$opt" >"$weatherfile" && curl -sf "$url$emojiopt" >"$emojifile" || exit 1; }
 showweather() {
-	emoji="$(printf "\033[12m%s\033[10m" "$(cut -d ' ' -f 1 "$emojifile")")"
-	sed '16q;d' "$weatherfile" | grep -wo "[0-9]*%" | sort -rn | sed "s/^/$emoji /g;1q" | tr -d '\n'
-	sed '13q;d' "$weatherfile" | grep -o "m\\([-+]\\)*[0-9]\\+" | sed 's/+//g' | sort -n -t 'm' -k 2n | sed -e 1b -e '$!d' | tr '\n|m' ' ' | awk '{print " \033[34m\033[0m " $1 "°","\033[31m\033[0m " $2 "°"}'
+	emoji="$(printf "\033[12m%s\033[10m" $(cut -d ' ' -f 1 $emojifile))"
+	sed '16q;d' $weatherfile | grep -wo "[0-9]*%" | sort -rn | sed "s/^/$emoji /g;1q" | tr -d '\n'
+	sed '13q;d' $weatherfile | grep -o "m\\([-+]\\)*[0-9]\\+" | sed 's/+//g' | sort -n -t 'm' -k 2n | sed -e 1b -e '$!d' | tr '\n|m' ' ' | awk '{print " \033[34m\033[0m " $1 "°","\033[31m\033[0m " $2 "°"}'
 }
-getforecast && convertemoji
+getforecast
 showweather
