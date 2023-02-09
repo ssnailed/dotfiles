@@ -1,4 +1,16 @@
 #!/bin/sh
+
 printf "Beginning upgrade.\\n"
-paru -Syu
+if command -v paru 1>/dev/null 2>&1; then
+    paru -Syu
+elif command -v yay 1>/dev/null 2>&1; then
+    yay -Syu
+elif command -v pacman 1>/dev/null 2>&1; then
+    pacman -Syu
+fi
+
+command -v apt 1>/dev/null 2>&1 && sudo apt upgrade
+
 pkill -RTMIN+8 "${STATUSBAR:-dwmblocks}"
+printf "\\nUpgrade complete.\\nPress <Enter> to exit window.\\n\\n"
+read -r _
