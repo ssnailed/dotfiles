@@ -1,61 +1,62 @@
 #!/bin/sh
 
 # sudo not required for some system commands
-for command in mount umount sv pacman apt updatedb su shutdown poweroff reboot ; do
-    alias $command="sudo $command"
-done; unset command
+for command in mount umount sv pacman apt updatedb su shutdown poweroff reboot; do
+	command -v $command 1>/dev/null 2>&1 && alias $command="sudo $command"
+done
+unset command
 
 # Verbosity and settings that you pretty much just always are going to want.
 alias \
-    cp="cp -iv" \
-    mv="mv -iv" \
-    rm="rm -vI" \
-    bc="bc -ql" \
-    mkd="mkdir -pv" \
-    ffmpeg="ffmpeg -hide_banner" \
-    exa="exa -abghHliS" \
-    duf="duf -all" \
-    ls="ls -hN --color=auto --group-directories-first" \
-    grep="grep --color=auto" \
-    diff="diff --color=auto" \
-
+	cp="cp -iv" \
+	mv="mv -iv" \
+	rm="rm -vI" \
+	bc="bc -ql" \
+	mkd="mkdir -pv" \
+	ffmpeg="ffmpeg -hide_banner" \
+	exa="exa -abghHliS" \
+	duf="duf -all" \
+	ls="ls -hN --color=auto --group-directories-first" \
+	grep="grep --color=auto" \
+	diff="diff --color=auto" \
+	nvidia-settings="nvidia-settings --config=$XDG_CONFIG_HOME/nvidia/settings"
 
 # Colorize commands when possible.
 alias \
-    ls="ls -hN --color=auto --group-directories-first" \
-    grep="grep --color=auto" \
-    diff="diff --color=auto" \
-    ccat="highlight --out-format=ansi" \
-    ip="ip -color=auto"
+	ls="ls -hN --color=auto --group-directories-first" \
+	grep="grep --color=auto" \
+	diff="diff --color=auto" \
+	ccat="highlight --out-format=ansi" \
+	ip="ip -color=auto"
 
 # These common commands are just too long! Abbreviate them.
 alias \
-    ka="killall" \
-    e="$EDITOR" \
-    z="zathura" \
-    p="pacman" \
-    ar="apt remove" \
-    are="apt reinstall" \
-    ai="apt install" \
-    aur="apt autoremove" \
-    au="apt upgrade" \
-    kssh="kitty +kitten ssh"
+	ka="killall" \
+	e="$EDITOR" \
+	z="zathura" \
+	p="pacman" \
+	ar="apt remove" \
+	are="apt reinstall" \
+	ai="apt install" \
+	aur="apt autoremove" \
+	au="apt upgrade" \
+	kssh="kitty +kitten ssh"
 
 # Misc.
 alias \
-    ref="shortcuts >/dev/null; source ${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc ; source ${XDG_CONFIG_HOME:-$HOME/.config}/shell/zshnameddirrc" \
-    weath="less -S ${XDG_CACHE_HOME:-$HOME/.cache}/weatherreport" \
-    remvirt="virt-manager -c 'qemu+ssh://luca@192.168.178.200/system'" \
-    vim="nvim" \
-    wikidown='rclone sync cloud:files/luca/Notes ~/Documents/vimwiki' \
-    wikiup='rclone sync ~/Documents/vimwiki cloud:files/luca/Notes' \
-    cam="mpv --untimed --no-cache --no-osc --no-input-default-bindings --profile=low-latency --input-conf=/dev/null --title=webcam $(ls /dev/video[0,2,4,6,8] | tail -n 1)" \
-    ahv="export ANSIBLE_VAULT_PASSWORD_FILE=~/.ansible/secrets/ansible-homelab && ansible-vault" \
-    xpick=" xprop | awk '     
+	ref="shortcuts >/dev/null; source ${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc ; source ${XDG_CONFIG_HOME:-$HOME/.config}/shell/zshnameddirrc" \
+	weath="less -S ${XDG_CACHE_HOME:-$HOME/.cache}/weatherreport" \
+	remvirt="virt-manager -c 'qemu+ssh://luca@192.168.178.200/system'" \
+	vim="nvim" \
+	wikidown='rclone sync cloud:files/luca/Notes ~/Documents/vimwiki' \
+	wikiup='rclone sync ~/Documents/vimwiki cloud:files/luca/Notes' \
+	cam="mpv --untimed --no-cache --no-osc --no-input-default-bindings --profile=low-latency --input-conf=/dev/null --title=webcam $(ls /dev/video[0,2,4,6,8] | tail -n 1)" \
+	ahv="export ANSIBLE_VAULT_PASSWORD_FILE=~/.ansible/secrets/ansible-homelab && ansible-vault" \
+	xpick=" xprop | awk '     
         /^WM_CLASS/{sub(/.* =/, \"instance:\"); sub(/,/, \"\nclass:\"); print}
         /^WM_NAME/{sub(/.* =/, \"title:\"); print}'"
 
 # Functions
-whed () {
-  $EDITOR "$(which "$1")"
+whed() {
+	$EDITOR "$(which "$1")"
 }
