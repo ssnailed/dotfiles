@@ -9,11 +9,7 @@ pamixer "$@" >/dev/null
 # Query amixer for the current volume and whether or not the speaker is muted
 volume="$(pamixer --get-volume)"
 
-if [ "$volume" -gt "100" ]; then
-	urgency="critical"
-else
-	urgency="low"
-fi
+[ "$volume" -gt "100" ] && highlight="#ff768e" || highlight="#7aa2f7"
 
 if [ "$volume" -gt "70" ]; then
 	icon="audio-volume-high"
@@ -25,10 +21,12 @@ fi
 
 mute="$(pamixer --get-mute)"
 if [ "$volume" = 0 ] || [ "$mute" = "true" ]; then
-	notify-send -a "changeVolume" -i "audio-volume-muted" -u $urgency -h string:x-dunst-stack-tag:$msgTag "Volume muted"
+	notify-send -a "changeVolume" -i "audio-volume-muted" -u low -h string:x-dunst-stack-tag:$msgTag "Volume muted"
 else
-	notify-send -a "changeVolume" -i "$icon" -u $urgency -h string:x-dunst-stack-tag:$msgTag \
-		-h int:value:"$volume" "Volume: ${volume}%"
+	notify-send -a "changeVolume" -i "$icon" -u low "Volume: ${volume}%"\
+        -h string:x-dunst-stack-tag:$msgTag \
+	    -h int:value:$volume \
+        -h string:hlcolor:$highlight
 fi
 
 # Play the volume changed sound

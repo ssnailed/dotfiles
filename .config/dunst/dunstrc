@@ -4,6 +4,7 @@
     width = 370
     height = 370
     offset = 5x24
+    gap_size = 4
     transparency = 10
     font = Monospace 12
     format = "<b>%s</b>\n%b"
@@ -15,11 +16,16 @@
     markup = full
     icon_theme = Qogir-dark
     icon_path = /usr/share/icons/Qogir-dark/16/panel/
+    dmenu = /usr/local/bin/dmenu -p dunst
+    mouse_left = context
+    middle = close_all
+    mouse_right = close_current
 
 [urgency_low]
     background = "#1a1b26"
     foreground = "#c0caf5"
     highlight = "#7aa2f7"
+    history_ignore = true
     timeout = 3
 
 [urgency_normal]
