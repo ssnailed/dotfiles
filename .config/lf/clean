@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-kitty +kitten icat --clear --transfer-mode file
+kitty +kitten icat --clear --silent --stdin no --transfer-mode memory >/dev/tty
