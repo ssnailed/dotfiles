@@ -4,7 +4,7 @@ shift=""
 if ls /sys/class/net/w*/operstate 1>/dev/null 2>&1; then
 	for w in /sys/class/net/w*/; do
 		percent="$(cat /proc/net/wireless | grep "$(basename "$(dirname $w/operstate)")" | tr -s ' ' | cut -d ' ' -f3 | tr -dc "[:digit:]")"
-		grep -vxq '0x1003' "$w/flags" && wifi_icon="" || wifi_icon="$(sed "s/up/直/;s/down/睊/" $w/operstate | tr -d "[:space:]")"
+		grep -vxq '0x1003' "$w/flags" && wifi_icon="" || wifi_icon="$(sed "s/up/直/;s/down/睊/;s/dormant/睊/" $w/operstate | tr -d "[:space:]")"
 		printf "$shift\033[11m%s\033[10m %s" "$wifi_icon" "$percent"
 		shift=" "
 	done
