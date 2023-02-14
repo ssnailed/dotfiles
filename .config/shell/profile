@@ -37,6 +37,8 @@ export HISTFILE="$XDG_DATA_HOME/history"
 export GRADLE_USER_HOME="$XDG_DATA_HOME/gradle"
 export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority" # WARN: This line can break some display managers
 export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME"/npm/npmrc
+export CUDA_CACHE_PATH="$XDG_CACHE_HOME"/nv
+_JAVA_OPTIONS=-Djava.util.prefs.userRoot="$XDG_CONFIG_HOME"/java
 
 # Other program settings:
 export FZF_DEFAULT_OPTS="--layout=reverse --height 40%"
