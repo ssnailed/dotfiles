@@ -8,23 +8,17 @@ local plugins = {
     { "nvim-lua/plenary.nvim" },
     { "lewis6991/impatient.nvim" },
     { "tpope/vim-surround",
-        setup = function()
-            require('funcs').on_file_open("vim-surround")
-        end
+        event = { "BufRead", "BufWinEnter", "BufNewFile" },
     },
     { "tpope/vim-repeat",
-        setup = function()
-            require('funcs').on_file_open("vim-repeat")
-        end
+        event = { "BufRead", "BufWinEnter", "BufNewFile" },
     },
     { "fladson/vim-kitty",
         ft = "kitty"
     },
     { "kyazdani42/nvim-web-devicons" },
     { "felipec/vim-sanegx",
-        setup = function()
-            require('funcs').on_file_open("vim-sanegx")
-        end
+        event = { "BufRead", "BufWinEnter", "BufNewFile" },
     },
     { "folke/which-key.nvim",
         config = function()
@@ -37,26 +31,20 @@ local plugins = {
         end
     },
     { "folke/todo-comments.nvim",
-        setup = function()
-            require('funcs').on_file_open("todo-comments.nvim")
-        end,
+        event = { "BufRead", "BufWinEnter", "BufNewFile" },
         config = function()
             require('plugins.config.todo-comments')
         end
     },
     { "akinsho/bufferline.nvim",
-        setup = function()
-            require('funcs').on_file_open("bufferline.nvim")
-            require('funcs').map("bufferline")
-        end,
+        event = { "BufRead", "BufWinEnter", "BufNewFile" },
         config = function()
             require('plugins.config.bufferline')
+            require('funcs').map("bufferline")
         end,
     },
     { "nvim-lualine/lualine.nvim",
-        setup = function()
-            require('funcs').on_file_open("lualine.nvim")
-        end,
+        event = { "BufRead", "BufWinEnter", "BufNewFile" },
         config = function()
             require('plugins.config.lualine')
         end,
@@ -68,35 +56,27 @@ local plugins = {
     },
     { "lukas-reineke/indent-blankline.nvim",
         after = "nvim-treesitter",
-        setup = function()
-            require('funcs').on_file_open("indent-blankline.nvim")
-            require('funcs').map("blankline")
-        end,
+        event = { "BufRead", "BufWinEnter", "BufNewFile" },
         config = function()
             require('plugins.config.indent-blankline')
+            require('funcs').map("blankline")
         end,
     },
     { "norcalli/nvim-colorizer.lua",
-        setup = function()
-            require('funcs').on_file_open("nvim-colorizer.lua")
-        end,
+        event = { "BufRead", "BufWinEnter", "BufNewFile" },
         config = function()
             require('plugins.config.nvim-colorizer')
         end,
     },
     { "RRethy/vim-illuminate",
-        setup = function()
-            require('funcs').on_file_open("vim-illuminate")
-            require('funcs').map("illuminate")
-        end,
+        event = { "BufRead", "BufWinEnter", "BufNewFile" },
         config = function()
             require('plugins.config.illuminate')
+            require('funcs').map("illuminate")
         end,
     },
     { "nvim-treesitter/nvim-treesitter",
-        setup = function()
-            require('funcs').on_file_open("nvim-treesitter")
-        end,
+        event = { "BufRead", "BufWinEnter", "BufNewFile" },
         cmd = {
             "TSInstall",
             "TSBufEnable",
@@ -113,7 +93,18 @@ local plugins = {
     { "lewis6991/gitsigns.nvim",
         ft = "gitcommit",
         setup = function()
-            require('funcs').gitsigns()
+            vim.api.nvim_create_autocmd({ "BufRead" }, {
+                group = vim.api.nvim_create_augroup("GitSignsLazyLoad", { clear = true }),
+                callback = function()
+                    vim.fn.system("git rev-parse " .. vim.fn.expand "%:p:h")
+                    if vim.v.shell_error == 0 then
+                        vim.api.nvim_del_augroup_by_name "GitSignsLazyLoad"
+                        vim.schedule(function()
+                            require("packer").loader "gitsigns.nvim"
+                        end)
+                    end
+                end,
+            })
         end,
         config = function()
             require('plugins.config.gitsigns')
@@ -130,12 +121,10 @@ local plugins = {
     { "williamboman/mason-lspconfig.nvim" },
     { "neovim/nvim-lspconfig",
         after = "mason-lspconfig.nvim",
-        setup = function()
-            require('funcs').on_file_open("nvim-lspconfig")
-            require('funcs').map("lspconfig")
-        end,
+        event = { "BufRead", "BufWinEnter", "BufNewFile" },
         config = function()
             require('plugins.config.lspconfig')
+            require('funcs').map("lspconfig")
         end,
     },
     { "jose-elias-alvarez/null-ls.nvim",
@@ -145,20 +134,16 @@ local plugins = {
     },
     { "rcarriga/nvim-dap-ui",
         after = "nvim-dap",
-        setup = function()
-            require('funcs').on_file_open("nvim-dap-ui")
-        end,
+        event = { "BufRead", "BufWinEnter", "BufNewFile" },
         config = function()
             require('plugins.config.dapui')
         end,
     },
     { "mfussenegger/nvim-dap",
-        setup = function()
-            require('funcs').on_file_open("nvim-dap")
-            require('funcs').map("dap")
-        end,
+        event = { "BufRead", "BufWinEnter", "BufNewFile" },
         config = function()
             require('plugins.config.dap')
+            require('funcs').map("dap")
         end,
     },
     { "rafamadriz/friendly-snippets",
@@ -195,11 +180,9 @@ local plugins = {
         end,
     },
     { "numToStr/Comment.nvim",
+        event = { "BufRead", "BufWinEnter", "BufNewFile" },
         config = function()
             require('plugins.config.comment')
-        end,
-        setup = function()
-            require('funcs').on_file_open("Comment.nvim")
             require('funcs').map("comment")
         end,
     },
