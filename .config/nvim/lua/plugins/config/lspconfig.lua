@@ -62,7 +62,7 @@ mason_lspconfig.setup_handlers({
         }
         lspconfig["intelephense"].setup(opts)
     end,
-    ["sumneko_lua"] = function()
+    ["lua_ls"] = function()
         opts = {
             on_attach = on_attach,
             capabilities = capabilities,
@@ -85,6 +85,6 @@ mason_lspconfig.setup_handlers({
                 },
             },
         }
-        lspconfig["sumneko_lua"].setup(opts)
+        lspconfig["lua_ls"].setup(opts)
     end
 })
