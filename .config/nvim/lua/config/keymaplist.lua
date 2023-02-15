@@ -41,6 +41,12 @@ M.maps = {
             { "<a-p>", "<cmd>lua require('illuminate').next_reference{reverse=true,wrap=true}<CR>" },
         }
     },
+    bufferline = {
+        n = {
+            { "<TAB>", "<cmd>BufferLineCycleNext<CR>", "Previous" },
+            { "<S-TAB>", "<cmd>BufferLineCyclePrev<CR>", "Next" },
+        }
+    }
 }
 
 M.whichkey = {

@@ -148,7 +148,6 @@ local plugins = {
     },
     { "rafamadriz/friendly-snippets",
         event = "InsertEnter",
-        module = { "cmp", "cmp_nvim_lsp" },
     },
     { "hrsh7th/nvim-cmp",
         after = "friendly-snippets",
