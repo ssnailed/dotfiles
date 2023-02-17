@@ -9,8 +9,8 @@ export XSECURELOCK_PASSWORD_PROMPT="time_hex"
 export XSECURELOCK_AUTH_TIMEOUT=10
 export XSECURELOCK_SHOW_DATETIME=1
 export XSECURELOCK_COMPOSITE_OBSCURER=0
-[ -r "/usr/libexec/xscreensaver/cubicgrid" ] && export XSECURELOCK_SAVER="/usr/libexec/xscreensaver/cubicgrid -root"
-[ -r "/usr/lib/xscreensaver/cubicgrid" ] && export XSECURELOCK_SAVER="/usr/lib/xscreensaver/cubicgrid -root"
+[ -r "/usr/libexec/xscreensaver/cubicgrid" ] && export XSECURELOCK_SAVER="/usr/libexec/xscreensaver/cubicgrid"
+[ -r "/usr/lib/xscreensaver/cubicgrid" ] && export XSECURELOCK_SAVER="/usr/lib/xscreensaver/cubicgrid"
 export XSECURELOCK_SHOW_DATETIME=1
 export XSECURELOCK_SHOW_HOSTNAME=1
 
