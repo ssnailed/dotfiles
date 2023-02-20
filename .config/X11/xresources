@@ -1,6 +1,6 @@
 !! Set cursor size (Check GTK in .config too):
 Xcursor.size: 24
-Xcursor.theme: Qogir-dark
+Xcursor.theme: tokyo-night
 
 !! Set a default font and font size:
 *.font: Noto Sans:style=Regular:pixelsize=14:antialias=true;
