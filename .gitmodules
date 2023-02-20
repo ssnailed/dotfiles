@@ -1,3 +1,12 @@
 [submodule ".local/share/zsh/plugins/fast-syntax-highlighlighting"]
 	path = .local/share/zsh/plugins/fast-syntax-highlighlighting
 	url = https://github.com/zdharma-continuum/fast-syntax-highlighting
+[submodule ".local/src/dwm"]
+	path = .local/src/dwm
+	url = https://git.snaile.de/luca/dwm
+[submodule ".local/src/dmenu"]
+	path = .local/src/dmenu
+	url = https://git.snaile.de/luca/dmenu
+[submodule ".local/src/dwmblocks"]
+	path = .local/src/dwmblocks
+	url = https://git.snaile.de/luca/dwmblocks
