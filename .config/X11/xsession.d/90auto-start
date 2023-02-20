@@ -13,3 +13,4 @@ start dunst
 start pipewire
 start dwmblocks
 start remapd
+start checkup
