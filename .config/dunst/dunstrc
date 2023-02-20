@@ -42,3 +42,6 @@
     highlight = "#ff768e"
     timeout = 10
 
+[updates]
+    category = updates
+    timeout = 0

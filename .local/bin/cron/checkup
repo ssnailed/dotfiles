@@ -4,30 +4,32 @@
 
 notify-send " Repository Sync" "Checking for package updates..."
 
-if command -v pacman; then
-	sudo pacman -Syyuw --noconfirm || notify-send "Error downloading updates." "Check your internet connection, if pacman is already running, or run update manually to see errors."
-	pkill -RTMIN+8 "${STATUSBAR:-dwmblocks}"
+askupgrade() {
+    [ "$(notify-send -c updates --action=Yes=Yes --action=No=No " Repository Sync" "Updates available. Update now?")" = 'Yes' ] && $TERMINAL -e upgrades
+}
 
+confirmcheck() {
+    notify-send " Repository Sync" "Sync complete. No new packages for update."
+}
+
+failcheck() {
+    notify-send "Error downloading updates." "Check your internet connection, if $1 is already running, or run update manually to see errors."
+}
+
+if command -v pacman 1>/dev/null 2>&1; then
+	sudo pacman -Syyuw --noconfirm || failcheck pacman
 	if pacman -Qu | grep -v "\[ignored\]"; then
-		answer=$(
-			notify-send --action=Yes=Yes --action=No=No \
-				" Repository Sync" "Updates available. Update now?"
-		)
-		[ $answer -eq 1 ] && $TERMINAL -e upgrades
+        askupgrade
 	else
-		notify-send " Repository Sync" "Sync complete. No new packages for update."
+        confirmcheck
 	fi
-elif command -v apt; then
+elif command -v apt 1>/dev/null 2>&1; then
 	n=$(sudo apt upgrade -dy 2>/dev/null | grep -m1 '^[0-9]\+ upgraded,' | tr -cd '0-9' | cut -c1-2)
 	if [ "$n" = '' ]; then
-		notify-send "Error downloading updates." "Check your internet connection, if pacman is already running, or run update manually to see errors."
+        failcheck apt
 	elif [ "$n" = 00 ]; then
-		notify-send " Repository Sync" "Sync complete. No new packages for update."
+        confirmcheck
 	else
-		notify-send --action=Yes=Yes --action=No=No \
-			" Repository Sync" "Updates available. Update now?"
-		[ "$answer" = 1 ] && $TERMINAL -e upgrades
+        askupgrade
 	fi
-
-	pkill -RTMIN+8 "${STATUSBAR:-dwmblocks}"
 fi

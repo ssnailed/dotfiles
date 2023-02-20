@@ -4,7 +4,7 @@ if command -v pacman 1>/dev/null 2>&1; then
 fi
 
 if command -v apt 1>/dev/null 2>&1; then
-    vals=$(apt upgrade -sy | grep -m1 '^[0-9]\+ upgraded,' | tr -cd '0-9 ' | tr ' ' '\n' | grep '[0-9]\+' | xargs echo)
+    vals=$(apt upgrade -sy 2>/dev/null | grep -m1 '^[0-9]\+ upgraded,' | tr -cd '0-9 ' | tr ' ' '\n' | grep '[0-9]\+' | xargs echo)
 
     for i in $vals; do
         [ $i != 0 ] && icon="\033[11m\033[10m"
