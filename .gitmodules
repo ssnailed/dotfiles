@@ -10,3 +10,12 @@
 [submodule ".local/src/dwmblocks"]
 	path = .local/src/dwmblocks
 	url = https://git.snaile.de/luca/dwmblocks
+[submodule ".local/share/icons/tokyonight-icons"]
+	path = .local/share/icons/tokyonight-icons
+	url = https://git.snaile.de/luca/tokyonight-icons
+[submodule ".local/share/themes/tokyonight-theme"]
+	path = .local/share/themes/tokyonight-theme
+	url = https://git.snaile.de/luca/tokyonight-theme
+[submodule ".local/share/icons/tokyonight-theme"]
+	path = .local/share/icons/tokyonight-theme
+	url = https://git.snaile.de/luca/tokyonight-theme
