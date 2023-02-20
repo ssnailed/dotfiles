@@ -7,11 +7,11 @@ start() {
 xwallpaper --zoom "${XDG_DATA_HOME:-$HOME/.local/share/}/bg"
 start playerctld daemon
 start picom
-start unclutter
+start unclutter -noevents
 start dunst
 start pipewire
 start dwmblocks
 start remapd
 
-remaps
-checkup
+remaps &
+checkup &
