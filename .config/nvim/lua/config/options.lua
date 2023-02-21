@@ -40,7 +40,7 @@ o.listchars      = "eol:$,tab:>-,trail:~,extends:>,precedes:<"
 g.Illuminate_ftblacklist = { 'alpha', 'NvimTree' }
 g.mapleader = ' '
 
-local icons = require 'config.iconlist'
+local icons = require 'config.icons'.list
 
 local signs = {
     DiagnosticSignError = icons.BoldError,
