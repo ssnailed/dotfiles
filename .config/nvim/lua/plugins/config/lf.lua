@@ -1,4 +1,3 @@
--- Defaults
 require("lf").setup({
     default_actions = {},
     winblend = 0,

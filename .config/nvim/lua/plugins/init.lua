@@ -2,7 +2,7 @@ local icons = require('config.icons').list
 local plugins = {
     { "wbthomason/packer.nvim",
         config = function()
-            require('funcs').map("packer")
+            require('config.keymaps').map("packer")
         end
     },
     { "nvim-lua/plenary.nvim" },
@@ -40,7 +40,7 @@ local plugins = {
         event = { "BufRead", "BufWinEnter", "BufNewFile" },
         config = function()
             require('plugins.config.bufferline')
-            require('funcs').map("bufferline")
+            require('config.keymaps').map("bufferline")
         end,
     },
     { "nvim-lualine/lualine.nvim",
@@ -59,7 +59,7 @@ local plugins = {
         event = { "BufRead", "BufWinEnter", "BufNewFile" },
         config = function()
             require('plugins.config.indent-blankline')
-            require('funcs').map("blankline")
+            require('config.keymaps').map("blankline")
         end,
     },
     { "norcalli/nvim-colorizer.lua",
@@ -72,7 +72,7 @@ local plugins = {
         event = { "BufRead", "BufWinEnter", "BufNewFile" },
         config = function()
             require('plugins.config.illuminate')
-            require('funcs').map("illuminate")
+            require('config.keymaps').map("illuminate")
         end,
     },
     { "nvim-treesitter/nvim-treesitter",
@@ -112,7 +112,7 @@ local plugins = {
     },
     { "williamboman/mason.nvim",
         setup = function()
-            require('funcs').map("mason")
+            require('config.keymaps').map("mason")
         end,
         config = function()
             require "plugins.config.mason"
@@ -124,7 +124,7 @@ local plugins = {
         event = { "BufRead", "BufWinEnter", "BufNewFile" },
         config = function()
             require('plugins.config.lspconfig')
-            require('funcs').map("lspconfig")
+            require('config.keymaps').map("lspconfig")
         end,
     },
     { "jose-elias-alvarez/null-ls.nvim",
@@ -143,7 +143,7 @@ local plugins = {
         event = { "BufRead", "BufWinEnter", "BufNewFile" },
         config = function()
             require('plugins.config.dap')
-            require('funcs').map("dap")
+            require('config.keymaps').map("dap")
         end,
     },
     { "rafamadriz/friendly-snippets",
@@ -182,13 +182,13 @@ local plugins = {
         event = { "BufRead", "BufWinEnter", "BufNewFile" },
         config = function()
             require('plugins.config.comment')
-            require('funcs').map("comment")
+            require('config.keymaps').map("comment")
         end,
     },
     { "nvim-telescope/telescope.nvim",
         config = function()
             require('plugins.config.telescope')
-            require('funcs').map("telescope")
+            require('config.keymaps').map("telescope")
         end,
     },
     { "ahmedkhalf/project.nvim",
@@ -205,7 +205,7 @@ local plugins = {
         opt = true,
         config = function()
             require('plugins.config.lf')
-            require('funcs').map("lf")
+            require('config.keymaps').map("lf")
         end
     },
 }

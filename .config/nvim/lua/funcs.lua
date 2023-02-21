@@ -20,37 +20,6 @@ function M.bootstrap()
     end
 end
 
-function M.map(section)
-    local maps = require('config.keymaplist').maps[section]
-    if maps then
-        for mode, binds in pairs(maps) do
-            for _, bind in pairs(binds) do
-                local key = bind[1]
-                local cmd = bind[2]
-                local opt = { silent = true, noremap = true }
-                vim.api.nvim_set_keymap(mode, key, cmd, opt)
-            end
-        end
-    end
-
-    local wk_ok, whichkey = pcall(require, 'which-key')
-    if wk_ok then
-        local wkmaps = require('config.keymaplist').whichkey[section]
-        if wkmaps then
-            for mode, binds in pairs(wkmaps) do
-                whichkey.register(binds, {
-                    mode = mode,
-                    prefix = "<leader>",
-                    buffer = nil,
-                    silent = true,
-                    noremap = true,
-                    nowait = true,
-                })
-            end
-        end
-    end
-end
-
 function M.format_filter(client)
     local filetype = vim.bo.filetype
     local n = require "null-ls"

@@ -1,5 +1,6 @@
 local M = {}
-M.maps = {
+
+local maps = {
     general = {
         n = { -- normal mode
             -- Better window navigation
@@ -49,13 +50,14 @@ M.maps = {
     }
 }
 
-M.whichkey = {
+local wkmaps = {
     general = {
         n = {
             ["w"] = { "<cmd>w!<CR>", "Save" },
             ["q"] = { function() require("funcs").buf_kill() end, "Close" },
             ["f"] = { function() require("lf").start("~") end, "File Picker" },
             ["h"] = { "<cmd>nohlsearch<CR>", "Clear Highlights" },
+            ["e"] = { function() require('packer').loader("lf.nvim") require("lf").start() end, "File Picker" },
             u = {
                 name = "Utility",
                 c = { "<cmd>w!<CR><cmd>!compiler \"%:p\"<CR>", "Compile" },
@@ -231,5 +233,35 @@ M.whichkey = {
         }
     }
 }
+
+local wk_ok, whichkey = pcall(require, 'which-key')
+
+M.map = function(section)
+    if maps[section] then
+        for mode, binds in pairs(maps[section]) do
+            for _, bind in pairs(binds) do
+                local key = bind[1]
+                local cmd = bind[2]
+                local opt = { silent = true, noremap = true }
+                vim.api.nvim_set_keymap(mode, key, cmd, opt)
+            end
+        end
+    end
+
+    if wk_ok then
+        if wkmaps[section] then
+            for mode, binds in pairs(wkmaps[section]) do
+                whichkey.register(binds, {
+                    mode = mode,
+                    prefix = "<leader>",
+                    buffer = nil,
+                    silent = true,
+                    noremap = true,
+                    nowait = true,
+                })
+            end
+        end
+    end
+end
 
 return M
