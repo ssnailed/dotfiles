@@ -1,0 +1,24 @@
+#!/bin/sh
+
+# this script provides a menu of screenshot options, using flameshot
+
+geom() {
+    case $1 in 
+        "active") eval "$(xdotool getactivewindow getwindowgeometry --shell)" ;;
+        "select") eval "$(xdotool selectwindow getwindowgeometry --shell)" ;;
+    esac
+    echo "${WIDTH}x${HEIGHT}+${X}+${Y}"
+}
+
+# variables
+output="${XDG_PICTURES_DIR:-$HOME/Pictures}/$(date '+%y%m%d-%H%M-%S').png"
+case "$(printf "selected area\\ncurrent window\\nselected window\\nfull screen\\nselected area (copy)\\ncurrent window (copy)\\nselect window (copy)\\nfull screen (copy)" | dmenu -i -p "Screenshot which area?")" in
+    "selected area") flameshot gui -p "$output" ;;
+    "current window") flameshot gui -p "$output" --region "$(geom active)";;
+    "selected window") flameshot gui -p "$output" --region "$(geom select)";;
+    "full screen") flameshot full -p "$output" ;;
+    "selected area (copy)") flameshot gui -c ;;
+    "current window (copy)") flameshot gui -p "$output" -c --region "$(geom active)";;
+    "selected window (copy)") flameshot gui -p "$output" -c --region "$(geom select)";;
+    "full screen (copy)") flameshot full -c ;;
+esac
