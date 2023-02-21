@@ -1,4 +1,8 @@
 #!/bin/sh
+
+big="\033[11m"
+reset="\033[10m"
+
 update() {
 	sum=0
 	for arg; do
@@ -12,4 +16,4 @@ update() {
 }
 rx=$(update /sys/class/net/[ew]*/statistics/rx_bytes)
 tx=$(update /sys/class/net/[ew]*/statistics/tx_bytes)
-printf "%5sB %5sB\\n" $(numfmt --to=iec $rx $tx)
+printf "$big$reset%5sB $big$reset%5sB\\n" $(numfmt --to=iec $rx $tx)

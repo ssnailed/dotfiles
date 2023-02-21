@@ -1,6 +1,6 @@
 #!/bin/sh
 if command -v pacman 1>/dev/null 2>&1; then
-    echo -n "$(pacman -Qu | grep -Fcv "[ignored]" | sed "s/^/ /;s/^ 0$//g")"
+    echo -n "$(pacman -Qu | grep -Fcv "[ignored]" | sed "s/^//;s/^ 0$//g")"
 fi
 
 if command -v apt 1>/dev/null 2>&1; then
@@ -11,5 +11,5 @@ if command -v apt 1>/dev/null 2>&1; then
         print="$print$i/"
     done
 
-    [ -n "$icon" ] && printf "$icon " && echo " $print" | sed 's/\/$//'
+    [ -n "$icon" ] && printf "$icon" && echo " $print" | sed 's/\/$//'
 fi
