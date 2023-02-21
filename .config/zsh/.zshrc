@@ -84,7 +84,7 @@ _lfcd () {
   zle accept-line
 }
 zle -N _lfcd
-bindkey '^o' _lfcd
+bindkey '^e' _lfcd
 
 # bind lazygit to ctrl-g
 lg () {
@@ -100,9 +100,6 @@ function write_venv(){
   echo -n "${VIRTUAL_ENV:t}" > "/tmp/current_venv-$$"
 }
 add-zsh-hook precmd write_venv
-
-# Edit line in vim with ctrl-e:
-bindkey '^e' edit-command-line
 
 # other keybinds
 bindkey -v '^?' backward-delete-char
