@@ -59,6 +59,7 @@ M.whichkey = {
             u = {
                 name = "Utility",
                 c = { "<cmd>w!<CR><cmd>!compiler \"%:p\"<CR>", "Compile" },
+                g = { "<cmd>PackerLoad nvim-ghost.nvim<CR>", "Start ghost server" },
             },
             l = {
                 name = "LSP",

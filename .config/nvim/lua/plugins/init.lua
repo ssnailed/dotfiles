@@ -203,6 +203,10 @@ local plugins = {
             require('plugins.config.project')
         end,
     },
+    { "subnut/nvim-ghost.nvim",
+        opt = true,
+        run = ":call nvim_ghost#installer#install()",
+    },
 }
 
 local status_ok, packer = pcall(require, "packer")
