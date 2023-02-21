@@ -185,12 +185,6 @@ local plugins = {
             require('funcs').map("comment")
         end,
     },
-    { "lmburns/lf.nvim",
-        config = function()
-            require('plugins.config.lf')
-            require('funcs').map("lf")
-        end
-    },
     { "nvim-telescope/telescope.nvim",
         config = function()
             require('plugins.config.telescope')
@@ -206,6 +200,13 @@ local plugins = {
     { "subnut/nvim-ghost.nvim",
         opt = true,
         run = ":call nvim_ghost#installer#install()",
+    },
+    { "lmburns/lf.nvim",
+        opt = true,
+        config = function()
+            require('plugins.config.lf')
+            require('funcs').map("lf")
+        end
     },
 }
 

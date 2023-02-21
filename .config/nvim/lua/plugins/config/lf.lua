@@ -1,9 +1,9 @@
 -- Defaults
 require("lf").setup({
+    default_actions = {},
     winblend = 0,
     highlights = {
-        border = "Normal",
-        background = "Normal",
+        NormalFloat = { guibg = "NONE" }
     },
     border = "rounded",
 })
