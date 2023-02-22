@@ -14,8 +14,8 @@
     line_height = 2
     corner_radius = 8
     markup = full
-    icon_theme = Qogir-dark
-    icon_path = /usr/share/icons/Qogir-dark/16/panel/
+    icon_theme = tokyonight
+    icon_path = /home/luca/.local/share/icons/tokyonight/16x16/panel
     dmenu = /usr/local/bin/dmenu -p dunst
     mouse_left = context
     middle = close_all
