@@ -197,10 +197,10 @@ local plugins = {
             require('plugins.config.project')
         end,
     },
-    { "subnut/nvim-ghost.nvim",
-        opt = true,
-        run = ":call nvim_ghost#installer#install()",
-    },
+    -- { "subnut/nvim-ghost.nvim",
+    --     opt = true,
+    --     run = ":call nvim_ghost#installer#install()",
+    -- },
     { "lmburns/lf.nvim",
         opt = true,
         config = function()
