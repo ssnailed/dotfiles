@@ -4,17 +4,19 @@ if not status_ok then
 end
 local icons = require('config.icons').list
 
-whichkey.setup {
-    marks = false,
-    registers = false,
-    presets = {
-        operators = false,
-        motions = false,
-        text_objects = false,
-        windows = false,
-        nav = false,
-        z = false,
-        g = false,
+whichkey.setup({
+    plugins = {
+        marks = false,
+        registers = false,
+        presets = {
+            operators = false,
+            motions = false,
+            text_objects = false,
+            windows = false,
+            nav = false,
+            z = false,
+            g = false,
+        }
     },
     spelling = {
         enabled = false,
@@ -46,6 +48,6 @@ whichkey.setup {
     triggers = "auto",
     triggers_blacklist = {
         i = { "j", "k" },
-        v = { "j", "k", "c", "y", "d", "v" },
+        v = { "j", "k", "y" },
     },
-}
+})

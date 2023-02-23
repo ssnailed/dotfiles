@@ -37,7 +37,7 @@ o.modeline       = true
 o.modelines      = 3
 o.listchars      = "eol:$,tab:>-,trail:~,extends:>,precedes:<"
 
-g.Illuminate_ftblacklist = { 'alpha', 'NvimTree' }
+g.Illuminate_ftblacklist = { 'alpha' }
 g.mapleader = ' '
 
 local icons = require 'config.icons'.list

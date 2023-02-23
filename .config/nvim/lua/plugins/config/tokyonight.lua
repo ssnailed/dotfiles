@@ -4,9 +4,9 @@ if not status_ok then
 end
 
 tokyonight.setup({
+    style = "night",
     transparent = true,
     terminal_colors = true,
     dim_inactive = true,
-    lualine_bold = true,
 })
 vim.cmd [[colorscheme tokyonight]]

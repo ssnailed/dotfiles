@@ -7,11 +7,10 @@ local plugins = {
     },
     { "nvim-lua/plenary.nvim" },
     { "lewis6991/impatient.nvim" },
-    { "tpope/vim-surround",
-        event = { "BufRead", "BufWinEnter", "BufNewFile" },
-    },
-    { "tpope/vim-repeat",
-        event = { "BufRead", "BufWinEnter", "BufNewFile" },
+    { "kylechui/nvim-surround",
+        config = function()
+            require('plugins.config.nvim-surround')
+        end
     },
     { "fladson/vim-kitty",
         ft = "kitty"
@@ -162,10 +161,10 @@ local plugins = {
         end,
     },
     { "saadparwaiz1/cmp_luasnip", after = "LuaSnip" },
-    { "hrsh7th/cmp-nvim-lua", after = "cmp_luasnip" },
-    { "hrsh7th/cmp-nvim-lsp", after = "cmp-nvim-lua" },
-    { "hrsh7th/cmp-buffer", after = "cmp-nvim-lsp" },
-    { "hrsh7th/cmp-path", after = "cmp-buffer" },
+    { "hrsh7th/cmp-nvim-lua",     after = "cmp_luasnip" },
+    { "hrsh7th/cmp-nvim-lsp",     after = "cmp-nvim-lua" },
+    { "hrsh7th/cmp-buffer",       after = "cmp-nvim-lsp" },
+    { "hrsh7th/cmp-path",         after = "cmp-buffer" },
     { "onsails/lspkind.nvim" },
     { "windwp/nvim-autopairs",
         after = "nvim-cmp",
@@ -203,6 +202,7 @@ local plugins = {
     -- },
     { "lmburns/lf.nvim",
         opt = true,
+        commit = "383429497292dd8a84271e74a81c6db6993ca7ab",
         config = function()
             require('plugins.config.lf')
             require('config.keymaps').map("lf")

@@ -64,9 +64,9 @@ M.list = {
             pattern = { "qf", "help", "man", "lspinfo", "spectre_panel", "lir" },
             callback = function()
                 vim.cmd [[
-          nnoremap <silent> <buffer> q :close<CR> 
-          set nobuflisted 
-        ]]
+                  nnoremap <silent> <buffer> q :close<CR> 
+                  set nobuflisted 
+                ]]
             end
         }
     },
@@ -91,9 +91,7 @@ M.list = {
     { -- Fix auto comment
         'BufWinEnter',
         {
-            callback = function()
-                vim.cmd("set formatoptions-=cro")
-            end
+            command = "set formatoptions-=cro"
         }
     },
     { -- Highlight yanked text
@@ -106,8 +104,8 @@ M.list = {
     }
 }
 
-M.setup = function()
-    vim.api.nvim_create_augroup('packer_user_config', { clear = true })
+function M.setup()
+    vim.api.nvim_create_augroup('user_config', { clear = true })
     for _, entry in ipairs(M.list) do
         local event = entry[1]
         local opts = entry[2]

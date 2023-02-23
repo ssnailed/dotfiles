@@ -50,14 +50,18 @@ local maps = {
     }
 }
 
+local function start_lf()
+require('lf').start()
+end
+
+
 local wkmaps = {
     general = {
         n = {
             ["w"] = { "<cmd>w!<CR>", "Save" },
             ["q"] = { function() require("funcs").buf_kill() end, "Close" },
-            ["f"] = { function() require("lf").start("~") end, "File Picker" },
             ["h"] = { "<cmd>nohlsearch<CR>", "Clear Highlights" },
-            ["e"] = { function() require('packer').loader("lf.nvim") require("lf").start() end, "File Picker" },
+            ["e"] = { function() require('packer').loader("lf.nvim") start_lf() end, "File Picker" },
             u = {
                 name = "Utility",
                 c = { "<cmd>w!<CR><cmd>!compiler \"%:p\"<CR>", "Compile" },
