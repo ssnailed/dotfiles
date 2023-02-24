@@ -2,9 +2,10 @@
 :root {
 	--userchrome-tab-active-bgcolor: #7aa2f7;
 	--userchrome-tab-inactive-bgcolor: #15161E;
+	--userchrome-tab-loading-bgcolor: #7dcfff;
 	--userchrome-tab-active-fgcolor: #15161E;
 	--userchrome-tab-inactive-fgcolor: #7aa2f7;
-    --userchrome-urlbar-bgcolor: #15161E;
+	--userchrome-tab-loading-fgcolor: #15161E;
     --userchrome-font: "JetBrains Mono";
 }
 
@@ -107,7 +108,6 @@
 #urlbar-background {
 	border-width: 0 !important;
 	border-radius: 0 !important;
-    /* color: var(--userchrome-urlbar-bgcolor); */
 }
 
 #urlbar-input-container {
@@ -115,10 +115,10 @@
 	margin-left: 1em !important;
 }
 
-/* #urlbar-input { */
-/* 	margin-left: 0.4em !important; */
-/* 	margin-right: 0.4em !important; */
-/* } */
+#urlbar-input {
+	margin-left: 0.4em !important;
+	margin-right: 0.4em !important;
+}
 
 .urlbarView-row {
 	padding-top: 0 !important;
@@ -193,11 +193,11 @@
 }
 
 :root:not([customizing]) #TabsToolbar {
-	background-color: #222;
+	background-color: var(--userchrome-tab-inactive-bgcolor);
 }
 
 :root:not([customizing]) #navigator-toolbox {
-	background-color: #222 !important;
+	background-color: var(--userchrome-tab-inactive-bgcolor) !important;
 }
 
 #TabsToolbar,
@@ -210,6 +210,14 @@
 tab:not([selected="true"]) {
 	background-color: var(--userchrome-tab-inactive-bgcolor) !important;
 	color: var(--userchrome-tab-inactive-fgcolor) !important;
+}
+
+/* Change color of loading tabs */
+tab[progress="true"],
+tab[bursting="true"],
+tab[busy="true"] {
+	background-color: var(--userchrome-tab-loading-bgcolor) !important;
+	color: var(--userchrome-tab-loading-fgcolor) !important;
 }
 
 tab {
@@ -225,7 +233,7 @@ tab {
 }
 
 /* hide tab bar if only one tab open */
-tab:only-of-type {
+tab:only-of-type:not([progress="true"]):not([bursting="true"]):not([busy="true"]) {
 	display: none;
 }
 
@@ -236,7 +244,7 @@ tab:only-of-type {
 
 /* hide container line on tab*/
 #tabbrowser-tabs .tab-context-line {
-	display: none
+	display: none;
 }
 
 /* disable favicons in tab */
@@ -271,6 +279,17 @@ tab:only-of-type {
 /* Tab: hovered colors */
 #tabbrowser-tabs .tabbrowser-tab:hover:not([selected]) .tab-content {
 	background: var(--userchrome-tab-active-bgcolor) !important;
+	color: var(--userchrome-tab-active-fgcolor) !important;
+    filter: brightness(0.55);
+}
+
+/* Tab: loading colors */
+#tabbrowser-tabs .tabbrowser-tab[progress="true"] .tab-content,
+#tabbrowser-tabs .tabbrowser-tab[bursting="true"] .tab-content,
+#tabbrowser-tabs .tabbrowser-tab[busy="true"] .tab-content {
+    display: -moz-box !important;
+	background-color: var(--userchrome-tab-loading-bgcolor) !important;
+	color: var(--userchrome-tab-loading-fgcolor) !important;
 }
 
 /* remove white margin around active tabs */
