@@ -1,6 +1,7 @@
 #!/bin/sh
 # battery status file is sent in as an argument from sb-battery
 
-# while inotifywait -e modify "$1/status"; do
-	# pkill -RTMIN+3 dwmblocks || break
-# done
+upower --monitor-detail -i "$1" | while read -r _; do
+	pkill -RTMIN+3 dwmblocks
+	timeout 5 cat > /dev/null
+done
