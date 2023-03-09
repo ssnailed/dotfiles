@@ -41,8 +41,8 @@ java)
 	[ "$loc":w != "" ] && exec "$loc" run -q -p "$(dirname $loc)"
 	;;
 m) octave "$file" ;;
-md) if [ -x "$(command -v lowdown)" ]; then
-	lowdown --parse-no-intraemph "$file" -Tms | groff -mpdfmark -ms -kept -T pdf >"$base".pdf
+md) if [ -x "$(command -v pandoc)" ]; then
+    pandoc -t latex -s -o "$base".pdf "$file"
 elif [ -x "$(command -v groffdown)" ]; then
 	groffdown -i "$file" | groff -T pdf >"$base.pdf"
 else
