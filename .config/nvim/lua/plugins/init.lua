@@ -9,7 +9,7 @@ local plugins = {
     { "lewis6991/impatient.nvim" },
     { "kylechui/nvim-surround",
         config = function()
-            require('plugins.config.nvim-surround')
+            require('plugins.nvim-surround')
         end
     },
     { "fladson/vim-kitty",
@@ -21,56 +21,56 @@ local plugins = {
     },
     { "folke/which-key.nvim",
         config = function()
-            require('plugins.config.whichkey')
+            require('plugins.whichkey')
         end,
     },
     { "folke/tokyonight.nvim",
         config = function()
-            require('plugins.config.tokyonight')
+            require('plugins.tokyonight')
         end
     },
     { "folke/todo-comments.nvim",
         event = { "BufRead", "BufWinEnter", "BufNewFile" },
         config = function()
-            require('plugins.config.todo-comments')
+            require('plugins.todo-comments')
         end
     },
     { "akinsho/bufferline.nvim",
         event = { "BufRead", "BufWinEnter", "BufNewFile" },
         config = function()
-            require('plugins.config.bufferline')
+            require('plugins.bufferline')
             require('config.keymaps').map("bufferline")
         end,
     },
     { "nvim-lualine/lualine.nvim",
         event = { "BufRead", "BufWinEnter", "BufNewFile" },
         config = function()
-            require('plugins.config.lualine')
+            require('plugins.lualine')
         end,
     },
     { "akinsho/toggleterm.nvim",
         config = function()
-            require('plugins.config.toggleterm')
+            require('plugins.toggleterm')
         end,
     },
     { "lukas-reineke/indent-blankline.nvim",
         after = "nvim-treesitter",
         event = { "BufRead", "BufWinEnter", "BufNewFile" },
         config = function()
-            require('plugins.config.indent-blankline')
+            require('plugins.indent-blankline')
             require('config.keymaps').map("blankline")
         end,
     },
     { "norcalli/nvim-colorizer.lua",
         event = { "BufRead", "BufWinEnter", "BufNewFile" },
         config = function()
-            require('plugins.config.nvim-colorizer')
+            require('plugins.nvim-colorizer')
         end,
     },
     { "RRethy/vim-illuminate",
         event = { "BufRead", "BufWinEnter", "BufNewFile" },
         config = function()
-            require('plugins.config.illuminate')
+            require('plugins.illuminate')
             require('config.keymaps').map("illuminate")
         end,
     },
@@ -86,7 +86,7 @@ local plugins = {
         },
         run = ":TSUpdate",
         config = function()
-            require('plugins.config.treesitter')
+            require('plugins.treesitter')
         end,
     },
     { "lewis6991/gitsigns.nvim",
@@ -106,7 +106,7 @@ local plugins = {
             })
         end,
         config = function()
-            require('plugins.config.gitsigns')
+            require('plugins.gitsigns')
         end,
     },
     { "williamboman/mason.nvim",
@@ -114,7 +114,7 @@ local plugins = {
             require('config.keymaps').map("mason")
         end,
         config = function()
-            require "plugins.config.mason"
+            require "plugins.mason"
         end,
     },
     { "williamboman/mason-lspconfig.nvim" },
@@ -122,42 +122,39 @@ local plugins = {
         after = "mason-lspconfig.nvim",
         event = { "BufRead", "BufWinEnter", "BufNewFile" },
         config = function()
-            require('plugins.config.lspconfig')
+            require('plugins.lspconfig')
             require('config.keymaps').map("lspconfig")
         end,
     },
     { "jose-elias-alvarez/null-ls.nvim",
         config = function()
-            require('plugins.config.null-ls')
+            require('plugins.null-ls')
         end,
     },
     { "rcarriga/nvim-dap-ui",
         after = "nvim-dap",
         event = { "BufRead", "BufWinEnter", "BufNewFile" },
         config = function()
-            require('plugins.config.dapui')
+            require('plugins.dapui')
         end,
     },
     { "mfussenegger/nvim-dap",
         event = { "BufRead", "BufWinEnter", "BufNewFile" },
         config = function()
-            require('plugins.config.dap')
+            require('plugins.dap')
             require('config.keymaps').map("dap")
         end,
     },
-    { "rafamadriz/friendly-snippets",
-        event = "InsertEnter",
-    },
     { "hrsh7th/nvim-cmp",
-        after = "friendly-snippets",
         config = function()
-            require('plugins.config.cmp')
+            require('plugins.cmp')
         end,
     },
     { "L3MON4D3/LuaSnip",
         after = "nvim-cmp",
+        run = "make install_jsregexp",
         config = function()
-            require('plugins.config.luasnip')
+            require('plugins.luasnip')
         end,
     },
     { "saadparwaiz1/cmp_luasnip", after = "LuaSnip" },
@@ -168,43 +165,27 @@ local plugins = {
     { "onsails/lspkind.nvim" },
     { "windwp/nvim-autopairs",
         after = "nvim-cmp",
+        event = "InsertEnter",
         config = function()
-            require('plugins.config.autopairs')
+            require('plugins.autopairs')
         end,
     },
     { "goolord/alpha-nvim",
         config = function()
-            require('plugins.config.alpha')
+            require('plugins.alpha')
         end,
     },
     { "numToStr/Comment.nvim",
         event = { "BufRead", "BufWinEnter", "BufNewFile" },
         config = function()
-            require('plugins.config.comment')
+            require('plugins.comment')
             require('config.keymaps').map("comment")
         end,
     },
-    { "nvim-telescope/telescope.nvim",
-        config = function()
-            require('plugins.config.telescope')
-            require('config.keymaps').map("telescope")
-        end,
-    },
-    { "ahmedkhalf/project.nvim",
-        after = "telescope.nvim",
-        config = function()
-            require('plugins.config.project')
-        end,
-    },
-    -- { "subnut/nvim-ghost.nvim",
-    --     opt = true,
-    --     run = ":call nvim_ghost#installer#install()",
-    -- },
     { "lmburns/lf.nvim",
-        opt = true,
         commit = "383429497292dd8a84271e74a81c6db6993ca7ab",
         config = function()
-            require('plugins.config.lf')
+            require('plugins.lf')
             require('config.keymaps').map("lf")
         end
     },

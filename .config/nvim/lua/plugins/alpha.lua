@@ -38,12 +38,9 @@ end
 dashboard.section.header.val = banner
 
 dashboard.section.buttons.val = {
-    dashboard.button("f", icons.ui.FindFile .. " Find file", ":Telescope find_files<CR>"),
-    dashboard.button("n", icons.ui.NewFile .. " New file", ":ene <BAR> startinsert<CR>"),
-    dashboard.button("p", icons.ui.Project .. " Find project", ":Telescope projects<CR>"),
-    dashboard.button("r", icons.ui.History .. " Recent files", ":Telescope oldfiles<CR>"),
-    dashboard.button("t", icons.ui.FindText .. " Find text", ":Telescope live_grep<CR>"),
-    dashboard.button("q", icons.ui.SignOut .. " Quit", ":qa<CR>"),
+    dashboard.button("n", icons.ui.NewFile .. " New file", "<CMD>ene<CR>"),
+    dashboard.button("e", icons.ui.FindFile .. " Open file", "<CMD>Lf<CR>"),
+    dashboard.button("q", icons.ui.SignOut .. " Quit", "<CMD>qa<CR>"),
 }
 
 dashboard.section.footer.val = "Behold: a Snail's Vim"
@@ -52,5 +49,5 @@ dashboard.section.footer.opts.hl = "Type"
 dashboard.section.header.opts.hl = "Include"
 dashboard.section.buttons.opts.hl = "Keyword"
 
-dashboard.opts.opts.noautocmd = true
+-- dashboard.opts.opts.noautocmd = true
 alpha.setup(dashboard.opts)

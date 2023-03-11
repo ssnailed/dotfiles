@@ -2,6 +2,7 @@ local status_ok, whichkey = pcall(require, 'which-key')
 if not status_ok then
     return
 end
+
 local icons = require('config.icons').list
 
 whichkey.setup({

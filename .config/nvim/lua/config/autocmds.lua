@@ -38,7 +38,7 @@ M.list = {
     {
         "BufWritePost",
         {
-            pattern = "~/.local/src/dwmblocks/config.h",
+            pattern = "*/dwmblocks/config.h",
             command = "!cd ~/.local/src/dwmblocks/; sudo make install && { killall -q dwmblocks;setsid -f dwmblocks }"
         }
     },

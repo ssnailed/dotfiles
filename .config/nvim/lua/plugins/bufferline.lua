@@ -1,10 +1,9 @@
-local colors = require('tokyonight.colors').setup({ transform = true })
-
 local status_ok, bufferline = pcall(require, "bufferline")
 if not status_ok then
     return
 end
 
+local colors = require('tokyonight.colors').setup({ transform = true })
 local icons = require('config.icons').list
 
 local function is_ft(b, ft)

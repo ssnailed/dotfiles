@@ -2,13 +2,8 @@ local M = {}
 
 local maps = {
     general = {
-        n = { -- normal mode
-            -- Better window navigation
-            { "<C-h>", "<C-w>h" },
-            { "<C-j>", "<C-w>j" },
-            { "<C-k>", "<C-w>k" },
-            { "<C-l>", "<C-w>l" },
-            -- Resize with arrows
+        n = {
+            -- Resize windows with arrows
             { "<C-Up>", ":resize -2<CR>" },
             { "<C-Down>", ":resize +2<CR>" },
             { "<C-Left>", ":vertical resize -2<CR>" },
@@ -17,18 +12,18 @@ local maps = {
             { "<TAB>", ":bnext<CR>" },
             { "<S-TAB>", ":bprevious<CR>" },
             -- lsp
-            { "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>" },
-            { "gd", "<cmd>lua vim.lsp.buf.definition()<CR>" },
-            { "K", "<cmd>lua vim.lsp.buf.hover()<CR>" },
-            { "gI", "<cmd>lua vim.lsp.buf.implementation()<CR>" },
-            { "gr", "<cmd>lua vim.lsp.buf.references()<CR>" },
-            { "gl", "<cmd>lua vim.diagnostic.open_float()<CR>" },
+            { "gD", vim.lsp.buf.declaration },
+            { "gd", vim.lsp.buf.definition },
+            { "K",  vim.lsp.buf.hover },
+            { "gI", vim.lsp.buf.implementation },
+            { "gr", vim.lsp.buf.references },
+            { "gl", vim.diagnostic.open_float },
         },
-        i = { -- insert mode
+        i = {
             -- Delete last word with ctrl + del
             { "<C-BS>", "<C-W>" },
         },
-        v = { -- visual mode
+        v = {
             -- Better paste
             { "p", '"_dP' },
             -- Stay in indent mode
@@ -36,46 +31,50 @@ local maps = {
             { ">", ">gv" },
         }
     },
-    illuminate = {
-        n = {
-            { "<a-n>", "<cmd>lua require('illuminate').next_reference{wrap=true}<CR>" },
-            { "<a-p>", "<cmd>lua require('illuminate').next_reference{reverse=true,wrap=true}<CR>" },
-        }
-    },
     bufferline = {
         n = {
-            { "<TAB>", "<cmd>BufferLineCycleNext<CR>", "Previous" },
-            { "<S-TAB>", "<cmd>BufferLineCyclePrev<CR>", "Next" },
+            { "<TAB>", "<cmd>BufferLineCycleNext<CR>" },
+            { "<S-TAB>", "<cmd>BufferLineCyclePrev<CR>" },
         }
-    }
+    },
+    blankline = {
+        n = {
+            { "<c-c>",
+                function()
+                    local ok, start = require("indent_blankline.utils").get_current_context(
+                        vim.g.indent_blankline_context_patterns,
+                        vim.g.indent_blankline_use_treesitter_scope
+                    )
+                    if ok then
+                        vim.api.nvim_win_set_cursor(vim.api.nvim_get_current_win(), { start, 0 })
+                        vim.cmd [[normal! _]]
+                    end
+                end
+            }
+        }
+   },
 }
-
-local function start_lf()
-require('lf').start()
-end
-
 
 local wkmaps = {
     general = {
         n = {
             ["w"] = { "<cmd>w!<CR>", "Save" },
-            ["q"] = { function() require("funcs").buf_kill() end, "Close" },
+            ["q"] = { require("funcs").buf_kill, "Close" },
             ["h"] = { "<cmd>nohlsearch<CR>", "Clear Highlights" },
-            ["e"] = { function() require('packer').loader("lf.nvim") start_lf() end, "File Picker" },
+            ["n"] = { "<cmd>ene<CR>", "New File" },
             u = {
                 name = "Utility",
                 c = { "<cmd>w!<CR><cmd>!compiler \"%:p\"<CR>", "Compile" },
-                -- g = { function() require('packer').loader("nvim-ghost.nvim") end, "Start ghost server" },
             },
             l = {
                 name = "LSP",
-                a = { function() vim.lsp.buf.code_action() end, "Code Action" },
-                f = { function() require("funcs").format { async = true } end, "Format" },
-                j = { function() vim.diagnostic.goto_next() end, "Next Diagnostic" },
-                k = { function() vim.diagnostic.goto_prev() end, "Prev Diagnostic" },
-                l = { function() vim.lsp.codelens.run() end, "CodeLens Action" },
-                q = { function() vim.diagnostic.setloclist() end, "Quickfix" },
-                r = { function() vim.lsp.buf.rename() end, "Rename" },
+                a = { vim.lsp.buf.code_action, "Code Action" },
+                f = { function() require("funcs").format({ async = true }) end, "Format" },
+                j = { vim.diagnostic.goto_next, "Next Diagnostic" },
+                k = { vim.diagnostic.goto_prev, "Prev Diagnostic" },
+                l = { vim.lsp.codelens.run, "CodeLens Action" },
+                q = { vim.diagnostic.setloclist, "Quickfix" },
+                r = { vim.lsp.buf.rename, "Rename" },
             }
 
         }
@@ -84,7 +83,7 @@ local wkmaps = {
         n = {
             l = {
                 name = "LSP",
-                i = { "<cmd>LspInfo<cr>", "Info" },
+                i = { "<cmd>LspInfo<cr>", "LSP Info" },
             }
         }
     },
@@ -100,69 +99,15 @@ local wkmaps = {
         n = {
             d = {
                 name = "DAP",
-                b = { function() require("dap").toggle_breakpoint() end, "Toggle Breakpoint" },
-                c = { function() require("dap").continue() end, "Continue" },
-                i = { function() require("dap").step_into() end, "Step Into" },
-                o = { function() require("dap").step_over() end, "Step Over" },
-                O = { function() require("dap").step_out() end, "Step Out" },
-                r = { function() require("dap").repl.toggle() end, "Toggle REPL" },
-                l = { function() require("dap").run_last() end, "Run Last" },
-                t = { function() require("dap").terminate() end, "Stop Debugger" },
-                u = { function() require("dapui").toggle() end, "Toggle DAP UI" },
-            }
-        }
-    },
-    telescope = {
-        n = {
-            b = {
-                name = "Buffers",
-                f = { "<cmd>Telescope buffers<CR>", "Find" },
-            },
-            g = {
-                name = "Git",
-                o = { "<cmd>Telescope git_status<cr>", "Open changed file" },
-                b = { "<cmd>Telescope git_branches<cr>", "Checkout branch" },
-                c = { "<cmd>Telescope git_commits<cr>", "Checkout commit" },
-                C = { "<cmd>Telescope git_bcommits<cr>", "Checkout commit(for current file)" },
-            },
-            l = {
-                name = "LSP",
-                d = { "<cmd>Telescope diagnostics bufnr=0 theme=get_ivy<cr>", "Buffer Diagnostics" },
-                w = { "<cmd>Telescope diagnostics<cr>", "Diagnostics" },
-                s = { "<cmd>Telescope lsp_document_symbols<cr>", "Document Symbols" },
-                S = { "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>", "Workspace Symbols" },
-                e = { "<cmd>Telescope quickfix<cr>", "Telescope Quickfix" },
-            },
-            s = {
-                name = "Search",
-                c = { "<cmd>Telescope colorscheme<cr>", "Colorscheme" },
-                f = { "<cmd>Telescope find_files<cr>", "Find File" },
-                h = { "<cmd>Telescope help_tags<cr>", "Find Help" },
-                H = { "<cmd>Telescope highlights<cr>", "Find highlight groups" },
-                M = { "<cmd>Telescope man_pages<cr>", "Man Pages" },
-                r = { "<cmd>Telescope oldfiles<cr>", "Open Recent File" },
-                R = { "<cmd>Telescope registers<cr>", "Registers" },
-                t = { "<cmd>Telescope live_grep<cr>", "Text" },
-                T = { "<cmd>TodoTelescope<cr>", "Todo Comments" },
-                k = { "<cmd>Telescope keymaps<cr>", "Keymaps" },
-                C = { "<cmd>Telescope commands<cr>", "Commands" },
-            }
-        }
-    },
-    blankline = {
-        n = {
-            c = {
-                function()
-                    local ok, start = require("indent_blankline.utils").get_current_context(
-                        vim.g.indent_blankline_context_patterns,
-                        vim.g.indent_blankline_use_treesitter_scope
-                    )
-                    if ok then
-                        vim.api.nvim_win_set_cursor(vim.api.nvim_get_current_win(), { start, 0 })
-                        vim.cmd [[normal! _]]
-                    end
-                end,
-                "Jump to current_context",
+                b = { require("dap").toggle_breakpoint, "Toggle Breakpoint" },
+                c = { require("dap").continue, "Continue" },
+                i = { require("dap").step_into, "Step Into" },
+                o = { require("dap").step_over, "Step Over" },
+                O = { require("dap").step_out, "Step Out" },
+                r = { require("dap").repl.toggle, "Toggle REPL" },
+                l = { require("dap").run_last, "Run Last" },
+                t = { require("dap").terminate, "Stop Debugger" },
+                u = { require("dapui").toggle, "Toggle DAP UI" },
             }
         }
     },
@@ -196,12 +141,7 @@ local wkmaps = {
     },
     lf = {
         n = {
-            ["e"] = { function() require("lf").start() end, "File Picker" },
-        }
-    },
-    alpha = {
-        n = {
-            [";"] = { "<cmd>Alpha<CR>", "Dashboard" },
+            ["e"] = { require("lf").start, "File Picker" },
         }
     },
     treesitter = {
@@ -224,14 +164,14 @@ local wkmaps = {
         n = {
             g = {
                 name = "Git",
-                j = { function() require("gitsigns").next_hunk() end, "Next Hunk" },
-                k = { function() require("gitsigns").prev_hunk() end, "Prev Hunk" },
-                l = { function() require("gitsigns").blame_line() end, "Blame" },
-                p = { function() require("gitsigns").preview_hunk() end, "Preview Hunk" },
-                r = { function() require("gitsigns").reset_hunk() end, "Reset Hunk" },
-                R = { function() require("gitsigns").reset_buffer() end, "Reset Buffer" },
-                s = { function() require("gitsigns").stage_hunk() end, "Stage Hunk" },
-                u = { function() require("gitsigns").undo_stage_hunk() end, "Undo Stage Hunk" },
+                j = { require("gitsigns").next_hunk, "Next Hunk" },
+                k = { require("gitsigns").prev_hunk, "Prev Hunk" },
+                l = { require("gitsigns").blame_line, "Blame" },
+                p = { require("gitsigns").preview_hunk, "Preview Hunk" },
+                r = { require("gitsigns").reset_hunk, "Reset Hunk" },
+                R = { require("gitsigns").reset_buffer, "Reset Buffer" },
+                s = { require("gitsigns").stage_hunk, "Stage Hunk" },
+                u = { require("gitsigns").undo_stage_hunk, "Undo Stage Hunk" },
                 d = { "<cmd>Gitsigns diffthis HEAD<cr>", "Git Diff" },
             },
         }
@@ -245,8 +185,13 @@ M.map = function(section)
         for mode, binds in pairs(maps[section]) do
             for _, bind in pairs(binds) do
                 local key = bind[1]
-                local cmd = bind[2]
+                local cmd = ""
                 local opt = { silent = true, noremap = true }
+                if type(bind[2]) == "string" then
+                    cmd = bind[2]
+                elseif type(bind[2]) == "function" then
+                    opt["callback"] = bind[2]
+                end
                 vim.api.nvim_set_keymap(mode, key, cmd, opt)
             end
         end

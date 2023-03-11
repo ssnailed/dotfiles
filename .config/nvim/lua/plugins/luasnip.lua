@@ -3,14 +3,9 @@ if not status_ok then
     return
 end
 
-local options = {
+luasnip.setup({
     history = true,
-    updateevents = "TextChanged,TextChangedI",
-}
-
-luasnip.config.set_config(options)
-require("luasnip.loaders.from_vscode").lazy_load { paths = vim.g.luasnippets_path or "" }
-require("luasnip.loaders.from_vscode").lazy_load()
+})
 
 vim.api.nvim_create_autocmd("InsertLeave", {
     callback = function()
