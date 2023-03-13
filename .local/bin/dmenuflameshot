@@ -11,7 +11,7 @@ geom() {
 }
 
 # variables
-output="${XDG_PICTURES_DIR:-$HOME/Pictures}/$(date '+%y%m%d-%H%M-%S').png"
+output="${XDG_PICTURES_DIR:-$HOME/Pictures}/Screenshots/$(date '+%y%m%d-%H%M-%S').png"
 case "$(printf "selected area\\ncurrent window\\nselected window\\nfull screen\\nselected area (copy)\\ncurrent window (copy)\\nselect window (copy)\\nfull screen (copy)" | dmenu -i -p "Screenshot which area?")" in
     "selected area") flameshot gui -p "$output" ;;
     "current window") flameshot gui -p "$output" --region "$(geom active)";;
