@@ -5,7 +5,7 @@ end
 
 local icons = require('config.icons').list
 
-local settings = {
+mason.setup({
     ui = {
         border = "none",
         icons = {
@@ -16,6 +16,4 @@ local settings = {
     },
     log_level = vim.log.levels.INFO,
     max_concurrent_installers = 4,
-}
-
-mason.setup(settings)
+})

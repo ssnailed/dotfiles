@@ -1,6 +1,9 @@
 local o = vim.opt
 local g = vim.g
 
+g.mapleader = " "
+g.maplocalleader = ","
+
 o.undodir        = vim.fn.stdpath "cache" .. "/undo"
 o.clipboard      = "unnamedplus"
 o.conceallevel   = 0
@@ -37,10 +40,7 @@ o.modeline       = true
 o.modelines      = 3
 o.listchars      = "eol:$,tab:>-,trail:~,extends:>,precedes:<"
 
-g.Illuminate_ftblacklist = { 'alpha' }
-g.mapleader = ' '
-
-local icons = require 'config.icons'.list
+local icons = require('config.icons').list
 
 local signs = {
     DiagnosticSignError = icons.BoldError,

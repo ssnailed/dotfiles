@@ -7,6 +7,15 @@ local plugins = {
     },
     { "nvim-lua/plenary.nvim" },
     { "lewis6991/impatient.nvim" },
+    { "lervag/vimtex",
+        setup = function()
+            vim.g.vimtex_view_method = "zathura"
+        end,
+        config = function()
+            require('config.keymaps').map("vimtex")
+        end,
+
+    },
     { "kylechui/nvim-surround",
         config = function()
             require('plugins.nvim-surround')
