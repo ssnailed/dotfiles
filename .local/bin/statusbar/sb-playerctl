@@ -4,10 +4,10 @@ big="\033[11m"
 reset="\033[10m"
 
 pidof -x sbd-playerctl >/dev/null 2>&1 || sbd-playerctl >/dev/null 2>&1 &
-[ "$(playerctl status 2>&1)" = "No players found" ] && echo "$bigﱙ$reset" && exit 1
+[ "$(playerctl status 2>&1)" = "No players found" ] && echo -e "$bigﱙ$reset" && exit 1
 # song="$(playerctl metadata xesam:artist) - $(playerctl metadata xesam:title)"
 song="$(playerctl metadata xesam:title) - $(playerctl metadata xesam:artist)"
 [ ${#song} -gt 35 ] && song="$(printf %.35s "$song")…"
 
-icon="$big$(playerctl status | sed "s/Playing//;s/Paused//;")$reset"
-echo "$icon $song"
+icon="$(playerctl status | sed "s/Playing//;s/Paused//;")"
+echo -e "$big$icon$reset $song"
